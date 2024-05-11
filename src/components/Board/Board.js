@@ -8,7 +8,7 @@ const Board = () => {
         <div className='tiles'>
             {ranks.map((rank,i) =>
                 files.map((file,j) =>
-                    <div>{rank}{file}</div>
+                    <div key={file+'-'+rank}>{file}{rank}</div>
                 )
             )}
         </div>
