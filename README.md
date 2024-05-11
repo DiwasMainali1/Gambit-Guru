@@ -16,16 +16,6 @@ Welcome to Gambit Guru, a powerful and intuitive chess opening trainer web app b
 
 - **Mobile-Friendly**: Access Gambit Guru on the go with its mobile-friendly design. Whether you're using a desktop, tablet, or smartphone, you can enjoy a seamless training experience across devices.
 
-## Getting Started
-
-To start using Gambit Guru, follow these simple steps:
-
-1. Clone the repository: `git clone https://github.com/yourusername/gambit-guru.git`
-2. Navigate to the project directory: `cd gambit-guru`
-3. Install the dependencies: `npm install`
-4. Start the development server: `npm start`
-5. Open your web browser and visit: `http://localhost:3000`
-
 ## Feedback and Support
 
 If you have any feedback, suggestions, or encounter any issues while using Gambit Guru, please don't hesitate to reach out. You can contact me via email at diwas.mainali1@gmail.com 
