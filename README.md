@@ -28,6 +28,6 @@ To start using Gambit Guru, follow these simple steps:
 
 ## Feedback and Support
 
-If you have any feedback, suggestions, or encounter any issues while using Gambit Guru, please don't hesitate to reach out. You can contact us via email at support@gambitguru.com or open an issue on the GitHub repository.
+If you have any feedback, suggestions, or encounter any issues while using Gambit Guru, please don't hesitate to reach out. You can contact us via email at diwas.mainali1@gmail.com 
 
 We hope you enjoy using Gambit Guru and find it helpful in your chess opening training journey. Happy practicing!
