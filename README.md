@@ -1,5 +1,5 @@
 # Gambit Guru - Chess Opening Trainer Web App
-![Gambit Guru](https://imgur.com/a/URA28It)
+![Gambit Guru](https://imgur.com/na0Ek7h)
 Welcome to Gambit Guru, a powerful and intuitive chess opening trainer web app built with React. Whether you're a beginner looking to learn the fundamentals or an experienced player aiming to master your favorite openings, Gambit Guru is here to help you take your chess game to the next level.
 
 ## Features (Upon Completion)
