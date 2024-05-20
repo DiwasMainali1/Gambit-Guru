@@ -17,7 +17,6 @@ body {
     background-position: center;
     background-size: cover;
     border-radius: 30px;    position: relative;
-    margin: 0 auto;
 }
 
 .Header a {
@@ -58,22 +57,27 @@ body {
 }
 
 #Board {
-    width: 720px;
-    height: 720px;
+    width: 900px;
+    height: 900px;
     background-color: white;
     display: flex;
     flex-wrap: wrap;
+    border: 0px solid black; box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+    margin-top: 10vh;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .square {
-    height: 90px;
-    width: 90px;
+    height: 112.5px;
+    width: 112.5px;
 }
 
 .yellow {
-    background-color: #dadb98;
+    background-color: #f0d9b5;
 }
 
 .gray {
-    background-color: #241f1f;
+    background-color: #b58863;
 }

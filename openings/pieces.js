@@ -1,83 +1,12 @@
-const whitePawn = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/white/pawn.png")'
-    }
-});
-  
-const whiteKnight = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/white/knight.png")'
-    }
-});
-  
-const whiteBishop = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/white/bishop.png")'
-    }
-});
-  
-const whiteKing = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/white/king.png")'
-    }
-});
-  
-const whiteQueen = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/white/queen.png")'
-    }
-});
-  
-const whiteRook = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/white/rook.png")'
-    }
-});
-  
-const blackPawn = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/black/pawn.png")'
-    }
-});
-  
-const blackKnight = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/black/knight.png")'
-    }
-});
-  
-const blackBishop = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/black/bishop.png")'
-    }
-});
-  
-const blackKing = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/black/king.png")'
-    }
-});
-  
-const blackQueen = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/black/queen.png")'
-    }
-});
-  
-const blackRook = Object.assign(document.createElement('div'), {
-    className: 'pieces',
-    style: {
-      backgroundImage: 'url("../bgImages/black/rook.png")'
-    }
-});
+const whitePawn = '<div class="piece" id="White-Pawn"><img src="alpha/wP.svg" /></div>';
+const whiteKnight = '<div class="piece" id="White-Knight"><img src="alpha/wN.svg" /></div>';
+const whiteBishop = '<div class="piece" id="White-Bishop"><img src="alpha/wB.svg" /></div>';
+const whiteRook = '<div class="piece" id="White-Rook"><img src="alpha/wR.svg" /></div>';
+const whiteQueen = '<div class="piece" id="White-Queen"><img src="alpha/wQ.svg" /></div>';
+const whiteKing = '<div class="piece" id="White-King"><img src="alpha/wK.svg" /></div>';
+const blackPawn = '<div class="piece" id="black-Pawn"><img src="alpha/bP.svg" /></div>';
+const blackKnight = '<div class="piece" id="black-Knight"><img src="alpha/bN.svg" /></div>';
+const blackBishop = '<div class="piece" id="black-Bishop"><img src="alpha/bB.svg" /></div>';
+const blackRook = '<div class="piece" id="black-Rook"><img src="alpha/bR.svg" /></div>';
+const blackQueen = '<div class="piece" id="black-Queen"><img src="alpha/bQ.svg" /></div>';
+const blackKing = '<div class="piece" id="black-King"><img src="alpha/bK.svg" /></div>';

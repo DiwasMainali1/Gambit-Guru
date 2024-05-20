@@ -1,6 +1,4 @@
 const board = document.querySelector("#Board")
-const file = 8
-const ranks = 8
 
 const startPieces = [
     blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook,
@@ -15,11 +13,24 @@ const startPieces = [
 
 
 function createBoard() {
-    startPieces.forEach((startPieces) => {
+    let rank = 8
+    startPieces.forEach((startPiece, i) => {
+        let index = 8 - (i % 8);
+        let file = String.fromCharCode(105 - index)
+
         const square = document.createElement('div')
         square.classList.add('square')
-        square.classList.add('yellow')
+        square.innerHTML = startPiece;
+        if (((rank + (105 - index)) % 2)) {
+            square.classList.add('yellow')
+        } else {
+            square.classList.add('gray')
+        }
+        square.setAttribute('square-id', file + rank)
         board.append(square)
+        if (index == 1) {
+            rank = rank - 1
+        }
     })
 }
 createBoard()
