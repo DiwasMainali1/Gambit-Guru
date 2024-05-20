@@ -56,3 +56,24 @@ body {
     background-color: #B22222;
     transform: scale(1.10);
 }
+
+#Board {
+    width: 720px;
+    height: 720px;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.square {
+    height: 90px;
+    width: 90px;
+}
+
+.yellow {
+    background-color: #dadb98;
+}
+
+.gray {
+    background-color: #241f1f;
+}
