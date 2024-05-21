@@ -55,9 +55,16 @@ function getInfo(e) {
     }
 }
 
+prevSquare = NaN
 function getPossibleMoves(e) {
     const clickInfo = getInfo(e);
+    removeColour(specialSquares);
     specialSquares.length = 0;
+    pieceNode = e.target.parentNode.parentNode;
+    if (pieceNode && pieceNode == prevSquare) {
+        return
+    }
+    prevSquare = e.target.parentNode.parentNode
     if (Array.isArray(clickInfo)) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
@@ -86,6 +93,13 @@ function fillColour(squares) {
         square.style.justifyContent = 'center';
         square.style.alignItems = 'center';
         square.innerHTML = '<span style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
+    }
+}
+
+function removeColour(squares) {
+    for(i in squares) {
+        const square = squares[i];
+        square.innerHTML = '';
     }
 }
 
