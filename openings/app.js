@@ -39,16 +39,47 @@ createBoard()
 const allSquares = document.querySelectorAll("#Board .square")
 
 allSquares.forEach(square => {
-    square.addEventListener('click', getInfo)
-    square.addEventListener('dragstart', getInfo)
+    square.addEventListener('click', getInfo); square.addEventListener('dragstart', getInfo);
+    square.addEventListener('click', getPossibleMoves); square.addEventListener('dragstart', getPossibleMoves);
 })
 
 
 function getInfo(e) {
-    pieceExists = e.target.parentNode.parentNode.getAttribute("square-id");
-    if (pieceExists !== null) {
-        console.log(pieceExists)
+    pieceId = e.target.parentNode.parentNode.getAttribute("square-id");
+    pieceName = e.target.parentNode.getAttribute("id");
+    squareId = e.target.getAttribute("square-id");
+    if (pieceId) {
+        return [pieceId, pieceName]
     } else {
-        console.log(e.target.getAttribute("square-id"))
+        return squareId
     }
+}
+
+function getPossibleMoves(e) {
+    clickInfo = getInfo(e)
+    if (Array.isArray(clickInfo)) {
+        pieceName = clickInfo[1]
+        pieceId = clickInfo[0]
+        if (pieceName === "White-Pawn") {
+            console.log(pawnMoves(pieceId))
+        }
+        if (pieceName === "White-Knight") {
+            console.log(knightMoves(pieceId))
+        }        
+    }
+}
+
+function pawnMoves(pos) {
+    let num = parseInt(pos[1])
+
+    if (num === 2) {
+        let pos1 = pos[0] + (num + 1)
+        let pos2 = pos[0] + (num + 2)
+        return [pos1, pos2]
+    }
+}
+
+function knightMoves(pos) {
+    let num = pos.charCodeAt(0);
+    return num
 }
