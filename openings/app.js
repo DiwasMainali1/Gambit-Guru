@@ -69,6 +69,7 @@ function getPossibleMoves(e) {
     }
 }
 
+//Moving pawns
 function pawnMoves(pos) {
     let num = parseInt(pos[1])
 
