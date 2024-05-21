@@ -10,3 +10,4 @@ const blackBishop = '<div class="piece" id="Black-Bishop"><img src="alpha/bB.svg
 const blackRook = '<div class="piece" id="Black-Rook"><img src="alpha/bR.svg" /></div>';
 const blackQueen = '<div class="piece" id="Black-Queen"><img src="alpha/bQ.svg" /></div>';
 const blackKing = '<div class="piece" id="Black-King"><img src="alpha/bK.svg" /></div>';
+const greyDot = '<div class="decor" id="Grey-Dot"><img src="alpha/gD.svg" /></div>';

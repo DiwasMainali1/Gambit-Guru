@@ -37,10 +37,10 @@ function createBoard() {
 createBoard()
 
 const allSquares = document.querySelectorAll("#Board .square")
-
+const specialSquares = [];
 allSquares.forEach(square => {
     square.addEventListener('click', getInfo); square.addEventListener('dragstart', getInfo);
-    square.addEventListener('click', getPossibleMoves); square.addEventListener('dragstart', getPossibleMoves);
+    square.addEventListener('click', getPossibleMoves); square.addEventListener('dragstart', getPossibleMoves); 
 })
 
 
@@ -56,27 +56,48 @@ function getInfo(e) {
 }
 
 function getPossibleMoves(e) {
-    clickInfo = getInfo(e)
+    const clickInfo = getInfo(e);
+    specialSquares.length = 0;
     if (Array.isArray(clickInfo)) {
-        pieceName = clickInfo[1]
-        pieceId = clickInfo[0]
+        const pieceName = clickInfo[1];
+        const pieceId = clickInfo[0];
+
+        let possibleMoveIds = [];
         if (pieceName === "White-Pawn") {
-            console.log(pawnMoves(pieceId))
+            possibleMoveIds = pawnMoves(pieceId);
+        } else if (pieceName === "White-Knight") {
+            possibleMoveIds = knightMoves(pieceId);
         }
-        if (pieceName === "White-Knight") {
-            console.log(knightMoves(pieceId))
-        }        
+
+        possibleMoveIds.forEach(moveId => {
+            const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+            if (moveSquare) {
+                specialSquares.push(moveSquare);
+            }
+        });
+    }
+    fillColour(specialSquares);
+}  
+
+function fillColour(squares) {
+    for(i in squares) {
+        const square = squares[i];
+        square.style.display = 'flex';
+        square.style.justifyContent = 'center';
+        square.style.alignItems = 'center';
+        square.innerHTML = '<span style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
     }
 }
 
-//Moving pawns
+
 function pawnMoves(pos) {
     let num = parseInt(pos[1])
 
     if (num === 2) {
         let pos1 = pos[0] + (num + 1)
         let pos2 = pos[0] + (num + 2)
-        return [pos1, pos2]
+        moveset = [pos1, pos2]
+        return moveset
     } else if(num < 8) {
         return pos[0] + (num + 1)
     }
@@ -85,5 +106,10 @@ function pawnMoves(pos) {
 function knightMoves(pos) {
     let file = pos[0].charCodeAt(0);
     let rank = parseInt(pos[1])
-    return [String.fromCharCode(file + 1) + (rank + 2), String.fromCharCode(file - 1) + (rank + 2)]
+
+    let pos1 = String.fromCharCode(file - 1) + (rank + 2);
+    let pos2 = String.fromCharCode(file + 1) + (rank + 2);
+
+    moveset = [pos1, pos2];
+    return moveset
 }
