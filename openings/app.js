@@ -77,10 +77,13 @@ function pawnMoves(pos) {
         let pos1 = pos[0] + (num + 1)
         let pos2 = pos[0] + (num + 2)
         return [pos1, pos2]
+    } else if(num < 8) {
+        return pos[0] + (num + 1)
     }
 }
 
 function knightMoves(pos) {
-    let num = pos.charCodeAt(0);
-    return num
+    let file = pos[0].charCodeAt(0);
+    let rank = parseInt(pos[1])
+    return [String.fromCharCode(file + 1) + (rank + 2), String.fromCharCode(file - 1) + (rank + 2)]
 }
