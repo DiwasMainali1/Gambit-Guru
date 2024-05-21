@@ -4,9 +4,9 @@ const whiteBishop = '<div class="piece" id="White-Bishop"><img src="alpha/wB.svg
 const whiteRook = '<div class="piece" id="White-Rook"><img src="alpha/wR.svg" /></div>';
 const whiteQueen = '<div class="piece" id="White-Queen"><img src="alpha/wQ.svg" /></div>';
 const whiteKing = '<div class="piece" id="White-King"><img src="alpha/wK.svg" /></div>';
-const blackPawn = '<div class="piece" id="black-Pawn"><img src="alpha/bP.svg" /></div>';
-const blackKnight = '<div class="piece" id="black-Knight"><img src="alpha/bN.svg" /></div>';
-const blackBishop = '<div class="piece" id="black-Bishop"><img src="alpha/bB.svg" /></div>';
-const blackRook = '<div class="piece" id="black-Rook"><img src="alpha/bR.svg" /></div>';
-const blackQueen = '<div class="piece" id="black-Queen"><img src="alpha/bQ.svg" /></div>';
-const blackKing = '<div class="piece" id="black-King"><img src="alpha/bK.svg" /></div>';
+const blackPawn = '<div class="piece" id="Black-Pawn"><img src="alpha/bP.svg" /></div>';
+const blackKnight = '<div class="piece" id="Black-Knight"><img src="alpha/bN.svg" /></div>';
+const blackBishop = '<div class="piece" id="Black-Bishop"><img src="alpha/bB.svg" /></div>';
+const blackRook = '<div class="piece" id="Black-Rook"><img src="alpha/bR.svg" /></div>';
+const blackQueen = '<div class="piece" id="Black-Queen"><img src="alpha/bQ.svg" /></div>';
+const blackKing = '<div class="piece" id="Black-King"><img src="alpha/bK.svg" /></div>';

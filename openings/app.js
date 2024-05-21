@@ -21,6 +21,7 @@ function createBoard() {
         const square = document.createElement('div')
         square.classList.add('square')
         square.innerHTML = startPiece;
+        square.firstChild?.setAttribute('draggable', true)
         if (((rank + (105 - index)) % 2)) {
             square.classList.add('yellow')
         } else {
@@ -34,3 +35,20 @@ function createBoard() {
     })
 }
 createBoard()
+
+const allSquares = document.querySelectorAll("#Board .square")
+
+allSquares.forEach(square => {
+    square.addEventListener('click', getInfo)
+    square.addEventListener('dragstart', getInfo)
+})
+
+
+function getInfo(e) {
+    pieceExists = e.target.parentNode.parentNode.getAttribute("square-id");
+    if (pieceExists !== null) {
+        console.log(pieceExists)
+    } else {
+        console.log(e.target.getAttribute("square-id"))
+    }
+}
