@@ -36,32 +36,32 @@ function createBoard() {
 }
 createBoard()
 
+
 const allSquares = document.querySelectorAll("#Board .square")
-const specialSquares = [];
+
 allSquares.forEach(square => {
-    square.addEventListener('click', getInfo); square.addEventListener('dragstart', getInfo);
-    square.addEventListener('click', getPossibleMoves); square.addEventListener('dragstart', getPossibleMoves); 
+    square.addEventListener('dragstart', getPossibleMoves); 
+    square.addEventListener('dragend', dragEnd); 
 })
 
-
-function getInfo(e) {
-    pieceId = e.target.parentNode.parentNode.getAttribute("square-id");
-    pieceName = e.target.parentNode.getAttribute("id");
-    squareId = e.target.getAttribute("square-id");
-    if (pieceId) {
-        return [pieceId, pieceName]
-    } else {
-        return squareId
-    }
+function dragEnd(e) {
+    const pieceNode = e.target;
+    pieceNode.style.visibility = "visible";
 }
 
+const specialSquares = [];
 prevSquare = NaN
+
 function getPossibleMoves(e) {
+    const pieceNode = e.target;
+    setTimeout(() => {
+        pieceNode.style.visibility = "hidden";
+    }, 0)
     const clickInfo = getInfo(e);
     removeColour(specialSquares);
     specialSquares.length = 0;
-    pieceNode = e.target.parentNode.parentNode;
     if (pieceNode && pieceNode == prevSquare) {
+        prevSquare = NaN
         return
     }
     prevSquare = e.target.parentNode.parentNode
@@ -126,4 +126,16 @@ function knightMoves(pos) {
 
     moveset = [pos1, pos2];
     return moveset
+}
+
+
+function getInfo(e) {
+    pieceId = e.target.parentNode.parentNode.getAttribute("square-id");
+    pieceName = e.target.parentNode.getAttribute("id");
+    squareId = e.target.getAttribute("square-id");
+    if (pieceId) {
+        return [pieceId, pieceName]
+    } else {
+        return squareId
+    }
 }
