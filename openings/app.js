@@ -41,19 +41,32 @@ const allSquares = document.querySelectorAll("#Board .square")
 
 allSquares.forEach(square => {
     square.addEventListener('dragstart', getPossibleMoves); 
+    square.addEventListener('dragover', dragOver);
+    square.addEventListener('drop', dragDrop);
     square.addEventListener('dragend', dragEnd); 
+    
 })
+
+function dragDrop(e) {
+    console.log(e.target)
+}
+
+function dragOver(e) {
+    e.preventDefault()
+}
 
 function dragEnd(e) {
     const pieceNode = e.target;
     pieceNode.style.visibility = "visible";
+    console.log('hi')
 }
+
 
 const specialSquares = [];
 prevSquare = NaN
 
 function getPossibleMoves(e) {
-    const pieceNode = e.target;
+    const pieceNode = e.target.parentNode;
     setTimeout(() => {
         pieceNode.style.visibility = "hidden";
     }, 0)
