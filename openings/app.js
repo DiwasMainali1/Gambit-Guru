@@ -36,7 +36,6 @@ function createBoard() {
 
 createBoard();
 
-
 const allSquares = document.querySelectorAll("#Board .square")
 
 allSquares.forEach(square => {
@@ -143,7 +142,6 @@ function removeColour(squares) {
     }
 }
 
-
 function pawnMoves(pos) {
     let num = parseInt(pos[1])
 
@@ -171,6 +169,7 @@ function knightMoves(pos) {
 function getInfo(e) {
     pieceId = e.target.parentNode.parentNode.getAttribute("square-id");
     pieceName = e.target.parentNode.getAttribute("id");
+    console.log(e.target.parentNode)
     squareId = e.target.getAttribute("square-id");
     if (pieceId) {
         return [pieceId, pieceName]
