@@ -11,7 +11,6 @@ const startPieces = [
     whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, whiteRook
 ]
 
-
 function createBoard() {
     let rank = 8
     startPieces.forEach((startPiece, i) => {
@@ -34,30 +33,46 @@ function createBoard() {
         }
     })
 }
-createBoard()
+
+createBoard();
 
 
 const allSquares = document.querySelectorAll("#Board .square")
 
 allSquares.forEach(square => {
+    const img = square.querySelector('img');
+    if (img) {
+      img.classList.add('grabbable'); 
+    }
     square.addEventListener('dragstart', dragStart); 
     square.addEventListener('dragover', dragOver);
     square.addEventListener('drop', dragDrop);
     square.addEventListener('dragend', dragEnd);   
-
 })
+
+let draggedElement
 function dragStart(e) {
     getPossibleMoves(e);
-    e.dataTransfer.effectAllowed = "copyMove";
+    draggedElement = e.target
 }  
+
 function dragOver(e) {
+    e.dataTransfer.dropEffect = "move";
     e.preventDefault(); 
 }
+
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
     if (hasSpan) {
-        console.log('Valid Move');
+        pieceNode.appendChild(draggedElement);
+        removeColour(specialSquares);
+        specialSquares.length = 0;
+    } else if (pieceNode.tagName.toLowerCase() === 'span') {
+        let square = pieceNode.parentNode;
+        square.appendChild(draggedElement);
+        removeColour(specialSquares);
+        specialSquares.length = 0;
     }
 }
 
@@ -66,6 +81,7 @@ function dragEnd(e) {
     pieceNode.style.visibility = "visible";
 }
 
+//Functions
 const specialSquares = [];
 prevSquare = NaN
 function getPossibleMoves(e) {
@@ -117,11 +133,16 @@ function fillColour(squares) {
 }
 
 function removeColour(squares) {
-    for(i in squares) {
+    for (let i = 0; i < squares.length; i++) {
         const square = squares[i];
-        square.innerHTML = '';
+        const spanElement = square.querySelector('span');
+      
+        if (spanElement) {
+            square.removeChild(spanElement);
+        }
     }
 }
+
 
 function pawnMoves(pos) {
     let num = parseInt(pos[1])

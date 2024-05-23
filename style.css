@@ -82,10 +82,11 @@ body {
     background-color: #b58863;
 }
 
-.grabbing * {
+.grabbable {
+    cursor: grab;
+}
+
+.grabbable:active {
     cursor: grabbing;
 }
 
-[dropEffect="move"] {
-    cursor: move;
-}
