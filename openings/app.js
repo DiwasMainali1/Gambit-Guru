@@ -44,14 +44,21 @@ allSquares.forEach(square => {
     square.addEventListener('dragover', dragOver);
     square.addEventListener('drop', dragDrop);
     square.addEventListener('dragend', dragEnd);   
+
 })
-
-
-function dragDrop(e) {
-}
-
+function dragStart(e) {
+    getPossibleMoves(e);
+    e.dataTransfer.effectAllowed = "copyMove";
+}  
 function dragOver(e) {
     e.preventDefault(); 
+}
+function dragDrop(e) {
+    const pieceNode = e.target;
+    const hasSpan = pieceNode.querySelector('span') !== null;
+    if (hasSpan) {
+        console.log('Valid Move');
+    }
 }
 
 function dragEnd(e) {
@@ -61,14 +68,8 @@ function dragEnd(e) {
 
 const specialSquares = [];
 prevSquare = NaN
-
-function dragStart(e) {
-    getPossibleMoves(e);
-}  
-
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
-    console.log(pieceNode)
     const imageNode = e.target.parentNode.firstElementChild;
 
     if (imageNode) {
@@ -104,7 +105,6 @@ function getPossibleMoves(e) {
     }
     fillColour(specialSquares);   
 }
-
 
 function fillColour(squares) {
     for(i in squares) {
