@@ -40,36 +40,42 @@ createBoard()
 const allSquares = document.querySelectorAll("#Board .square")
 
 allSquares.forEach(square => {
-    square.addEventListener('dragstart', getPossibleMoves); 
+    square.addEventListener('dragstart', dragStart); 
     square.addEventListener('dragover', dragOver);
     square.addEventListener('drop', dragDrop);
-    square.addEventListener('dragend', dragEnd); 
-    
+    square.addEventListener('dragend', dragEnd);   
 })
 
+
 function dragDrop(e) {
-    console.log(e.target)
 }
 
 function dragOver(e) {
-    e.preventDefault()
+    e.preventDefault(); 
 }
 
 function dragEnd(e) {
     const pieceNode = e.target;
     pieceNode.style.visibility = "visible";
-    console.log('hi')
 }
-
 
 const specialSquares = [];
 prevSquare = NaN
 
+function dragStart(e) {
+    getPossibleMoves(e);
+}  
+
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
-    setTimeout(() => {
-        pieceNode.style.visibility = "hidden";
-    }, 0)
+    console.log(pieceNode)
+    const imageNode = e.target.parentNode.firstElementChild;
+
+    if (imageNode) {
+        setTimeout(() => {
+            imageNode.style.visibility = "hidden";
+        }, 0); 
+    }
     const clickInfo = getInfo(e);
     removeColour(specialSquares);
     specialSquares.length = 0;
@@ -96,8 +102,9 @@ function getPossibleMoves(e) {
             }
         });
     }
-    fillColour(specialSquares);
-}  
+    fillColour(specialSquares);   
+}
+
 
 function fillColour(squares) {
     for(i in squares) {
@@ -115,7 +122,6 @@ function removeColour(squares) {
         square.innerHTML = '';
     }
 }
-
 
 function pawnMoves(pos) {
     let num = parseInt(pos[1])
@@ -140,7 +146,6 @@ function knightMoves(pos) {
     moveset = [pos1, pos2];
     return moveset
 }
-
 
 function getInfo(e) {
     pieceId = e.target.parentNode.parentNode.getAttribute("square-id");

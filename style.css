@@ -82,3 +82,11 @@ body {
     background-color: #b58863;
 }
 
+
+.grabbable * {
+	cursor: move !important; 
+	cursor: -webkit-grabbing !important;
+	cursor:    -moz-grabbing !important; 
+	cursor:         grabbing !important;
+}
+
