@@ -170,16 +170,43 @@ function removeColour(squares) {
 }
 
 function pawnMoves(pos) {
-    let num = parseInt(pos[1])
-    if (num === 2) {
-        let pos1 = pos[0] + (num + 1)
-        let pos2 = pos[0] + (num + 2)
-        moveset = [pos1, pos2]
-        return moveset
+    const file = pos[0];
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+
+    if (rank === 2) {
+        const oneStepMove = file + (rank + 1);
+        const twoStepMove = file + (rank + 2);
+        const oneStepSquare = document.querySelector(`[square-id="${oneStepMove}"]`);
+        const twoStepSquare = document.querySelector(`[square-id="${twoStepMove}"]`);
+
+        if (oneStepSquare.childNodes.length === 0) {
+            moveset.push(oneStepMove);
+
+            if (twoStepSquare.childNodes.length === 0) {
+                moveset.push(twoStepMove);
+            }
+        }
     } else {
-        moveset = [pos[0] + (num + 1)]
-        return moveset
+        const oneStepMove = file + (rank + 1);
+        const oneStepSquare = document.querySelector(`[square-id="${oneStepMove}"]`);
+
+        if (oneStepSquare.childNodes.length === 0) {
+            moveset.push(oneStepMove);
+        }
     }
+
+    const captureFiles = [String.fromCharCode(file.charCodeAt(0) - 1), String.fromCharCode(file.charCodeAt(0) + 1)];
+    for (const captureFile of captureFiles) {
+        if (captureFile >= 'a' && captureFile <= 'h') {
+            const captureMove = captureFile + (rank + 1);
+            const captureSquare = document.querySelector(`[square-id="${captureMove}"]`);
+            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Bpiece")) {
+                moveset.push(captureMove);
+            }
+        }
+    }
+    return moveset;
 }
 
 function knightMoves(pos) {
