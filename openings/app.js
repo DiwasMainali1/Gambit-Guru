@@ -81,7 +81,6 @@ function dragDrop(e) {
 function dragEnd(e) {
     const pieceNode = e.target;
     if (isDragDrop) {
-        console.log(pieceNode.id, pieceNode.parentNode.getAttribute("square-id"))
         isDragDrop = 0
     }
     pieceNode.style.visibility = "visible";
@@ -131,6 +130,8 @@ function getPossibleMoves(e) {
             possibleMoveIds = queenMoves(pieceId);
         } else if (pieceName == "White-Rook") {
             possibleMoveIds = rookMoves(pieceId);
+        } else if (pieceName == "White-King") {
+            possibleMoveIds = kingMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
@@ -339,5 +340,35 @@ function rookMoves(pos) {
         }
     }
 
+    return moveset;
+}
+
+function kingMoves(pos) {
+    const file = pos[0].charCodeAt(0);
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+    const directions = [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1]
+    ];  
+    for (const [fileOffset, rankOffset] of directions) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        const moveId = newFile + newRank;
+        const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+        if (moveSquare && moveSquare.childNodes.length > 0) {
+            const childNode = moveSquare.childNodes[0];
+            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                continue;
+            }
+        }
+        moveset.push(moveId);
+    }
     return moveset;
 }
