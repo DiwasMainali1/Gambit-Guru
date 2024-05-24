@@ -137,7 +137,7 @@ function getPossibleMoves(e) {
             if (moveSquare) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
-                    if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                         return;
                     }
                 }     
@@ -183,20 +183,33 @@ function pawnMoves(pos) {
 }
 
 function knightMoves(pos) {
-    let file = pos[0].charCodeAt(0);
-    let rank = parseInt(pos[1])
+    const file = pos[0].charCodeAt(0);
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+    const moves = [
+        [-1, 2],
+        [1, 2],
+        [-2, 1],
+        [2, 1],
+        [-2, -1],
+        [2, -1],
+        [-1, -2],
+        [1, -2]
+    ];
 
-    let pos1 = String.fromCharCode(file - 1) + (rank + 2);
-    let pos2 = String.fromCharCode(file + 1) + (rank + 2);
-    let pos3 = String.fromCharCode(file - 2) + (rank + 1);
-    let pos4 = String.fromCharCode(file + 2) + (rank + 1);
-    let pos5 = String.fromCharCode(file - 2) + (rank - 1);
-    let pos6 = String.fromCharCode(file + 2) + (rank - 1);
-    let pos7 = String.fromCharCode(file - 1) + (rank - 2);
-    let pos8 = String.fromCharCode(file + 1) + (rank - 2);
+    for (const [fileOffset, rankOffset] of moves) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        if (newFile >= 'a' && newFile <= 'h' && newRank >= 1 && newRank <= 8) {
+            const moveId = newFile + newRank;
+            const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Wpiece")) {
+                moveset.push(moveId);
+            }
+        }
+    }
 
-    moveset = [pos1, pos2, pos3, pos4, pos5, pos6, pos7, pos8];
-    return moveset
+    return moveset;
 }
 
 function bishopMoves(pos) {
