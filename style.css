@@ -17,9 +17,10 @@ body {
     background-image: url('bgImages/images.jpg');
     background-position: center;
     background-size: cover;
-    border-radius: 30px;    position: relative;
+    border-radius: 30px;
+    position: relative;
 }
-
+  
 .Header a {
     font-weight: 600;
     padding: 11px 17px;
@@ -28,7 +29,13 @@ body {
     font-size: 38px;
     cursor: pointer;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
+  
+.Header a:hover {
+    color: #2e52f0;
+}
+
 .Opening-Menu {
     display: flex;
     flex-direction: column;
@@ -44,7 +51,6 @@ body {
     text-align: center;
     text-decoration: none;
     color: #dadb98;
-    background-color: #241f1f;
     border: 3px solid #dadb98;
     border-radius: 40px;
     cursor: pointer;
