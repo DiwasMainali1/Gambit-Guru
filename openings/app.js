@@ -120,14 +120,15 @@ function getPossibleMoves(e) {
         }
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
-            if (moveSquare.childNodes.length > 0) {
-                const childNode = moveSquare.childNodes[0];
-                if (childNode.classList && childNode.classList.contains("Wpiece")) {
-                    return;
-                }
-            }
             if (moveSquare) {
-              specialSquares.push(moveSquare);
+                if (moveSquare.childNodes.length > 0) {
+                    const childNode = moveSquare.childNodes[0];
+                    if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                        return;
+                    }
+                }
+                
+                specialSquares.push(moveSquare);
             }
         });
     }
@@ -174,8 +175,14 @@ function knightMoves(pos) {
 
     let pos1 = String.fromCharCode(file - 1) + (rank + 2);
     let pos2 = String.fromCharCode(file + 1) + (rank + 2);
+    let pos3 = String.fromCharCode(file - 2) + (rank + 1);
+    let pos4 = String.fromCharCode(file + 2) + (rank + 1);
+    let pos5 = String.fromCharCode(file - 2) + (rank - 1);
+    let pos6 = String.fromCharCode(file + 2) + (rank - 1);
+    let pos7 = String.fromCharCode(file - 1) + (rank - 2);
+    let pos8 = String.fromCharCode(file + 1) + (rank - 2);
 
-    moveset = [pos1, pos2];
+    moveset = [pos1, pos2, pos3, pos4, pos5, pos6, pos7, pos8];
     return moveset
 }
 
