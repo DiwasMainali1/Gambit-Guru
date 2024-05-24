@@ -49,7 +49,7 @@ allSquares.forEach(square => {
     square.addEventListener('dragend', dragEnd);   
 })
 
-let draggedElement
+let draggedElement;
 function dragStart(e) {
     draggedElement = e.target
     getPossibleMoves(e);
@@ -117,6 +117,8 @@ function getPossibleMoves(e) {
             possibleMoveIds = pawnMoves(pieceId);
         } else if (pieceName === "White-Knight") {
             possibleMoveIds = knightMoves(pieceId);
+        } else if (pieceName == "White-Bishop") {
+            possibleMoveIds = bishopMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
@@ -126,8 +128,7 @@ function getPossibleMoves(e) {
                     if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                         return;
                     }
-                }
-                
+                }     
                 specialSquares.push(moveSquare);
             }
         });
@@ -186,3 +187,35 @@ function knightMoves(pos) {
     return moveset
 }
 
+function bishopMoves(pos) {
+    const file = pos[0].charCodeAt(0);
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+    const directions = [
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1]
+    ];
+
+    for (const [fileOffset, rankOffset] of directions) {
+        for (let i = 1; i <= 8; i++) {
+            const newFile = String.fromCharCode(file + fileOffset * i);
+            const newRank = rank + rankOffset * i;
+            if (newFile < 'a' || newFile > 'h' || newRank < 1 || newRank > 8) break;
+
+            const moveId = newFile + newRank;
+            const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+            if (moveSquare.childNodes.length > 0) {
+                const childNode = moveSquare.childNodes[0];
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    break;
+                }
+            }
+
+            moveset.push(moveId);
+        }
+    }
+
+    return moveset;
+}
