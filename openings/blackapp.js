@@ -11,6 +11,7 @@ const startPieces = [
     blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook
 ]
 
+// Function to create the chess board
 function createBoard() {
     let rank = 8
     startPieces.forEach((startPiece, i) => {
@@ -38,6 +39,7 @@ createBoard();
 
 const allSquares = document.querySelectorAll("#Board .square")
 
+// Add event listeners to each square on the board
 allSquares.forEach(square => {
     const img = square.querySelector('img');
     if (img) {
@@ -50,17 +52,20 @@ allSquares.forEach(square => {
 })
 
 let draggedElement;
+// Function to handle drag start event
 function dragStart(e) {
     draggedElement = e.target
     getPossibleMoves(e);
 }  
 
+// Function to handle drag over event
 function dragOver(e) {
     e.dataTransfer.dropEffect = "move";
     e.preventDefault(); 
 }
 
 let isDragDrop;
+// Function to handle drop event
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
@@ -78,6 +83,7 @@ function dragDrop(e) {
     }
 }
 
+// Function to handle drag end event
 function dragEnd(e) {
     const pieceNode = e.target;
     if (isDragDrop) {
@@ -87,8 +93,9 @@ function dragEnd(e) {
     pieceNode.style.visibility = "visible";
 }
 
-//Functions
 
+//Functions
+// Function to get information about the clicked piece and square
 function getInfo(e) {
     pieceId = e.target.parentNode.getAttribute("square-id");
     pieceName = e.target.getAttribute("id");
@@ -99,8 +106,11 @@ function getInfo(e) {
         return squareId
     }
 }
+
+
 const specialSquares = [];
 prevSquare = NaN
+// Function to get possible moves for a piece
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
     const imageNode = e.target.parentNode.firstElementChild;
@@ -148,6 +158,7 @@ function getPossibleMoves(e) {
     fillColour(specialSquares);   
 }
 
+// Function to highlight possible move squares
 function fillColour(squares) {
     for(i in squares) {
         const square = squares[i];
@@ -158,6 +169,7 @@ function fillColour(squares) {
     }
 }
 
+// Function to remove highlight from squares
 function removeColour(squares) {
     for (let i = 0; i < squares.length; i++) {
         const square = squares[i];
@@ -169,19 +181,48 @@ function removeColour(squares) {
     }
 }
 
+// Function to get possible pawn moves
 function pawnMoves(pos) {
-    let num = parseInt(pos[1])
-    if (num === 2) {
-        let pos1 = pos[0] + (num + 1)
-        let pos2 = pos[0] + (num + 2)
-        moveset = [pos1, pos2]
-        return moveset
+    const file = pos[0];
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+
+    if (rank === 2) {
+        const oneStepMove = file + (rank + 1);
+        const twoStepMove = file + (rank + 2);
+        const oneStepSquare = document.querySelector(`[square-id="${oneStepMove}"]`);
+        const twoStepSquare = document.querySelector(`[square-id="${twoStepMove}"]`);
+
+        if (oneStepSquare.childNodes.length === 0) {
+            moveset.push(oneStepMove);
+
+            if (twoStepSquare.childNodes.length === 0) {
+                moveset.push(twoStepMove);
+            }
+        }
     } else {
-        moveset = [pos[0] + (num + 1)]
-        return moveset
+        const oneStepMove = file + (rank + 1);
+        const oneStepSquare = document.querySelector(`[square-id="${oneStepMove}"]`);
+
+        if (oneStepSquare.childNodes.length === 0) {
+            moveset.push(oneStepMove);
+        }
     }
+
+    const captureFiles = [String.fromCharCode(file.charCodeAt(0) - 1), String.fromCharCode(file.charCodeAt(0) + 1)];
+    for (const captureFile of captureFiles) {
+        if (captureFile >= 'a' && captureFile <= 'h') {
+            const captureMove = captureFile + (rank + 1);
+            const captureSquare = document.querySelector(`[square-id="${captureMove}"]`);
+            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Wpiece")) {
+                moveset.push(captureMove);
+            }
+        }
+    }
+    return moveset;
 }
 
+// Function to get possible knight moves
 function knightMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -212,6 +253,7 @@ function knightMoves(pos) {
     return moveset;
 }
 
+// Function to get possible bishop moves
 function bishopMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -245,6 +287,7 @@ function bishopMoves(pos) {
     return moveset;
 }
 
+// Function to get possible queen moves
 function queenMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -282,6 +325,7 @@ function queenMoves(pos) {
     return moveset;
 }
 
+// Function to get possible rook moves
 function rookMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
