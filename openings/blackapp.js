@@ -1,14 +1,14 @@
 const board = document.querySelector("#Board")
 
 const startPieces = [
-    blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook,
-    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
+    whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, whiteRook,
+    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
-    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
-    whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, whiteRook
+    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
+    blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook
 ]
 
 function createBoard() {
@@ -22,9 +22,9 @@ function createBoard() {
         square.innerHTML = startPiece;
         square.firstChild?.setAttribute('draggable', true)
         if (((rank + (105 - index)) % 2)) {
-            square.classList.add('yellow')
-        } else {
             square.classList.add('gray')
+        } else {
+            square.classList.add('yellow')
         }
         square.setAttribute('square-id', file + rank)
         board.append(square)
@@ -121,11 +121,11 @@ function getPossibleMoves(e) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
         let possibleMoveIds = [];
-        if (pieceName === "White-Pawn") {
+        if (pieceName === "Black-Pawn") {
             possibleMoveIds = pawnMoves(pieceId);
-        } else if (pieceName === "White-Knight") {
+        } else if (pieceName === "Black-Knight") {
             possibleMoveIds = knightMoves(pieceId);
-        } else if (pieceName == "White-Bishop") {
+        } else if (pieceName == "Black-Bishop") {
             possibleMoveIds = bishopMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
