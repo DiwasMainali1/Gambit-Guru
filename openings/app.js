@@ -127,6 +127,10 @@ function getPossibleMoves(e) {
             possibleMoveIds = knightMoves(pieceId);
         } else if (pieceName == "White-Bishop") {
             possibleMoveIds = bishopMoves(pieceId);
+        } else if (pieceName == "White-Queen") {
+            possibleMoveIds = queenMoves(pieceId);
+        } else if (pieceName == "White-Rook") {
+            possibleMoveIds = rookMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
@@ -204,6 +208,76 @@ function bishopMoves(pos) {
         [-1, 1],
         [1, -1],
         [-1, -1]
+    ];
+
+    for (const [fileOffset, rankOffset] of directions) {
+        for (let i = 1; i <= 8; i++) {
+            const newFile = String.fromCharCode(file + fileOffset * i);
+            const newRank = rank + rankOffset * i;
+            if (newFile < 'a' || newFile > 'h' || newRank < 1 || newRank > 8) break;
+
+            const moveId = newFile + newRank;
+            const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+            if (moveSquare.childNodes.length > 0) {
+                const childNode = moveSquare.childNodes[0];
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    break;
+                }
+            }
+
+            moveset.push(moveId);
+        }
+    }
+
+    return moveset;
+}
+
+function queenMoves(pos) {
+    const file = pos[0].charCodeAt(0);
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+    const directions = [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1]
+    ];
+
+    for (const [fileOffset, rankOffset] of directions) {
+        for (let i = 1; i <= 8; i++) {
+            const newFile = String.fromCharCode(file + fileOffset * i);
+            const newRank = rank + rankOffset * i;
+            if (newFile < 'a' || newFile > 'h' || newRank < 1 || newRank > 8) break;
+
+            const moveId = newFile + newRank;
+            const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+            if (moveSquare.childNodes.length > 0) {
+                const childNode = moveSquare.childNodes[0];
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    break;
+                }
+            }
+
+            moveset.push(moveId);
+        }
+    }
+
+    return moveset;
+}
+
+function rookMoves(pos) {
+    const file = pos[0].charCodeAt(0);
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+    const directions = [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1]
     ];
 
     for (const [fileOffset, rankOffset] of directions) {
