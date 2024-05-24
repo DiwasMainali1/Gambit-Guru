@@ -120,8 +120,14 @@ function getPossibleMoves(e) {
         }
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+            if (moveSquare.childNodes.length > 0) {
+                const childNode = moveSquare.childNodes[0];
+                if (childNode.classList && childNode.classList.contains("Wpiece")) {
+                    return;
+                }
+            }
             if (moveSquare) {
-                specialSquares.push(moveSquare);
+              specialSquares.push(moveSquare);
             }
         });
     }
