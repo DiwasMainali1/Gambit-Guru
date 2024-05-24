@@ -1,5 +1,4 @@
 body {
-    
     background: linear-gradient(to right, #000000, #434343);
     background-position: center;
     background-size: cover;
@@ -19,6 +18,11 @@ body {
     background-size: cover;
     border-radius: 30px;
     position: relative;
+    transition: border-color 0.3s ease;
+}
+  
+.Header:hover {
+    border-color: #2eb3f0;
 }
   
 .Header a {
@@ -33,7 +37,7 @@ body {
 }
   
 .Header a:hover {
-    color: #2e52f0;
+    color: #2eb3f0;
 }
 
 .Opening-Menu {
