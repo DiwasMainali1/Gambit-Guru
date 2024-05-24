@@ -51,8 +51,8 @@ allSquares.forEach(square => {
 
 let draggedElement
 function dragStart(e) {
-    getPossibleMoves(e);
     draggedElement = e.target
+    getPossibleMoves(e);
 }  
 
 function dragOver(e) {
@@ -81,12 +81,22 @@ function dragEnd(e) {
 }
 
 //Functions
+function getInfo(e) {
+    pieceId = e.target.parentNode.getAttribute("square-id");
+    pieceName = e.target.getAttribute("id");
+    squareId = e.target.getAttribute("square-id");
+    if (pieceId) {
+        return [pieceId, pieceName]
+    } else {
+        return squareId
+    }
+}
 const specialSquares = [];
 prevSquare = NaN
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
     const imageNode = e.target.parentNode.firstElementChild;
-
+    console.log(pieceNode)
     if (imageNode) {
         setTimeout(() => {
             imageNode.style.visibility = "hidden";
@@ -99,18 +109,16 @@ function getPossibleMoves(e) {
         prevSquare = NaN
         return
     }
-    prevSquare = e.target.parentNode.parentNode
+    prevSquare = e.target.parentNode
     if (Array.isArray(clickInfo)) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
-
         let possibleMoveIds = [];
         if (pieceName === "White-Pawn") {
             possibleMoveIds = pawnMoves(pieceId);
         } else if (pieceName === "White-Knight") {
             possibleMoveIds = knightMoves(pieceId);
         }
-
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare) {
@@ -144,14 +152,15 @@ function removeColour(squares) {
 
 function pawnMoves(pos) {
     let num = parseInt(pos[1])
-
+    console.log(pos)
     if (num === 2) {
         let pos1 = pos[0] + (num + 1)
         let pos2 = pos[0] + (num + 2)
         moveset = [pos1, pos2]
         return moveset
-    } else if(num < 8) {
-        return pos[0] + (num + 1)
+    } else {
+        moveset = [pos[0] + (num + 1)]
+        return moveset
     }
 }
 
@@ -166,14 +175,3 @@ function knightMoves(pos) {
     return moveset
 }
 
-function getInfo(e) {
-    pieceId = e.target.parentNode.parentNode.getAttribute("square-id");
-    pieceName = e.target.parentNode.getAttribute("id");
-    console.log(e.target.parentNode)
-    squareId = e.target.getAttribute("square-id");
-    if (pieceId) {
-        return [pieceId, pieceName]
-    } else {
-        return squareId
-    }
-}
