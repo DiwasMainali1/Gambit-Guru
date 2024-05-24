@@ -96,7 +96,6 @@ prevSquare = NaN
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
     const imageNode = e.target.parentNode.firstElementChild;
-    console.log(pieceNode)
     if (imageNode) {
         setTimeout(() => {
             imageNode.style.visibility = "hidden";
@@ -152,7 +151,6 @@ function removeColour(squares) {
 
 function pawnMoves(pos) {
     let num = parseInt(pos[1])
-    console.log(pos)
     if (num === 2) {
         let pos1 = pos[0] + (num + 1)
         let pos2 = pos[0] + (num + 2)
