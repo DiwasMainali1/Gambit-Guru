@@ -60,6 +60,7 @@ function dragOver(e) {
     e.preventDefault(); 
 }
 
+let isDragDrop;
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
@@ -67,20 +68,35 @@ function dragDrop(e) {
         pieceNode.appendChild(draggedElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
+        isDragDrop = 1
     } else if (pieceNode.tagName.toLowerCase() === 'span') {
         let square = pieceNode.parentNode;
         square.appendChild(draggedElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
+        isDragDrop = 1
     }
 }
 
 function dragEnd(e) {
     const pieceNode = e.target;
+    if (isDragDrop) {
+        console.log(pieceNode.id, pieceNode.parentNode.getAttribute("square-id"))
+        isDragDrop = 0
+    }
     pieceNode.style.visibility = "visible";
 }
 
 //Functions
+
+function errorFill(e) {
+    e.target.parentNode.style.backgroundColour = "red"
+    
+}
+
+
+
+
 function getInfo(e) {
     pieceId = e.target.parentNode.getAttribute("square-id");
     pieceName = e.target.getAttribute("id");
