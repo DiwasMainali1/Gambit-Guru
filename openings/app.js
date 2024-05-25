@@ -2,6 +2,12 @@ const board = document.querySelector("#Board")
 const resetButton = document.getElementById('resetButton');
 resetButton.addEventListener('click', resetBoard);
 
+let isDragDrop;
+let isKingMoved;
+let isSrookMoved;
+let isLrookMoved;
+let draggedElement;
+
 const startPieces = [
     A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook,
     blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
@@ -36,9 +42,11 @@ function createBoard() {
 }
 
 function resetBoard() {
+    draggedElement = NaN;
     isKingMoved = 0;
-    isSrookMoved = 0;
     isLrookMoved = 0;
+    isSrookMoved = 0;
+    isDragDrop;
     const board = document.getElementById('Board');
     board.innerHTML = ''; 
     createBoard(); 
@@ -63,8 +71,6 @@ function addEventListeners() {
 createBoard();
 addEventListeners();
 
-let draggedElement;
-let castleRook;
 function dragStart(e) {
     draggedElement = e.target
     getPossibleMoves(e);
@@ -75,15 +81,11 @@ function dragOver(e) {
     e.preventDefault(); 
 }
 
-let isDragDrop;
-let isKingMoved;
-let isSrookMoved;
-let isLrookMoved;
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
     squareId = e.target.getAttribute("square-id");
-    if (draggedElement.id === "White-King" && squareId === "g1") {
+    if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
         let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
         pieceNode.appendChild(draggedElement);
@@ -91,9 +93,11 @@ function dragDrop(e) {
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } else if (draggedElement.id === "White-King" && squareId === "c1") {
-        
+    } else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
+        let rookElement = document.querySelector(`[id="${'A-White-Rook'}"]`);
+        let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
         pieceNode.appendChild(draggedElement);
+        rookSquare.appendChild(rookElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
