@@ -83,6 +83,9 @@ body {
     left: 100%;
 }
 .reset-button {
+    position: absolute;
+    bottom: 190px;
+    left: 1950px;
     display: inline-block;
     margin: 15px;
     padding: 20px 40px;

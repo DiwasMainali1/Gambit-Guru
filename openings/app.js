@@ -42,7 +42,6 @@ function resetBoard() {
     addEventListeners(); 
 }
 
-
 function addEventListeners() {
     const allSquares = document.querySelectorAll("#Board .square");
 
@@ -57,8 +56,10 @@ function addEventListeners() {
         square.addEventListener('dragend', dragEnd);
     });
 }
+
 createBoard();
 addEventListeners();
+
 let draggedElement;
 let castleRook;
 function dragStart(e) {
