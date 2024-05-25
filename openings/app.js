@@ -82,9 +82,14 @@ function dragOver(e) {
 }
 
 function dragDrop(e) {
-    const pieceNode = e.target;
-    const hasSpan = pieceNode.querySelector('span') !== null;
-    squareId = e.target.getAttribute("square-id");
+    let pieceNode = e.target;
+    let hasSpan = pieceNode.querySelector('span') !== null;
+    let squareId = e.target.getAttribute("square-id");
+    if(pieceNode.tagName.toLowerCase() === 'span') {
+        pieceNode = pieceNode.parentNode;
+        squareId = pieceNode.getAttribute("square-id");
+        hasSpan = 1;
+    }
     if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
         let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
@@ -106,13 +111,7 @@ function dragDrop(e) {
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } else if (pieceNode.tagName.toLowerCase() === 'span') {
-        let square = pieceNode.parentNode;
-        square.appendChild(draggedElement);
-        removeColour(specialSquares);
-        specialSquares.length = 0;
-        isDragDrop = 1
-    }
+    } 
     if (isDragDrop && draggedElement.id == "White-King") {
         isKingMoved = 1;
     }
