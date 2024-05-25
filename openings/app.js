@@ -3,14 +3,14 @@ const resetButton = document.getElementById('resetButton');
 resetButton.addEventListener('click', resetBoard);
 
 const startPieces = [
-    blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook,
+    A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook,
     blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
-    whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, whiteRook
+    A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook
 ]
 
 function createBoard() {
@@ -37,6 +37,8 @@ function createBoard() {
 
 function resetBoard() {
     isKingMoved = 0;
+    isSrookMoved = 0;
+    isLrookMoved = 0;
     const board = document.getElementById('Board');
     board.innerHTML = ''; 
     createBoard(); 
@@ -75,18 +77,23 @@ function dragOver(e) {
 
 let isDragDrop;
 let isKingMoved;
+let isSrookMoved;
+let isLrookMoved;
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
     squareId = e.target.getAttribute("square-id");
     if (draggedElement.id === "White-King" && squareId === "g1") {
+        let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
+        let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
         pieceNode.appendChild(draggedElement);
+        rookSquare.appendChild(rookElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (draggedElement.id === "White-King" && squareId === "c1") {
+        
         pieceNode.appendChild(draggedElement);
-
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
@@ -103,7 +110,13 @@ function dragDrop(e) {
         isDragDrop = 1
     }
     if (isDragDrop && draggedElement.id == "White-King") {
-        isKingMoved = 1
+        isKingMoved = 1;
+    }
+    if (isDragDrop && draggedElement.id == "A-White-Rook") {
+        isLrookMoved = 1;    
+    }
+    if (isDragDrop && draggedElement.id == "H-White-Rook") {
+        isSrookMoved = 1;
     }
 }
 
@@ -157,7 +170,7 @@ function getPossibleMoves(e) {
             possibleMoveIds = bishopMoves(pieceId);
         } else if (pieceName == "White-Queen") {
             possibleMoveIds = queenMoves(pieceId);
-        } else if (pieceName == "White-Rook") {
+        } else if ((pieceName == "A-White-Rook") || (pieceName == "H-White-Rook")) {
             possibleMoveIds = rookMoves(pieceId);
         } else if (pieceName == "White-King") {
             possibleMoveIds = kingMoves(pieceId);
@@ -371,8 +384,7 @@ function rookMoves(pos) {
 
     return moveset;
 }
-let isLongCastle;
-let isShortCastle;
+
 function kingMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -412,39 +424,59 @@ function kingMoves(pos) {
     if (isKingMoved) {
         return moveset;
     }
-    isLongCastle = 1;
-    isShortCastle = 1;
+    if (!isSrookMoved) {
+        let isShortCastle = checkShortCastle(file, rank, shortCastleDir);
+        if (isShortCastle) {
+            moveset.push('g1');
+        }
+    }
+    if (!isLrookMoved) {
+        let isLongCastle = checkLongCastle(file, rank, longCastleDir);
+        if (isLongCastle) {
+            moveset.push('c1');
+        }
+    }
+    return moveset;
+}
+
+function checkShortCastle(file, rank, shortCastleDir) {
+    let boolean = 1;
+
     for (const [fileOffset, rankOffset] of shortCastleDir) {
         const newFile = String.fromCharCode(file + fileOffset);
         const newRank = rank + rankOffset;
         const moveId = newFile + newRank;
         const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
             if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
-                isShortCastle = 0;
+                boolean = 0;
                 break;
             }
-        } 
+        }
     }
+
+    return boolean;
+}
+
+function checkLongCastle(file, rank, longCastleDir) {
+    let boolean = 1;
+
     for (const [fileOffset, rankOffset] of longCastleDir) {
         const newFile = String.fromCharCode(file + fileOffset);
         const newRank = rank + rankOffset;
         const moveId = newFile + newRank;
         const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
             if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
-                isLongCastle = 0;
+                boolean = 0;
                 break;
             }
         }
     }
-    if (isShortCastle) {
-        moveset.push('g1');
-    }
-    if (isLongCastle) {
-        moveset.push('c1');
-    }
-    return moveset;
+
+    return boolean;
 }
