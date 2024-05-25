@@ -90,16 +90,16 @@ function dragDrop(e) {
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;
     }
-    if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
-        let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
+    if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "g1") {
+        let rookElement = document.querySelector(`[id="${'H-Black-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
-        let rookElement = document.querySelector(`[id="${'A-White-Rook'}"]`);
+    } else if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "c1") {
+        let rookElement = document.querySelector(`[id="${'A-Black-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
@@ -112,13 +112,13 @@ function dragDrop(e) {
         specialSquares.length = 0;
         isDragDrop = 1
     } 
-    if (isDragDrop && draggedElement.id == "White-King") {
+    if (isDragDrop && draggedElement.id == "Black-King") {
         isKingMoved = 1;
     }
-    if (isDragDrop && draggedElement.id == "A-White-Rook") {
+    if (isDragDrop && draggedElement.id == "A-Black-Rook") {
         isLrookMoved = 1;    
     }
-    if (isDragDrop && draggedElement.id == "H-White-Rook") {
+    if (isDragDrop && draggedElement.id == "H-Black-Rook") {
         isSrookMoved = 1;
     }
 }
@@ -165,17 +165,17 @@ function getPossibleMoves(e) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
         let possibleMoveIds = [];
-        if (pieceName === "White-Pawn") {
+        if (pieceName === "Black-Pawn") {
             possibleMoveIds = pawnMoves(pieceId);
-        } else if (pieceName === "White-Knight") {
+        } else if (pieceName === "Black-Knight") {
             possibleMoveIds = knightMoves(pieceId);
-        } else if (pieceName == "White-Bishop") {
+        } else if (pieceName == "Black-Bishop") {
             possibleMoveIds = bishopMoves(pieceId);
-        } else if (pieceName == "White-Queen") {
+        } else if (pieceName == "Black-Queen") {
             possibleMoveIds = queenMoves(pieceId);
-        } else if ((pieceName == "A-White-Rook") || (pieceName == "H-White-Rook")) {
+        } else if ((pieceName == "A-Black-Rook") || (pieceName == "H-Black-Rook")) {
             possibleMoveIds = rookMoves(pieceId);
-        } else if (pieceName == "White-King") {
+        } else if (pieceName == "Black-King") {
             possibleMoveIds = kingMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
@@ -200,7 +200,7 @@ function fillColour(squares) {
         square.style.display = 'flex';
         square.style.justifyContent = 'center';
         square.style.alignItems = 'center';
-        square.innerHTML = '<span style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
+        square.innerHTML = '<span style="display: inline-block; width: 19px; height: 19px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
     }
 }
 
@@ -276,7 +276,7 @@ function knightMoves(pos) {
         if (newFile >= 'a' && newFile <= 'h' && newRank >= 1 && newRank <= 8) {
             const moveId = newFile + newRank;
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
-            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Wpiece")) {
+            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Bpiece")) {
                 moveset.push(moveId);
             }
         }
