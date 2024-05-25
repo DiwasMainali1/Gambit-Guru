@@ -36,6 +36,7 @@ function createBoard() {
 }
 
 function resetBoard() {
+    isKingMoved = 0;
     const board = document.getElementById('Board');
     board.innerHTML = ''; 
     createBoard(); 
@@ -73,17 +74,22 @@ function dragOver(e) {
 }
 
 let isDragDrop;
-let isCastle;
-let isShortCastle;
+let isKingMoved;
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
-    if (hasSpan && isCastle) {
-        if (isShortCastle) {
-            isShortCastle = 0;
-        } else {
-            console.log("Hi");
-        }
+    squareId = e.target.getAttribute("square-id");
+    if (draggedElement.id === "White-King" && squareId === "g1") {
+        pieceNode.appendChild(draggedElement);
+        removeColour(specialSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
+    } else if (draggedElement.id === "White-King" && squareId === "c1") {
+        pieceNode.appendChild(draggedElement);
+
+        removeColour(specialSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
     } else if (hasSpan) {
         pieceNode.appendChild(draggedElement);
         removeColour(specialSquares);
@@ -95,6 +101,9 @@ function dragDrop(e) {
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
+    }
+    if (isDragDrop && draggedElement.id == "White-King") {
+        isKingMoved = 1
     }
 }
 
@@ -362,7 +371,8 @@ function rookMoves(pos) {
 
     return moveset;
 }
-
+let isLongCastle;
+let isShortCastle;
 function kingMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -399,6 +409,11 @@ function kingMoves(pos) {
         }
         moveset.push(moveId);
     }
+    if (isKingMoved) {
+        return moveset;
+    }
+    isLongCastle = 1;
+    isShortCastle = 1;
     for (const [fileOffset, rankOffset] of shortCastleDir) {
         const newFile = String.fromCharCode(file + fileOffset);
         const newRank = rank + rankOffset;
@@ -407,10 +422,10 @@ function kingMoves(pos) {
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
             if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                isShortCastle = 0;
                 break;
             }
         } 
-        moveset.push(moveId);       
     }
     for (const [fileOffset, rankOffset] of longCastleDir) {
         const newFile = String.fromCharCode(file + fileOffset);
@@ -420,10 +435,16 @@ function kingMoves(pos) {
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
             if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                isLongCastle = 0;
                 break;
             }
-        } 
-        moveset.push(moveId);       
+        }
+    }
+    if (isShortCastle) {
+        moveset.push('g1');
+    }
+    if (isLongCastle) {
+        moveset.push('c1');
     }
     return moveset;
 }
