@@ -7,35 +7,35 @@ body {
 }
 
 .Header {
-    width: 300px;
-    height: 70px;
+    width: 200px;
+    height: 47px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 3px solid #dadb98;
+    border: 2px solid #dadb98;
     background-image: url('bgImages/images.jpg');
     background-position: center;
     background-size: cover;
-    border-radius: 30px;
+    border-radius: 20px;
     position: relative;
     transition: border-color 0.3s ease;
 }
-  
+
 .Header:hover {
     border-color: #2eb3f0;
 }
-  
+
 .Header a {
     font-weight: 600;
-    padding: 11px 17px;
+    padding: 7px 11px;
     color: #dadb98;
     text-align: center;
-    font-size: 38px;
+    font-size: 25px;
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease;
 }
-  
+
 .Header a:hover {
     color: #2eb3f0;
 }
@@ -45,23 +45,25 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
 .Opening-Menu a {
     display: inline-block;
-    width: 300px;
-    margin: 15px;
-    padding: 20px 40px;
-    font-size: 24px;
+    width: 200px;
+    margin: 10px;
+    padding: 13px 27px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     color: #dadb98;
-    border: 3px solid #dadb98;
-    border-radius: 40px;
+    border: 2px solid #dadb98;
+    border-radius: 27px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
+}
+
 .Opening-Menu a::before {
     content: '';
     position: absolute;
@@ -73,6 +75,7 @@ body {
     transform: skewX(-30deg);
     transition: left 0.4s ease;
 }
+
 .Opening-Menu a:hover {
     background-color: #B22222;
     transform: scale(1.15);
@@ -82,20 +85,21 @@ body {
 .Opening-Menu a:hover::before {
     left: 100%;
 }
+
 .reset-button {
     position: absolute;
-    bottom: 190px;
-    left: 1950px;
+    bottom: 127px;
+    left: 1300px;
     display: inline-block;
-    margin: 15px;
-    padding: 20px 40px;
-    font-size: 24px;
+    margin: 10px;
+    padding: 13px 27px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     color: #dadb98;
-    border: 3px solid #dadb98;
-    border-radius: 40px;
+    border: 2px solid #dadb98;
+    border-radius: 27px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -124,22 +128,24 @@ body {
 .reset-button:hover::before {
     left: 100%;
 }
+
 #Board {
-    width: 900px;
-    height: 900px;
+    width: 600px;
+    height: 600px;
     background-color: white;
     display: flex;
     flex-wrap: wrap;
-    border: 0px solid black; box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    border: 0px solid black;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
     margin: 0 auto;
-    margin-top: 10vh;
-    border-radius: 10px;
+    margin-top: 7vh;
+    border-radius: 7px;
     overflow: hidden;
 }
 
 .square {
-    height: 112.5px;
-    width: 112.5px;
+    height: 75px;
+    width: 75px;
 }
 
 .yellow {
@@ -157,4 +163,3 @@ body {
 .grabbable:active {
     cursor: grabbing;
 }
-

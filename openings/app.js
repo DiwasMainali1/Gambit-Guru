@@ -18,7 +18,10 @@ const startPieces = [
     whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
     A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook
 ]
+createBoard();
+addEventListeners();
 
+//Functions
 function createBoard() {
     let rank = 8;
     startPieces.forEach((startPiece, i) => {
@@ -67,9 +70,6 @@ function addEventListeners() {
         square.addEventListener('dragend', dragEnd);
     });
 }
-
-createBoard();
-addEventListeners();
 
 function dragStart(e) {
     draggedElement = e.target
@@ -131,7 +131,6 @@ function dragEnd(e) {
     pieceNode.style.visibility = "visible";
 }
 
-//Functions
 
 function getInfo(e) {
     pieceId = e.target.parentNode.getAttribute("square-id");
@@ -143,6 +142,7 @@ function getInfo(e) {
         return squareId
     }
 }
+
 const specialSquares = [];
 prevSquare = NaN
 function getPossibleMoves(e) {
@@ -200,7 +200,7 @@ function fillColour(squares) {
         square.style.display = 'flex';
         square.style.justifyContent = 'center';
         square.style.alignItems = 'center';
-        square.innerHTML = '<span style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
+        square.innerHTML = '<span style="display: inline-block; width: 19px; height: 19px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
     }
 }
 

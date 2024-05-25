@@ -1,19 +1,27 @@
-const board = document.querySelector("#Board");
+const board = document.querySelector("#Board")
 const resetButton = document.getElementById('resetButton');
 resetButton.addEventListener('click', resetBoard);
 
+let isDragDrop;
+let isKingMoved;
+let isSrookMoved;
+let isLrookMoved;
+let draggedElement;
+
 const startPieces = [
-    whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, whiteRook,
+    A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook,
     whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
-    blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook
+    A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook
 ]
+createBoard();
+addEventListeners();
 
-// Function to create the chess board
+//Functions
 function createBoard() {
     let rank = 8;
     startPieces.forEach((startPiece, i) => {
@@ -24,9 +32,9 @@ function createBoard() {
         square.innerHTML = startPiece;
         square.firstChild?.setAttribute('draggable', true);
         if ((rank + (105 - index)) % 2) {
-            square.classList.add('yellow');
-        } else {
             square.classList.add('gray');
+        } else {
+            square.classList.add('yellow');
         }
         square.setAttribute('square-id', file + rank);
         board.append(square);
@@ -37,6 +45,11 @@ function createBoard() {
 }
 
 function resetBoard() {
+    draggedElement = NaN;
+    isKingMoved = 0;
+    isLrookMoved = 0;
+    isSrookMoved = 0;
+    isDragDrop;
     const board = document.getElementById('Board');
     board.innerHTML = ''; 
     createBoard(); 
@@ -58,68 +71,67 @@ function addEventListeners() {
     });
 }
 
-createBoard();
-addEventListeners();
-
-const allSquares = document.querySelectorAll("#Board .square")
-
-// Add event listeners to each square on the board
-allSquares.forEach(square => {
-    const img = square.querySelector('img');
-    if (img) {
-      img.classList.add('grabbable'); 
-    }
-    square.addEventListener('dragstart', dragStart); 
-    square.addEventListener('dragover', dragOver);
-    square.addEventListener('drop', dragDrop);
-    square.addEventListener('dragend', dragEnd);   
-})
-
-let draggedElement;
-// Function to handle drag start event
 function dragStart(e) {
     draggedElement = e.target
     getPossibleMoves(e);
 }  
 
-// Function to handle drag over event
 function dragOver(e) {
     e.dataTransfer.dropEffect = "move";
     e.preventDefault(); 
 }
 
-let isDragDrop;
-// Function to handle drop event
 function dragDrop(e) {
-    const pieceNode = e.target;
-    const hasSpan = pieceNode.querySelector('span') !== null;
-    if (hasSpan) {
+    let pieceNode = e.target;
+    let hasSpan = pieceNode.querySelector('span') !== null;
+    let squareId = e.target.getAttribute("square-id");
+    if(pieceNode.tagName.toLowerCase() === 'span') {
+        pieceNode = pieceNode.parentNode;
+        squareId = pieceNode.getAttribute("square-id");
+        hasSpan = 1;
+    }
+    if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
+        let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
+        let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
+        pieceNode.appendChild(draggedElement);
+        rookSquare.appendChild(rookElement);
+        removeColour(specialSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
+    } else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
+        let rookElement = document.querySelector(`[id="${'A-White-Rook'}"]`);
+        let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
+        pieceNode.appendChild(draggedElement);
+        rookSquare.appendChild(rookElement);
+        removeColour(specialSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
+    } else if (hasSpan) {
         pieceNode.appendChild(draggedElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } else if (pieceNode.tagName.toLowerCase() === 'span') {
-        let square = pieceNode.parentNode;
-        square.appendChild(draggedElement);
-        removeColour(specialSquares);
-        specialSquares.length = 0;
-        isDragDrop = 1
+    } 
+    if (isDragDrop && draggedElement.id == "White-King") {
+        isKingMoved = 1;
+    }
+    if (isDragDrop && draggedElement.id == "A-White-Rook") {
+        isLrookMoved = 1;    
+    }
+    if (isDragDrop && draggedElement.id == "H-White-Rook") {
+        isSrookMoved = 1;
     }
 }
 
-// Function to handle drag end event
 function dragEnd(e) {
     const pieceNode = e.target;
     if (isDragDrop) {
-        console.log(pieceNode.id, pieceNode.parentNode.getAttribute("square-id"))
         isDragDrop = 0
     }
     pieceNode.style.visibility = "visible";
 }
 
 
-//Functions
-// Function to get information about the clicked piece and square
 function getInfo(e) {
     pieceId = e.target.parentNode.getAttribute("square-id");
     pieceName = e.target.getAttribute("id");
@@ -131,10 +143,8 @@ function getInfo(e) {
     }
 }
 
-
 const specialSquares = [];
 prevSquare = NaN
-// Function to get possible moves for a piece
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
     const imageNode = e.target.parentNode.firstElementChild;
@@ -155,23 +165,25 @@ function getPossibleMoves(e) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
         let possibleMoveIds = [];
-        if (pieceName === "Black-Pawn") {
+        if (pieceName === "White-Pawn") {
             possibleMoveIds = pawnMoves(pieceId);
-        } else if (pieceName === "Black-Knight") {
+        } else if (pieceName === "White-Knight") {
             possibleMoveIds = knightMoves(pieceId);
-        } else if (pieceName == "Black-Bishop") {
+        } else if (pieceName == "White-Bishop") {
             possibleMoveIds = bishopMoves(pieceId);
-        } else if (pieceName == "Black-Queen") {
+        } else if (pieceName == "White-Queen") {
             possibleMoveIds = queenMoves(pieceId);
-        } else if (pieceName == "Black-Rook") {
+        } else if ((pieceName == "A-White-Rook") || (pieceName == "H-White-Rook")) {
             possibleMoveIds = rookMoves(pieceId);
+        } else if (pieceName == "White-King") {
+            possibleMoveIds = kingMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
-                    if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                         return;
                     }
                 }     
@@ -182,7 +194,6 @@ function getPossibleMoves(e) {
     fillColour(specialSquares);   
 }
 
-// Function to highlight possible move squares
 function fillColour(squares) {
     for(i in squares) {
         const square = squares[i];
@@ -193,7 +204,6 @@ function fillColour(squares) {
     }
 }
 
-// Function to remove highlight from squares
 function removeColour(squares) {
     for (let i = 0; i < squares.length; i++) {
         const square = squares[i];
@@ -205,7 +215,6 @@ function removeColour(squares) {
     }
 }
 
-// Function to get possible pawn moves
 function pawnMoves(pos) {
     const file = pos[0];
     const rank = parseInt(pos[1]);
@@ -238,7 +247,7 @@ function pawnMoves(pos) {
         if (captureFile >= 'a' && captureFile <= 'h') {
             const captureMove = captureFile + (rank + 1);
             const captureSquare = document.querySelector(`[square-id="${captureMove}"]`);
-            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Wpiece")) {
+            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Bpiece")) {
                 moveset.push(captureMove);
             }
         }
@@ -246,7 +255,6 @@ function pawnMoves(pos) {
     return moveset;
 }
 
-// Function to get possible knight moves
 function knightMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -268,7 +276,7 @@ function knightMoves(pos) {
         if (newFile >= 'a' && newFile <= 'h' && newRank >= 1 && newRank <= 8) {
             const moveId = newFile + newRank;
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
-            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Bpiece")) {
+            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Wpiece")) {
                 moveset.push(moveId);
             }
         }
@@ -277,7 +285,6 @@ function knightMoves(pos) {
     return moveset;
 }
 
-// Function to get possible bishop moves
 function bishopMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -299,7 +306,7 @@ function bishopMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
-                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                     break;
                 }
             }
@@ -311,7 +318,6 @@ function bishopMoves(pos) {
     return moveset;
 }
 
-// Function to get possible queen moves
 function queenMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -337,7 +343,7 @@ function queenMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
-                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                     break;
                 }
             }
@@ -349,7 +355,6 @@ function queenMoves(pos) {
     return moveset;
 }
 
-// Function to get possible rook moves
 function rookMoves(pos) {
     const file = pos[0].charCodeAt(0);
     const rank = parseInt(pos[1]);
@@ -371,7 +376,7 @@ function rookMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
-                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                     break;
                 }
             }
@@ -381,4 +386,100 @@ function rookMoves(pos) {
     }
 
     return moveset;
+}
+
+function kingMoves(pos) {
+    const file = pos[0].charCodeAt(0);
+    const rank = parseInt(pos[1]);
+    const moveset = [];
+    const directions = [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1]
+    ];
+    const shortCastleDir = [
+        [1, 0],
+        [2, 0],
+    ];  
+    const longCastleDir = [
+        [-1, 0],
+        [-2, 0],
+        [-3, 0],
+    ]
+    for (const [fileOffset, rankOffset] of directions) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        const moveId = newFile + newRank;
+        const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+        if (moveSquare && moveSquare.childNodes.length > 0) {
+            const childNode = moveSquare.childNodes[0];
+            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                continue;
+            }
+        }
+        moveset.push(moveId);
+    }
+    if (isKingMoved) {
+        return moveset;
+    }
+    if (!isSrookMoved) {
+        let isShortCastle = checkShortCastle(file, rank, shortCastleDir);
+        if (isShortCastle) {
+            moveset.push('g1');
+        }
+    }
+    if (!isLrookMoved) {
+        let isLongCastle = checkLongCastle(file, rank, longCastleDir);
+        if (isLongCastle) {
+            moveset.push('c1');
+        }
+    }
+    return moveset;
+}
+
+function checkShortCastle(file, rank, shortCastleDir) {
+    let boolean = 1;
+
+    for (const [fileOffset, rankOffset] of shortCastleDir) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        const moveId = newFile + newRank;
+        const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+
+        if (moveSquare && moveSquare.childNodes.length > 0) {
+            const childNode = moveSquare.childNodes[0];
+            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                boolean = 0;
+                break;
+            }
+        }
+    }
+
+    return boolean;
+}
+
+function checkLongCastle(file, rank, longCastleDir) {
+    let boolean = 1;
+
+    for (const [fileOffset, rankOffset] of longCastleDir) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        const moveId = newFile + newRank;
+        const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+
+        if (moveSquare && moveSquare.childNodes.length > 0) {
+            const childNode = moveSquare.childNodes[0];
+            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                boolean = 0;
+                break;
+            }
+        }
+    }
+
+    return boolean;
 }
