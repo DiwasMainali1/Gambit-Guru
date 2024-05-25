@@ -1,4 +1,6 @@
 const board = document.querySelector("#Board")
+const resetButton = document.getElementById('resetButton');
+resetButton.addEventListener('click', resetBoard);
 
 const startPieces = [
     blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, blackRook,
@@ -12,44 +14,53 @@ const startPieces = [
 ]
 
 function createBoard() {
-    let rank = 8
+    let rank = 8;
     startPieces.forEach((startPiece, i) => {
         let index = 8 - (i % 8);
-        let file = String.fromCharCode(105 - index)
-
-        const square = document.createElement('div')
-        square.classList.add('square')
+        let file = String.fromCharCode(105 - index);
+        const square = document.createElement('div');
+        square.classList.add('square');
         square.innerHTML = startPiece;
-        square.firstChild?.setAttribute('draggable', true)
-        if (((rank + (105 - index)) % 2)) {
-            square.classList.add('yellow')
+        square.firstChild?.setAttribute('draggable', true);
+        if ((rank + (105 - index)) % 2) {
+            square.classList.add('yellow');
         } else {
-            square.classList.add('gray')
+            square.classList.add('gray');
         }
-        square.setAttribute('square-id', file + rank)
-        board.append(square)
+        square.setAttribute('square-id', file + rank);
+        board.append(square);
         if (index == 1) {
-            rank = rank - 1
+            rank = rank - 1;
         }
-    })
+    });
 }
 
+function resetBoard() {
+    const board = document.getElementById('Board');
+    board.innerHTML = ''; 
+    createBoard(); 
+    addEventListeners(); 
+}
+
+
+function addEventListeners() {
+    const allSquares = document.querySelectorAll("#Board .square");
+
+    allSquares.forEach(square => {
+        const img = square.querySelector('img');
+        if (img) {
+            img.classList.add('grabbable');
+        }
+        square.addEventListener('dragstart', dragStart);
+        square.addEventListener('dragover', dragOver);
+        square.addEventListener('drop', dragDrop);
+        square.addEventListener('dragend', dragEnd);
+    });
+}
 createBoard();
-
-const allSquares = document.querySelectorAll("#Board .square")
-
-allSquares.forEach(square => {
-    const img = square.querySelector('img');
-    if (img) {
-      img.classList.add('grabbable'); 
-    }
-    square.addEventListener('dragstart', dragStart); 
-    square.addEventListener('dragover', dragOver);
-    square.addEventListener('drop', dragDrop);
-    square.addEventListener('dragend', dragEnd);   
-})
-
+addEventListeners();
 let draggedElement;
+let castleRook;
 function dragStart(e) {
     draggedElement = e.target
     getPossibleMoves(e);
@@ -61,10 +72,18 @@ function dragOver(e) {
 }
 
 let isDragDrop;
+let isCastle;
+let isShortCastle;
 function dragDrop(e) {
     const pieceNode = e.target;
     const hasSpan = pieceNode.querySelector('span') !== null;
-    if (hasSpan) {
+    if (hasSpan && isCastle) {
+        if (isShortCastle) {
+            isShortCastle = 0;
+        } else {
+            console.log("Hi");
+        }
+    } else if (hasSpan) {
         pieceNode.appendChild(draggedElement);
         removeColour(specialSquares);
         specialSquares.length = 0;
@@ -356,7 +375,16 @@ function kingMoves(pos) {
         [-1, 1],
         [1, -1],
         [-1, -1]
+    ];
+    const shortCastleDir = [
+        [1, 0],
+        [2, 0],
     ];  
+    const longCastleDir = [
+        [-1, 0],
+        [-2, 0],
+        [-3, 0],
+    ]
     for (const [fileOffset, rankOffset] of directions) {
         const newFile = String.fromCharCode(file + fileOffset);
         const newRank = rank + rankOffset;
@@ -369,6 +397,32 @@ function kingMoves(pos) {
             }
         }
         moveset.push(moveId);
+    }
+    for (const [fileOffset, rankOffset] of shortCastleDir) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        const moveId = newFile + newRank;
+        const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+        if (moveSquare && moveSquare.childNodes.length > 0) {
+            const childNode = moveSquare.childNodes[0];
+            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                break;
+            }
+        } 
+        moveset.push(moveId);       
+    }
+    for (const [fileOffset, rankOffset] of longCastleDir) {
+        const newFile = String.fromCharCode(file + fileOffset);
+        const newRank = rank + rankOffset;
+        const moveId = newFile + newRank;
+        const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
+        if (moveSquare && moveSquare.childNodes.length > 0) {
+            const childNode = moveSquare.childNodes[0];
+            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                break;
+            }
+        } 
+        moveset.push(moveId);       
     }
     return moveset;
 }
