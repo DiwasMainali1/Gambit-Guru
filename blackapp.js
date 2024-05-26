@@ -183,7 +183,7 @@ function getPossibleMoves(e) {
             if (moveSquare) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
-                    if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    if (childNode && childNode.classList && childNode.classList.contains("WPiece")) {
                         return;
                     }
                 }     
@@ -247,7 +247,7 @@ function pawnMoves(pos) {
         if (captureFile >= 'a' && captureFile <= 'h') {
             const captureMove = captureFile + (rank + 1);
             const captureSquare = document.querySelector(`[square-id="${captureMove}"]`);
-            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Bpiece")) {
+            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("WPiece")) {
                 moveset.push(captureMove);
             }
         }
@@ -306,7 +306,7 @@ function bishopMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
-                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                     break;
                 }
             }
@@ -343,7 +343,7 @@ function queenMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
-                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                     break;
                 }
             }
@@ -376,7 +376,7 @@ function rookMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
-                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                     break;
                 }
             }
@@ -418,7 +418,7 @@ function kingMoves(pos) {
         const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
-            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+            if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                 continue;
             }
         }
@@ -453,7 +453,7 @@ function checkShortCastle(file, rank, shortCastleDir) {
 
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
-            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+            if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                 boolean = 0;
                 break;
             }
@@ -474,7 +474,7 @@ function checkLongCastle(file, rank, longCastleDir) {
 
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
-            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+            if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                 boolean = 0;
                 break;
             }

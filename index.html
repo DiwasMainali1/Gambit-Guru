@@ -7,14 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="Header">    
+    <div class="Header">
         <a href="index.html">Gambit Guru</a>
     </div>
-
-
-    <div class="Opening-Menu">
-        <a href="openings/ruy_lopez.html">The Ruy Lopez</a>
-        <a href="openings/sicilian.html">The Sicilian Defense</a>
-    </div>    
+    <div class="container">
+        <div class="Opening-Menu">
+            <p>Select your opening:</p>
+            <a href="openings/ruy_lopez.html" class="menu-item">
+                <span class="menu-text">The Ruy Lopez</span>
+                <span class="menu-icon">&#9818;</span>
+            </a>
+            <a href="openings/sicilian.html" class="menu-item">
+                <span class="menu-text">The Sicilian Defense</span>
+                <span class="menu-icon">&#9812;</span>
+            </a>
+        </div>
+        <div class="board-container">
+            <div id="Board"></div>
+            <button id="resetButton" class="reset-button">Reset</button>
+            <button id="switchButton" class="switch-button">Change Colour</button>
+        </div>
+    </div>
+    <script src="boardpieces.js"></script>
+    <script src="app.js"></script>
+    <script src="blackapp.js"></script>
 </body>
 </html>
