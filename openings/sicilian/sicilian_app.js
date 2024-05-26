@@ -124,6 +124,7 @@ function dragOver(e) {
 function dragDrop(e) {
     let pieceNode = e.target;
     let hasSpan = pieceNode.querySelector('span') !== null;
+    let hasCapture = pieceNode.parentNode.style.backgroundColor === 'rgb(100, 110, 64)';
     let squareId = e.target.getAttribute("square-id");
     if(pieceNode.tagName.toLowerCase() === 'span') {
         pieceNode = pieceNode.parentNode;
@@ -151,7 +152,14 @@ function dragDrop(e) {
         removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } 
+    } else if (hasCapture) {
+        let squareNode = pieceNode.parentNode;
+        squareNode.innerHTML = '';
+        squareNode.appendChild(draggedElement);
+        removeColour(allSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
+    }
     if (isDragDrop && draggedElement.id == "Black-King") {
         isKingMoved = 1;
     }
@@ -160,6 +168,35 @@ function dragDrop(e) {
     }
     if (isDragDrop && draggedElement.id == "H-Black-Rook") {
         isSrookMoved = 1;
+    }
+    if (isDragDrop) {
+        if (sicilianMoves.length === 1) {
+            addConfetti();
+            setTimeout(() => {
+                resetBoard();
+            }, 1300);
+        }
+        const lastMove = sicilianMoves[sicilianMoves.length - 1];
+        if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
+            if (whiteMoves.length > 0) {
+                wPieceLocation = whiteMoves[whiteMoves.length - 1][0];
+                whitePieceNode = whiteMoves[whiteMoves.length - 1][1];
+                whitePiece = document.querySelector(`[square-id="${wPieceLocation}"]`);
+                whitePiece = document.querySelector(`[square-id="${wPieceLocation}"]`);
+                childNodes = whitePiece.childNodes;
+                let blackSquare = document.querySelector(`[square-id="${whitePieceNode}"]`);
+                blackSquare.appendChild(childNodes[0]);
+            }
+            pieceNode.style.backgroundColor = "green";
+            specialSquares.push(pieceNode);
+            sicilianMoves.pop();
+            whiteMoves.pop();
+        } else {
+            pieceNode.style.backgroundColor = "red";
+            setTimeout(() => {
+                resetBoard();
+            }, 250);
+        }
     }
 
 }
@@ -227,7 +264,6 @@ function getPossibleMoves(e) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
                     if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
-                        captureSquares.length = 0;
                         captureSquares.push(moveSquare);
                         allSquares.push(moveSquare);
                         return;
