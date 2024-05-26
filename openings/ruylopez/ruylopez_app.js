@@ -121,6 +121,10 @@ function addEventListeners() {
 
 function dragStart(e) {
     draggedElement = e.target
+    if (draggedElement.tagName.toLowerCase() !== 'img') {
+        e.preventDefault(); 
+        return; 
+      }
     getPossibleMoves(e);
 }  
 
