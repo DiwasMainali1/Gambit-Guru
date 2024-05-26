@@ -33,8 +33,15 @@ let ruyLopezMoves = [
 ];
 
 let blackMoves = [
+    [ "d7", "d6"],
+    [ "f8", "c5"],
+    [ "b7", "b5"],
+    [ "g8", "f6"],
+    [ "a7", "a6"],
+    [ "b8", "c6"],
+    [ "e7", "e5"]    
+];
 
-]
 //Functions
 function createBoard() {
     let rank = 8;
@@ -59,6 +66,15 @@ function createBoard() {
 }
 
 function resetBoard() {
+    blackMoves = [
+        [ "d7", "d6"],
+        [ "f8", "c5"],
+        [ "b7", "b5"],
+        [ "g8", "f6"],
+        [ "a7", "a6"],
+        [ "b8", "c6"],
+        [ "e7", "e5"]    
+    ];
     ruyLopezMoves = [
         ["White-Pawn", "c3"],
         ["White-King", "g1"],
@@ -149,11 +165,17 @@ function dragDrop(e) {
     if (isDragDrop) {
         const lastMove = ruyLopezMoves[ruyLopezMoves.length - 1];
         if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
+            bPieceLocation = blackMoves[blackMoves.length - 1][0];
+            blackPieceNode = blackMoves[blackMoves.length - 1][1];
+            blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
+            blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
+            childNodes = blackPiece.childNodes;
+            let blackSquare = document.querySelector(`[square-id="${blackPieceNode}"]`);
+            blackSquare.appendChild(childNodes[0]);
             ruyLopezMoves.pop();
+            blackMoves.pop();
             pieceNode.style.backgroundColor = "green";
         } else {
-            console.log(draggedElement.id, squareId)
-            console.log(lastMove)
             pieceNode.style.backgroundColor = "red";
             setTimeout(() => {
                 resetBoard();
