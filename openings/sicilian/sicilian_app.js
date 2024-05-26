@@ -9,10 +9,10 @@ let isLrookMoved;
 let draggedElement;
 
 const startPieces = [
-    A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook,
-    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
+    A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
+    whitePawn, whitePawn, whitePawn, '', whitePawn, whitePawn, whitePawn, whitePawn,
     '', '',  '',  '',  '',  '',  '',  '', 
-    '', '',  '',  '',  '',  '',  '',  '',
+    '', '',  '',  whitePawn,  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
@@ -21,7 +21,30 @@ const startPieces = [
 createBoard();
 addEventListeners();
 
+let sicilianMoves = [
+    ["Black-Pawn", "b2"],
+    ["Black-Pawn", "e3"],
+    ["Black-Pawn", "e5"],
+    ["Black-Knight", "f3"],
+    ["Black-Pawn", "f4"]
+];
+
+let whiteMoves = [
+    [ "g8", "f6"],
+    [ "c6", "e5"],
+    [ "e7", "e5"],
+    [ "b8", "c6"],
+];
+
 //Functions
+function addConfetti() {
+    confetti({
+        particleCount: 1000,
+        spread: 500, 
+        origin: { y: 0.5 } 
+    });
+}
+
 function createBoard() {
     let rank = 8;
     startPieces.forEach((startPiece, i) => {
@@ -32,9 +55,9 @@ function createBoard() {
         square.innerHTML = startPiece;
         square.firstChild?.setAttribute('draggable', true);
         if ((rank + (105 - index)) % 2) {
-            square.classList.add('gray');
-        } else {
             square.classList.add('yellow');
+        } else {
+            square.classList.add('gray');
         }
         square.setAttribute('square-id', file + rank);
         board.append(square);
@@ -45,6 +68,19 @@ function createBoard() {
 }
 
 function resetBoard() {
+    sicilianMoves = [
+        ["Black-Pawn", "b2"],
+        ["Black-Pawn", "e3"],
+        ["Black-Pawn", "e5"],
+        ["Black-Knight", "f3"],
+        ["Black-Pawn", "f4"]
+    ];
+    whiteMoves = [
+        [ "g8", "f6"],
+        [ "c6", "e5"],
+        [ "e7", "e5"],
+        [ "b8", "c6"],
+    ];
     draggedElement = NaN;
     isKingMoved = 0;
     isLrookMoved = 0;
@@ -73,6 +109,10 @@ function addEventListeners() {
 
 function dragStart(e) {
     draggedElement = e.target
+    if (draggedElement.tagName.toLowerCase() !== 'img') {
+        e.preventDefault(); 
+        return; 
+      }
     getPossibleMoves(e);
 }  
 
@@ -95,7 +135,7 @@ function dragDrop(e) {
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "c1") {
@@ -103,12 +143,12 @@ function dragDrop(e) {
         let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (hasSpan) {
         pieceNode.appendChild(draggedElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
     } 
@@ -121,6 +161,7 @@ function dragDrop(e) {
     if (isDragDrop && draggedElement.id == "H-Black-Rook") {
         isSrookMoved = 1;
     }
+
 }
 
 function dragEnd(e) {
@@ -144,6 +185,8 @@ function getInfo(e) {
 }
 
 const specialSquares = [];
+const captureSquares = [];
+const allSquares = [];
 prevSquare = NaN
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
@@ -154,7 +197,7 @@ function getPossibleMoves(e) {
         }, 0); 
     }
     const clickInfo = getInfo(e);
-    removeColour(specialSquares);
+    removeColour(allSquares);
     specialSquares.length = 0;
     if (pieceNode && pieceNode == prevSquare) {
         prevSquare = NaN
@@ -183,16 +226,28 @@ function getPossibleMoves(e) {
             if (moveSquare) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
-                    if (childNode && childNode.classList && childNode.classList.contains("WPiece")) {
+                    if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                        captureSquares.length = 0;
+                        captureSquares.push(moveSquare);
+                        allSquares.push(moveSquare);
                         return;
                     }
-                }     
+                }
                 specialSquares.push(moveSquare);
+                allSquares.push(moveSquare);
             }
         });
     }
+    captureHighlight(captureSquares);
     fillColour(specialSquares);   
 }
+
+function captureHighlight(squares) {
+    for(i in squares) {
+        const square = squares[i];
+        square.style.backgroundColor = "#646e40";
+    }
+}    
 
 function fillColour(squares) {
     for(i in squares) {
@@ -212,8 +267,10 @@ function removeColour(squares) {
         if (spanElement) {
             square.removeChild(spanElement);
         }
+        square.style.backgroundColor = "";
     }
 }
+
 
 function pawnMoves(pos) {
     const file = pos[0];
@@ -247,7 +304,7 @@ function pawnMoves(pos) {
         if (captureFile >= 'a' && captureFile <= 'h') {
             const captureMove = captureFile + (rank + 1);
             const captureSquare = document.querySelector(`[square-id="${captureMove}"]`);
-            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("WPiece")) {
+            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Wpiece")) {
                 moveset.push(captureMove);
             }
         }

@@ -174,12 +174,6 @@ function dragDrop(e) {
         isSrookMoved = 1;
     }
     if (isDragDrop) {
-        if (ruyLopezMoves.length === 1) {
-            addConfetti();
-            setTimeout(() => {
-                resetBoard();
-            }, 1300);
-        }
         const lastMove = ruyLopezMoves[ruyLopezMoves.length - 1];
         if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
             if (blackMoves.length > 0) {
@@ -200,6 +194,12 @@ function dragDrop(e) {
             setTimeout(() => {
                 resetBoard();
             }, 250);
+        }
+        if (!ruyLopezMoves.length) {
+            addConfetti();
+            setTimeout(() => {
+                resetBoard();
+            }, 1300);
         }
     }
 

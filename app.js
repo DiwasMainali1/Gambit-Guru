@@ -1,5 +1,7 @@
 const board = document.querySelector("#Board")
 const resetButton = document.getElementById('resetButton');
+const changeButton = document.getElementById('changeColour');
+changeButton.addEventListener('click', changeBoard);
 resetButton.addEventListener('click', resetBoard);
 
 let isDragDrop;
@@ -8,16 +10,15 @@ let isSrookMoved;
 let isLrookMoved;
 let draggedElement;
 
-
 const startPieces = [
-    A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook,
-    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
+    A_BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, H_BlackRook,
+    BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
-    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
-    A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook
+    WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn,
+    A_WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, H_WhiteRook
 ]
 createBoard();
 addEventListeners();
@@ -55,6 +56,10 @@ function resetBoard() {
     board.innerHTML = ''; 
     createBoard(); 
     addEventListeners(); 
+}
+
+function changeBoard() {
+    
 }
 
 function addEventListeners() {
