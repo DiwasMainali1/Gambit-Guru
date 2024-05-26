@@ -21,15 +21,20 @@ const startPieces = [
 createBoard();
 addEventListeners();
 
-const ruyLopezMoves = [
+let ruyLopezMoves = [
   ["White-Pawn", "c3"],
   ["White-King", "g1"],
-  ["White-Pawn", "a4"],
+  ["White-Bishop", "b3"],
+  ["White-Pawn", "d3"],
   ["White-Bishop", "a4"],
   ["White-Bishop", "b5"],
   ["White-Knight", "f3"],
   ["White-Pawn", "e4"]
 ];
+
+let blackMoves = [
+
+]
 //Functions
 function createBoard() {
     let rank = 8;
@@ -54,6 +59,16 @@ function createBoard() {
 }
 
 function resetBoard() {
+    ruyLopezMoves = [
+        ["White-Pawn", "c3"],
+        ["White-King", "g1"],
+        ["White-Bishop", "b3"],
+        ["White-Pawn", "d3"],
+        ["White-Bishop", "a4"],
+        ["White-Bishop", "b5"],
+        ["White-Knight", "f3"],
+        ["White-Pawn", "e4"]
+    ];
     draggedElement = NaN;
     isKingMoved = 0;
     isLrookMoved = 0;
@@ -92,10 +107,6 @@ function dragOver(e) {
 
 function dragDrop(e) {
     let pieceNode = e.target;
-    if(draggedElement.id === "White-Pawn") {
-        console.log(ruyLopezMoves[ruyLopezMoves.length - 1]);
-        ruyLopezMoves.pop();
-    }
     let hasSpan = pieceNode.querySelector('span') !== null;
     let squareId = e.target.getAttribute("square-id");
     if(pieceNode.tagName.toLowerCase() === 'span') {
@@ -103,6 +114,7 @@ function dragDrop(e) {
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;
     }
+
     if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
         let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
@@ -134,6 +146,21 @@ function dragDrop(e) {
     if (isDragDrop && draggedElement.id == "H-White-Rook") {
         isSrookMoved = 1;
     }
+    if (isDragDrop) {
+        const lastMove = ruyLopezMoves[ruyLopezMoves.length - 1];
+        if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
+            ruyLopezMoves.pop();
+            pieceNode.style.backgroundColor = "green";
+        } else {
+            console.log(draggedElement.id, squareId)
+            console.log(lastMove)
+            pieceNode.style.backgroundColor = "red";
+            setTimeout(() => {
+                resetBoard();
+            }, 250);
+        }
+    }
+
 }
 
 function dragEnd(e) {
