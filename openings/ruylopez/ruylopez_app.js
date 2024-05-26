@@ -43,6 +43,14 @@ let blackMoves = [
 ];
 
 //Functions
+function addConfetti() {
+    confetti({
+        particleCount: 1000,
+        spread: 700, 
+        origin: { y: 0.5 } 
+    });
+}
+
 function createBoard() {
     let rank = 8;
     startPieces.forEach((startPiece, i) => {
@@ -130,7 +138,6 @@ function dragDrop(e) {
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;
     }
-
     if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
         let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
@@ -163,18 +170,27 @@ function dragDrop(e) {
         isSrookMoved = 1;
     }
     if (isDragDrop) {
+        if (ruyLopezMoves.length === 1) {
+            addConfetti();
+            setTimeout(() => {
+                resetBoard();
+            }, 1300);
+        }
         const lastMove = ruyLopezMoves[ruyLopezMoves.length - 1];
         if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
-            bPieceLocation = blackMoves[blackMoves.length - 1][0];
-            blackPieceNode = blackMoves[blackMoves.length - 1][1];
-            blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
-            blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
-            childNodes = blackPiece.childNodes;
-            let blackSquare = document.querySelector(`[square-id="${blackPieceNode}"]`);
-            blackSquare.appendChild(childNodes[0]);
+            if (blackMoves.length > 0) {
+                bPieceLocation = blackMoves[blackMoves.length - 1][0];
+                blackPieceNode = blackMoves[blackMoves.length - 1][1];
+                blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
+                blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
+                childNodes = blackPiece.childNodes;
+                let blackSquare = document.querySelector(`[square-id="${blackPieceNode}"]`);
+                blackSquare.appendChild(childNodes[0]);
+            }
+            pieceNode.style.backgroundColor = "green";
+            specialSquares.push(pieceNode);
             ruyLopezMoves.pop();
             blackMoves.pop();
-            pieceNode.style.backgroundColor = "green";
         } else {
             pieceNode.style.backgroundColor = "red";
             setTimeout(() => {
@@ -274,8 +290,10 @@ function removeColour(squares) {
         if (spanElement) {
             square.removeChild(spanElement);
         }
+        square.style.backgroundColor = "";
     }
 }
+
 
 function pawnMoves(pos) {
     const file = pos[0];
