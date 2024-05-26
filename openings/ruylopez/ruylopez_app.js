@@ -21,6 +21,15 @@ const startPieces = [
 createBoard();
 addEventListeners();
 
+const ruyLopezMoves = [
+  ["White-Pawn", "c3"],
+  ["White-King", "g1"],
+  ["White-Pawn", "a4"],
+  ["White-Bishop", "a4"],
+  ["White-Bishop", "b5"],
+  ["White-Knight", "f3"],
+  ["White-Pawn", "e4"]
+];
 //Functions
 function createBoard() {
     let rank = 8;
@@ -83,6 +92,10 @@ function dragOver(e) {
 
 function dragDrop(e) {
     let pieceNode = e.target;
+    if(draggedElement.id === "White-Pawn") {
+        console.log(ruyLopezMoves[ruyLopezMoves.length - 1]);
+        ruyLopezMoves.pop();
+    }
     let hasSpan = pieceNode.querySelector('span') !== null;
     let squareId = e.target.getAttribute("square-id");
     if(pieceNode.tagName.toLowerCase() === 'span') {
