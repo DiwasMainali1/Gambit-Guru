@@ -22,7 +22,7 @@ createBoard();
 addEventListeners();
 
 let sicilianMoves = [
-    ["Black-Pawn", "b2"],
+    ["Black-Pawn", "b3"],
     ["Black-Pawn", "e3"],
     ["Black-Pawn", "e5"],
     ["Black-Knight", "f3"],
@@ -69,7 +69,7 @@ function createBoard() {
 
 function resetBoard() {
     sicilianMoves = [
-        ["Black-Pawn", "b2"],
+        ["Black-Pawn", "b3"],
         ["Black-Pawn", "e3"],
         ["Black-Pawn", "e5"],
         ["Black-Knight", "f3"],
@@ -174,13 +174,8 @@ function dragDrop(e) {
         isSrookMoved = 1;
     }
     if (isDragDrop) {
-        if (sicilianMoves.length === 1) {
-            addConfetti();
-            setTimeout(() => {
-                resetBoard();
-            }, 1300);
-        }
         const lastMove = sicilianMoves[sicilianMoves.length - 1];
+        console.log(JSON.stringify([draggedElement.id, squareId]));
         if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
             pieceNode.style.backgroundColor = "green";
             specialSquares.push(pieceNode);
@@ -193,14 +188,27 @@ function dragDrop(e) {
                 blackSquare.innerHTML = '';
                 blackSquare.appendChild(childNodes[0]);
                 blackSquare.style.backgroundColor = '';
+                whiteMoves.pop();
             }
             sicilianMoves.pop();
-            whiteMoves.pop();
         } else {
             pieceNode.style.backgroundColor = "red";
             setTimeout(() => {
                 resetBoard();
             }, 250);
+        }
+        if (!sicilianMoves.length) {
+            const allSquares = document.querySelectorAll("#Board .square");
+            allSquares.forEach(square => {
+                const img = square.querySelector('img');
+                if (img) {
+                    square.style.backgroundColor = 'pink';
+                }
+            });
+            addConfetti();
+            setTimeout(() => {
+                resetBoard();
+            }, 1300);
         }
     }
 
