@@ -126,10 +126,14 @@ function dragDrop(e) {
     let hasSpan = pieceNode.querySelector('span') !== null;
     let hasCapture = pieceNode.parentNode.style.backgroundColor === 'rgb(100, 110, 64)';
     let squareId = e.target.getAttribute("square-id");
-    if(pieceNode.tagName.toLowerCase() === 'span' || hasCapture) {
+    if(pieceNode.tagName.toLowerCase() === 'span') {
         pieceNode = pieceNode.parentNode;
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;
+    }
+    if (hasCapture) {
+        pieceNode = pieceNode.parentNode;
+        squareId = pieceNode.getAttribute("square-id");     
     }
     if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "g1") {
         let rookElement = document.querySelector(`[id="${'H-Black-Rook'}"]`);
@@ -153,9 +157,9 @@ function dragDrop(e) {
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (hasCapture) {
-        let squareNode = pieceNode.parentNode;
-        squareNode.innerHTML = '';
-        squareNode.appendChild(draggedElement);
+        console.log(pieceNode)
+        pieceNode.innerHTML = '';
+        pieceNode.appendChild(draggedElement);
         removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
@@ -178,17 +182,18 @@ function dragDrop(e) {
         }
         const lastMove = sicilianMoves[sicilianMoves.length - 1];
         if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
+            pieceNode.style.backgroundColor = "green";
+            specialSquares.push(pieceNode);
             if (whiteMoves.length > 0) {
                 wPieceLocation = whiteMoves[whiteMoves.length - 1][0];
                 whitePieceNode = whiteMoves[whiteMoves.length - 1][1];
                 whitePiece = document.querySelector(`[square-id="${wPieceLocation}"]`);
-                whitePiece = document.querySelector(`[square-id="${wPieceLocation}"]`);
                 childNodes = whitePiece.childNodes;
                 let blackSquare = document.querySelector(`[square-id="${whitePieceNode}"]`);
+                blackSquare.innerHTML = '';
                 blackSquare.appendChild(childNodes[0]);
+                blackSquare.style.backgroundColor = '';
             }
-            pieceNode.style.backgroundColor = "green";
-            specialSquares.push(pieceNode);
             sicilianMoves.pop();
             whiteMoves.pop();
         } else {
@@ -306,7 +311,6 @@ function removeColour(squares) {
         square.style.backgroundColor = "";
     }
 }
-
 
 function pawnMoves(pos) {
     const file = pos[0];
