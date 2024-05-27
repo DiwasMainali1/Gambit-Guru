@@ -193,9 +193,9 @@ function dragDrop(e) {
             sicilianMoves.pop();
         } else {
             pieceNode.style.backgroundColor = "red";
-            //setTimeout(() => {
-            //    resetBoard();
-            //}, 250);
+            setTimeout(() => {
+                resetBoard();
+            }, 250);
         }
         if (!sicilianMoves.length) {
             const allSquares = document.querySelectorAll("#Board .square");

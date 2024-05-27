@@ -1,7 +1,7 @@
 const board = document.querySelector("#Board")
 const resetButton = document.getElementById('resetButton');
-const changeButton = document.getElementById('changeColour');
-changeButton.addEventListener('click', changeBoardColour);
+const switchButton = document.getElementById('switchButton');
+switchButton.addEventListener('click', switchColour);
 resetButton.addEventListener('click', resetBoard);
 
 let isDragDrop;
@@ -10,10 +10,7 @@ let isSrookMoved;
 let isLrookMoved;
 let draggedElement;
 
-function changeBoardColour() {
-    
-}
-const startPieces = [
+let startPieces = [
     A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
     whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
     '', '',  '',  '',  '',  '',  '',  '', 
@@ -21,7 +18,18 @@ const startPieces = [
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
-    A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook
+    A_blackRook, blackKnight, blackBishop, blackKing, blackQueen, blackBishop, blackKnight, H_blackRook
+]
+
+let whitePieces = [
+    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
+    A_blackRook, blackKnight, blackBishop, blackKing, blackQueen, blackBishop, blackKnight, H_blackRook,
+    '', '',  '',  '',  '',  '',  '',  '', 
+    '', '',  '',  '',  '',  '',  '',  '',
+    '', '',  '',  '',  '',  '',  '',  '',
+    '', '',  '',  '',  '',  '',  '',  '',
+    A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
+    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn
 ]
 createBoard();
 addEventListeners();
@@ -55,6 +63,12 @@ function createBoard() {
             rank = rank - 1;
         }
     });
+}
+function switchColour() {
+    let temp = startPieces;
+    startPieces = whitePieces;
+    whitePieces = temp;
+    resetBoard();
 }
 
 function resetBoard() {
@@ -150,7 +164,6 @@ function dragDrop(e) {
     if (isDragDrop && draggedElement.id == "H-Black-Rook") {
         isSrookMoved = 1;
     }
-
 }
 
 function dragEnd(e) {
@@ -400,7 +413,6 @@ function queenMoves(pos) {
                     break;
                 }
             }
-
             moveset.push(moveId);
         }
     }
