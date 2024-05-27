@@ -193,9 +193,9 @@ function dragDrop(e) {
             sicilianMoves.pop();
         } else {
             pieceNode.style.backgroundColor = "red";
-            setTimeout(() => {
-                resetBoard();
-            }, 250);
+            //setTimeout(() => {
+            //    resetBoard();
+            //}, 250);
         }
         if (!sicilianMoves.length) {
             const allSquares = document.querySelectorAll("#Board .square");
@@ -249,6 +249,7 @@ function getPossibleMoves(e) {
     const clickInfo = getInfo(e);
     removeColour(allSquares);
     specialSquares.length = 0;
+    captureSquares.length = 0;
     if (pieceNode && pieceNode == prevSquare) {
         prevSquare = NaN
         return
@@ -279,6 +280,7 @@ function getPossibleMoves(e) {
                     if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                         captureSquares.push(moveSquare);
                         allSquares.push(moveSquare);
+                        captureHighlight(captureSquares);
                         return;
                     }
                 }
@@ -287,7 +289,6 @@ function getPossibleMoves(e) {
             }
         });
     }
-    captureHighlight(captureSquares);
     fillColour(specialSquares);   
 }
 
@@ -414,6 +415,10 @@ function bishopMoves(pos) {
                 if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                     break;
                 }
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    moveset.push(moveId);
+                    break;
+                }
             }
 
             moveset.push(moveId);
@@ -451,6 +456,10 @@ function queenMoves(pos) {
                 if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                     break;
                 }
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    moveset.push(moveId);
+                    break;
+                }
             }
 
             moveset.push(moveId);
@@ -482,6 +491,10 @@ function rookMoves(pos) {
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
                 if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    break;
+                }
+                if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    moveset.push(moveId);
                     break;
                 }
             }
