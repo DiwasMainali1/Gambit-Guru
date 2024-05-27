@@ -31,7 +31,7 @@ let startPieces = [
 ]
 
 let whitePieces = [
-    A_blackRook, blackKnight, blackBishop, blackKing, blackQueen, blackBishop, blackKnight, H_blackRook,
+    A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook,
     blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',

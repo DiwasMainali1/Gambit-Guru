@@ -9,7 +9,7 @@ let isLrookMoved;
 let draggedElement;
 
 const startPieces = [
-    A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
+    A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook,
     whitePawn, whitePawn, whitePawn, '', whitePawn, whitePawn, whitePawn, whitePawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  whitePawn,  '',  '',  '',  '',
