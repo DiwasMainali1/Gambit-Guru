@@ -73,6 +73,7 @@ function createBoard() {
         }
     });
 }
+
 function switchColour() {
     let temp = startPieces;
     startPieces = whitePieces;
@@ -220,17 +221,17 @@ function getPossibleMoves(e) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
         let possibleMoveIds = [];
-        if (pieceName === "Black-Pawn") {
+        if (pieceName.includes("Pawn")) {
             possibleMoveIds = pawnMoves(pieceId);
-        } else if (pieceName === "Black-Knight") {
+        } else if (pieceName.includes("Knight")) {
             possibleMoveIds = knightMoves(pieceId);
-        } else if (pieceName == "Black-Bishop") {
+        } else if (pieceName.includes("Bishop")) {
             possibleMoveIds = bishopMoves(pieceId);
-        } else if (pieceName == "Black-Queen") {
+        } else if ((pieceName.includes("Queen"))) {
             possibleMoveIds = queenMoves(pieceId);
-        } else if ((pieceName == "A-Black-Rook") || (pieceName == "H-Black-Rook")) {
+        } else if ((pieceName.includes("Rook"))) {
             possibleMoveIds = rookMoves(pieceId);
-        } else if (pieceName == "Black-King") {
+        } else if (pieceName.includes("King")) {
             possibleMoveIds = kingMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
