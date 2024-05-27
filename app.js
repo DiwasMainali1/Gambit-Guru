@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+
 const board = document.querySelector("#Board")
 const resetButton = document.getElementById('resetButton');
 const switchButton = document.getElementById('switchButton');
@@ -22,14 +31,14 @@ let startPieces = [
 ]
 
 let whitePieces = [
-    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
     A_blackRook, blackKnight, blackBishop, blackKing, blackQueen, blackBishop, blackKnight, H_blackRook,
+    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
-    A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
-    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn
+    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
+    A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook
 ]
 createBoard();
 addEventListeners();

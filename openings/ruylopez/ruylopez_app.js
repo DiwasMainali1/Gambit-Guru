@@ -136,18 +136,23 @@ function dragOver(e) {
 function dragDrop(e) {
     let pieceNode = e.target;
     let hasSpan = pieceNode.querySelector('span') !== null;
+    let hasCapture = pieceNode.parentNode.style.backgroundColor === 'rgb(100, 110, 64)';
     let squareId = e.target.getAttribute("square-id");
     if(pieceNode.tagName.toLowerCase() === 'span') {
         pieceNode = pieceNode.parentNode;
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;
     }
+    if (hasCapture) {
+        pieceNode = pieceNode.parentNode;
+        squareId = pieceNode.getAttribute("square-id");     
+    }
     if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
         let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);;
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
@@ -155,15 +160,22 @@ function dragDrop(e) {
         let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);;
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (hasSpan) {
         pieceNode.appendChild(draggedElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);;
         specialSquares.length = 0;
         isDragDrop = 1
-    } 
+    } else if (hasCapture) {
+        console.log(pieceNode)
+        pieceNode.innerHTML = '';
+        pieceNode.appendChild(draggedElement);
+        removeColour(allSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
+    }
     if (isDragDrop && draggedElement.id == "White-King") {
         isKingMoved = 1;
     }
@@ -233,6 +245,8 @@ function getInfo(e) {
 }
 
 const specialSquares = [];
+const captureSquares = [];
+const allSquares = [];
 prevSquare = NaN
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
@@ -243,8 +257,9 @@ function getPossibleMoves(e) {
         }, 0); 
     }
     const clickInfo = getInfo(e);
-    removeColour(specialSquares);
+    removeColour(allSquares);;
     specialSquares.length = 0;
+    captureSquares.length = 0;
     if (pieceNode && pieceNode == prevSquare) {
         prevSquare = NaN
         return
@@ -273,14 +288,25 @@ function getPossibleMoves(e) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
                     if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                        captureSquares.push(moveSquare);
+                        allSquares.push(moveSquare);
+                        captureHighlight(captureSquares);
                         return;
                     }
                 }     
                 specialSquares.push(moveSquare);
+                allSquares.push(moveSquare);
             }
         });
     }
     fillColour(specialSquares);   
+}
+
+function captureHighlight(squares) {
+    for(i in squares) {
+        const square = squares[i];
+        square.style.backgroundColor = "#646e40";
+    }
 }
 
 function fillColour(squares) {
@@ -400,6 +426,10 @@ function bishopMoves(pos) {
                 if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                     break;
                 }
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    moveset.push(moveId);
+                    break;
+                }
             }
 
             moveset.push(moveId);
@@ -437,8 +467,11 @@ function queenMoves(pos) {
                 if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
                     break;
                 }
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    moveset.push(moveId);
+                    break;
+                }
             }
-
             moveset.push(moveId);
         }
     }
@@ -468,6 +501,10 @@ function rookMoves(pos) {
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
                 if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    break;
+                }
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    moveset.push(moveId);
                     break;
                 }
             }
