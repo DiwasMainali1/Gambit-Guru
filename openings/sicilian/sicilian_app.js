@@ -126,7 +126,7 @@ function dragDrop(e) {
     let hasSpan = pieceNode.querySelector('span') !== null;
     let hasCapture = pieceNode.parentNode.style.backgroundColor === 'rgb(100, 110, 64)';
     let squareId = e.target.getAttribute("square-id");
-    if(pieceNode.tagName.toLowerCase() === 'span') {
+    if(pieceNode.tagName.toLowerCase() === 'span' || hasCapture) {
         pieceNode = pieceNode.parentNode;
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;

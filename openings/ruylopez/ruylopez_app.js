@@ -196,6 +196,13 @@ function dragDrop(e) {
             }, 250);
         }
         if (!ruyLopezMoves.length) {
+            const allSquares = document.querySelectorAll("#Board .square");
+            allSquares.forEach(square => {
+                const img = square.querySelector('img');
+                if (img) {
+                    square.style.backgroundColor = 'pink';
+                }
+            });
             addConfetti();
             setTimeout(() => {
                 resetBoard();
