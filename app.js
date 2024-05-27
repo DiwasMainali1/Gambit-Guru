@@ -1,7 +1,7 @@
 const board = document.querySelector("#Board")
 const resetButton = document.getElementById('resetButton');
 const changeButton = document.getElementById('changeColour');
-changeButton.addEventListener('click', changeBoard);
+changeButton.addEventListener('click', changeBoardColour);
 resetButton.addEventListener('click', resetBoard);
 
 let isDragDrop;
@@ -10,20 +10,31 @@ let isSrookMoved;
 let isLrookMoved;
 let draggedElement;
 
+function changeBoardColour() {
+    
+}
 const startPieces = [
-    A_BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, H_BlackRook,
-    BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn,
+    A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
+    whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
     '', '',  '',  '',  '',  '',  '',  '', 
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
     '', '',  '',  '',  '',  '',  '',  '',
-    WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn,
-    A_WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, H_WhiteRook
+    blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
+    A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook
 ]
 createBoard();
 addEventListeners();
 
 //Functions
+function addConfetti() {
+    confetti({
+        particleCount: 1000,
+        spread: 500, 
+        origin: { y: 0.5 } 
+    });
+}
+
 function createBoard() {
     let rank = 8;
     startPieces.forEach((startPiece, i) => {
@@ -58,10 +69,6 @@ function resetBoard() {
     addEventListeners(); 
 }
 
-function changeBoard() {
-    
-}
-
 function addEventListeners() {
     const allSquares = document.querySelectorAll("#Board .square");
 
@@ -79,6 +86,10 @@ function addEventListeners() {
 
 function dragStart(e) {
     draggedElement = e.target
+    if (draggedElement.tagName.toLowerCase() !== 'img') {
+        e.preventDefault(); 
+        return; 
+      }
     getPossibleMoves(e);
 }  
 
@@ -90,43 +101,56 @@ function dragOver(e) {
 function dragDrop(e) {
     let pieceNode = e.target;
     let hasSpan = pieceNode.querySelector('span') !== null;
+    let hasCapture = pieceNode.parentNode.style.backgroundColor === 'rgb(100, 110, 64)';
     let squareId = e.target.getAttribute("square-id");
     if(pieceNode.tagName.toLowerCase() === 'span') {
         pieceNode = pieceNode.parentNode;
         squareId = pieceNode.getAttribute("square-id");
         hasSpan = 1;
     }
-    if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
-        let rookElement = document.querySelector(`[id="${'H-White-Rook'}"]`);
+    if (hasCapture) {
+        pieceNode = pieceNode.parentNode;
+        squareId = pieceNode.getAttribute("square-id");     
+    }
+    if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "g1") {
+        let rookElement = document.querySelector(`[id="${'H-Black-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
-        let rookElement = document.querySelector(`[id="${'A-White-Rook'}"]`);
+    } else if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "c1") {
+        let rookElement = document.querySelector(`[id="${'A-Black-Rook'}"]`);
         let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
         pieceNode.appendChild(draggedElement);
         rookSquare.appendChild(rookElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
     } else if (hasSpan) {
         pieceNode.appendChild(draggedElement);
-        removeColour(specialSquares);
+        removeColour(allSquares);
         specialSquares.length = 0;
         isDragDrop = 1
-    } 
-    if (isDragDrop && draggedElement.id == "White-King") {
+    } else if (hasCapture) {
+        console.log(pieceNode)
+        pieceNode.innerHTML = '';
+        pieceNode.appendChild(draggedElement);
+        removeColour(allSquares);
+        specialSquares.length = 0;
+        isDragDrop = 1
+    }
+    if (isDragDrop && draggedElement.id == "Black-King") {
         isKingMoved = 1;
     }
-    if (isDragDrop && draggedElement.id == "A-White-Rook") {
+    if (isDragDrop && draggedElement.id == "A-Black-Rook") {
         isLrookMoved = 1;    
     }
-    if (isDragDrop && draggedElement.id == "H-White-Rook") {
+    if (isDragDrop && draggedElement.id == "H-Black-Rook") {
         isSrookMoved = 1;
     }
+
 }
 
 function dragEnd(e) {
@@ -150,6 +174,8 @@ function getInfo(e) {
 }
 
 const specialSquares = [];
+const captureSquares = [];
+const allSquares = [];
 prevSquare = NaN
 function getPossibleMoves(e) {
     const pieceNode = e.target.parentNode;
@@ -160,8 +186,9 @@ function getPossibleMoves(e) {
         }, 0); 
     }
     const clickInfo = getInfo(e);
-    removeColour(specialSquares);
+    removeColour(allSquares);
     specialSquares.length = 0;
+    captureSquares.length = 0;
     if (pieceNode && pieceNode == prevSquare) {
         prevSquare = NaN
         return
@@ -171,17 +198,17 @@ function getPossibleMoves(e) {
         const pieceName = clickInfo[1];
         const pieceId = clickInfo[0];
         let possibleMoveIds = [];
-        if (pieceName === "White-Pawn") {
+        if (pieceName === "Black-Pawn") {
             possibleMoveIds = pawnMoves(pieceId);
-        } else if (pieceName === "White-Knight") {
+        } else if (pieceName === "Black-Knight") {
             possibleMoveIds = knightMoves(pieceId);
-        } else if (pieceName == "White-Bishop") {
+        } else if (pieceName == "Black-Bishop") {
             possibleMoveIds = bishopMoves(pieceId);
-        } else if (pieceName == "White-Queen") {
+        } else if (pieceName == "Black-Queen") {
             possibleMoveIds = queenMoves(pieceId);
-        } else if ((pieceName == "A-White-Rook") || (pieceName == "H-White-Rook")) {
+        } else if ((pieceName == "A-Black-Rook") || (pieceName == "H-Black-Rook")) {
             possibleMoveIds = rookMoves(pieceId);
-        } else if (pieceName == "White-King") {
+        } else if (pieceName == "Black-King") {
             possibleMoveIds = kingMoves(pieceId);
         }
         possibleMoveIds.forEach(moveId => {
@@ -189,16 +216,27 @@ function getPossibleMoves(e) {
             if (moveSquare) {
                 if (moveSquare.childNodes.length > 0) {
                     const childNode = moveSquare.childNodes[0];
-                    if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                        captureSquares.push(moveSquare);
+                        allSquares.push(moveSquare);
+                        captureHighlight(captureSquares);
                         return;
                     }
-                }     
+                }
                 specialSquares.push(moveSquare);
+                allSquares.push(moveSquare);
             }
         });
     }
     fillColour(specialSquares);   
 }
+
+function captureHighlight(squares) {
+    for(i in squares) {
+        const square = squares[i];
+        square.style.backgroundColor = "#646e40";
+    }
+}    
 
 function fillColour(squares) {
     for(i in squares) {
@@ -218,6 +256,7 @@ function removeColour(squares) {
         if (spanElement) {
             square.removeChild(spanElement);
         }
+        square.style.backgroundColor = "";
     }
 }
 
@@ -253,7 +292,7 @@ function pawnMoves(pos) {
         if (captureFile >= 'a' && captureFile <= 'h') {
             const captureMove = captureFile + (rank + 1);
             const captureSquare = document.querySelector(`[square-id="${captureMove}"]`);
-            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Bpiece")) {
+            if (captureSquare.childNodes.length > 0 && captureSquare.childNodes[0].classList.contains("Wpiece")) {
                 moveset.push(captureMove);
             }
         }
@@ -282,7 +321,7 @@ function knightMoves(pos) {
         if (newFile >= 'a' && newFile <= 'h' && newRank >= 1 && newRank <= 8) {
             const moveId = newFile + newRank;
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
-            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Wpiece")) {
+            if (moveSquare.childNodes.length === 0 || !moveSquare.childNodes[0].classList.contains("Bpiece")) {
                 moveset.push(moveId);
             }
         }
@@ -312,7 +351,11 @@ function bishopMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    break;
+                }
                 if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    moveset.push(moveId);
                     break;
                 }
             }
@@ -349,7 +392,11 @@ function queenMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    break;
+                }
                 if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    moveset.push(moveId);
                     break;
                 }
             }
@@ -382,7 +429,11 @@ function rookMoves(pos) {
             const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
             if (moveSquare.childNodes.length > 0) {
                 const childNode = moveSquare.childNodes[0];
+                if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
+                    break;
+                }
                 if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+                    moveset.push(moveId);
                     break;
                 }
             }
@@ -424,7 +475,7 @@ function kingMoves(pos) {
         const moveSquare = document.querySelector(`[square-id="${moveId}"]`);
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
-            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+            if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                 continue;
             }
         }
@@ -459,7 +510,7 @@ function checkShortCastle(file, rank, shortCastleDir) {
 
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
-            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+            if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                 boolean = 0;
                 break;
             }
@@ -480,7 +531,7 @@ function checkLongCastle(file, rank, longCastleDir) {
 
         if (moveSquare && moveSquare.childNodes.length > 0) {
             const childNode = moveSquare.childNodes[0];
-            if (childNode && childNode.classList && childNode.classList.contains("Wpiece")) {
+            if (childNode && childNode.classList && childNode.classList.contains("Bpiece")) {
                 boolean = 0;
                 break;
             }
