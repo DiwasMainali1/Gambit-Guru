@@ -1,7 +1,5 @@
 const whiteChessUtilities = (function() {
     const board = document.querySelector("#Board");
-    const resetButton = document.getElementById('resetButton');
-    resetButton.addEventListener('click', resetBoard);
     
     let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement
     
@@ -40,17 +38,6 @@ const whiteChessUtilities = (function() {
         });
     }
     
-    function resetBoard() {
-        draggedElement = NaN;
-        isKingMoved = 0;
-        isLrookMoved = 0;
-        isSrookMoved = 0;
-        isDragDrop;
-        const board = document.getElementById('Board');
-        board.innerHTML = ''; 
-        createBoard(); 
-        addEventListeners(); 
-    }
     
     function addEventListeners() {
         const allSquares = document.querySelectorAll("#Board .square");
@@ -517,49 +504,25 @@ const whiteChessUtilities = (function() {
         return boolean;
     }
     return {
-        createBoard,
-        resetBoard,
-        addEventListeners,
-        dragStart,
-        dragOver,
-        dragDrop,
-        dragEnd,
-        getInfo,
-        getPossibleMoves,
-        captureHighlight,
-        fillColour,
-        removeColour,
-        pawnMoves,
-        knightMoves,
-        bishopMoves,
-        queenMoves,
-        rookMoves,
-        kingMoves,
-        checkShortCastle,
-        checkLongCastle,
+        createBoard, addEventListeners, dragStart, dragOver, dragDrop, dragEnd, getInfo,
+        getPossibleMoves, captureHighlight, fillColour, removeColour, pawnMoves, knightMoves,
+        bishopMoves, queenMoves, rookMoves, kingMoves, checkShortCastle, checkLongCastle,
     };
 })();
 
 const blackChessUtilities = (function() {
     const board = document.querySelector("#Board")
-    const resetButton = document.getElementById('resetButton');
-    resetButton.addEventListener('click', resetBoard);
-
-    let isDragDrop;
-    let isKingMoved;
-    let isSrookMoved;
-    let isLrookMoved;
-    let draggedElement;
+    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement
 
     const startPieces = [
-        A_whiteRook, whiteKnight, whiteBishop, whiteQueen, whiteKing, whiteBishop, whiteKnight, H_whiteRook,
+        A_whiteRook, whiteKnight, whiteBishop, whiteKing, whiteQueen, whiteBishop, whiteKnight, H_whiteRook,
         whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn, whitePawn,
         '', '',  '',  '',  '',  '',  '',  '', 
         '', '',  '',  '',  '',  '',  '',  '',
         '', '',  '',  '',  '',  '',  '',  '',
         '', '',  '',  '',  '',  '',  '',  '',
         blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
-        A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook
+        A_blackRook, blackKnight, blackBishop, blackKing, blackQueen, blackBishop, blackKnight, H_blackRook
     ]
     createBoard();
     addEventListeners();
@@ -586,17 +549,6 @@ const blackChessUtilities = (function() {
         });
     }
 
-    function resetBoard() {
-        draggedElement = NaN;
-        isKingMoved = 0;
-        isLrookMoved = 0;
-        isSrookMoved = 0;
-        isDragDrop;
-        const board = document.getElementById('Board');
-        board.innerHTML = ''; 
-        createBoard(); 
-        addEventListeners(); 
-    }
 
     function addEventListeners() {
         const allSquares = document.querySelectorAll("#Board .square");
@@ -641,17 +593,17 @@ const blackChessUtilities = (function() {
             pieceNode = pieceNode.parentNode;
             squareId = pieceNode.getAttribute("square-id");     
         }
-        if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "g1") {
+        if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "f1") {
             let rookElement = document.querySelector(`[id="${'H-Black-Rook'}"]`);
-            let rookSquare = document.querySelector(`[square-id="${'f1'}"]`);
+            let rookSquare = document.querySelector(`[square-id="${'e1'}"]`);
             pieceNode.appendChild(draggedElement);
             rookSquare.appendChild(rookElement);
             removeColour(allSquares);
             specialSquares.length = 0;
             isDragDrop = 1
-        } else if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "c1") {
+        } else if (!isKingMoved && draggedElement.id === "Black-King" && squareId === "b1") {
             let rookElement = document.querySelector(`[id="${'A-Black-Rook'}"]`);
-            let rookSquare = document.querySelector(`[square-id="${'d1'}"]`);
+            let rookSquare = document.querySelector(`[square-id="${'c1'}"]`);
             pieceNode.appendChild(draggedElement);
             rookSquare.appendChild(rookElement);
             removeColour(allSquares);
@@ -1015,13 +967,13 @@ const blackChessUtilities = (function() {
         if (!isSrookMoved) {
             let isShortCastle = checkShortCastle(file, rank, shortCastleDir);
             if (isShortCastle) {
-                moveset.push('g1');
+                moveset.push('b1');
             }
         }
         if (!isLrookMoved) {
             let isLongCastle = checkLongCastle(file, rank, longCastleDir);
             if (isLongCastle) {
-                moveset.push('c1');
+                moveset.push('f1');
             }
         }
         return moveset;
@@ -1069,26 +1021,9 @@ const blackChessUtilities = (function() {
         return boolean;
     }
     return {
-        createBoard,
-        resetBoard,
-        addEventListeners,
-        dragStart,
-        dragOver,
-        dragDrop,
-        dragEnd,
-        getInfo,
-        getPossibleMoves,
-        captureHighlight,
-        fillColour,
-        removeColour,
-        pawnMoves,
-        knightMoves,
-        bishopMoves,
-        queenMoves,
-        rookMoves,
-        kingMoves,
-        checkShortCastle,
-        checkLongCastle,
+        createBoard, addEventListeners, dragStart, dragOver, dragDrop, dragEnd, getInfo,
+        getPossibleMoves, captureHighlight, fillColour, removeColour, pawnMoves, knightMoves,
+        bishopMoves, queenMoves, rookMoves, kingMoves, checkShortCastle, checkLongCastle,
     };    
 })();
 
