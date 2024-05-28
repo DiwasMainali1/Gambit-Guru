@@ -1,8 +1,9 @@
+import { resetBoard } from "./main.js";
 const whiteChessUtilities = (function() {
     const board = document.querySelector("#Board");
     
-    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement
-    
+    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening;
+    let openingMoves = [], blackMoves = [];
     const startPieces = [
         A_blackRook, blackKnight, blackBishop, blackQueen, blackKing, blackBishop, blackKnight, H_blackRook,
         blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
@@ -15,8 +16,19 @@ const whiteChessUtilities = (function() {
     ]
     createBoard();
     addEventListeners();
-    
-    function createBoard() {
+    function addConfetti() {
+        confetti({
+          particleCount: 1000,
+          spread: 700,
+          origin: { y: 0.5 },
+        });
+    }
+    function createBoard(bool, movesA, movesB) {
+        if (bool) {
+            isOpening = 1;
+            openingMoves = movesA;
+            blackMoves = movesB;
+        }
         let rank = 8;
         startPieces.forEach((startPiece, i) => {
             let index = 8 - (i % 8);
@@ -115,6 +127,45 @@ const whiteChessUtilities = (function() {
         if (isDragDrop && draggedElement.id == "H-White-Rook") {
             isSrookMoved = 1;
         }
+        if(isOpening && isDragDrop) {
+            const lastMove = openingMoves[openingMoves.length - 1];
+            if (
+            JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)
+            ) {
+            if (blackMoves.length > 0) {
+                let bPieceLocation = blackMoves[blackMoves.length - 1][0];
+                let blackPieceNode = blackMoves[blackMoves.length - 1][1];
+                let blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
+                let childNodes = blackPiece.childNodes;
+                let blackSquare = document.querySelector(
+                `[square-id="${blackPieceNode}"]`,
+                );
+                blackSquare.appendChild(childNodes[0]);
+            }
+            pieceNode.style.backgroundColor = "green";
+            specialSquares.push(pieceNode);
+            openingMoves.pop();
+            blackMoves.pop();
+            } else {
+            pieceNode.style.backgroundColor = "red";
+            setTimeout(() => {
+                resetBoard();
+            }, 250);
+            }
+            if (!openingMoves.length) {
+            const allSquares = document.querySelectorAll("#Board .square");
+            allSquares.forEach((square) => {
+                const img = square.querySelector("img");
+                if (img) {
+                square.style.backgroundColor = "pink";
+                }
+            });
+            addConfetti();
+            setTimeout(() => {
+                resetBoard();
+            }, 1300);
+            }                 
+        } 
     }
     
     function dragEnd(e) {
@@ -222,8 +273,7 @@ const whiteChessUtilities = (function() {
             square.style.backgroundColor = "";
         }
     }
-    
-    
+       
     function pawnMoves(pos) {
         const file = pos[0];
         const rank = parseInt(pos[1]);
@@ -504,7 +554,7 @@ const whiteChessUtilities = (function() {
         return boolean;
     }
     return {
-        createBoard, addEventListeners, dragStart, dragOver, dragDrop, dragEnd, getInfo,
+        addConfetti, createBoard, addEventListeners, dragStart, dragOver, dragDrop, dragEnd, getInfo,
         getPossibleMoves, captureHighlight, fillColour, removeColour, pawnMoves, knightMoves,
         bishopMoves, queenMoves, rookMoves, kingMoves, checkShortCastle, checkLongCastle,
     };
