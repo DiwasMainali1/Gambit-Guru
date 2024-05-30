@@ -61,6 +61,7 @@ body {
 }
 
 .dropdown:hover .dropdown-menu {
+    right: -5px;
     display: block;
 }
 
@@ -77,9 +78,10 @@ body {
     background-color: #b22222;
 }
 
-.Logo {
+.Logo, .menu-item {
+    margin-right: 45px;
     width: 250px;
-    height: 70px;
+    height: 60px;
     font-family: 'Inter', sans-serif;
     font-size: 36px;
     display: flex;
@@ -94,7 +96,7 @@ body {
     transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
-.Logo:hover {
+.Logo:hover, .menu-item:hover {
     border-color: #2eb3f0;
     transform: scale(1.1);
 }
@@ -110,24 +112,20 @@ body {
     text-decoration: none;
     transition: color 0.3s ease;
 }
-
 .Logo a:hover {
     color: #2eb3f0;
 }
-
 .Header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
 }
-
 .Opening-Menu {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .Opening-Menu p {
     font-family: 'Inter', sans-serif;
     font-size: 28px;
@@ -137,13 +135,11 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     user-select: none;
 }
-
 .menu-item {
     background-color: #000000;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 400px;
     margin: 15px;
     padding: 20px 30px;
     font-family: 'Inter', sans-serif;
@@ -159,7 +155,6 @@ body {
     overflow: hidden;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-
 .menu-item::before {
     content: "";
     position: absolute;
@@ -171,25 +166,41 @@ body {
     transform: skewX(-30deg);
     transition: left 0.4s ease;
 }
-
 .menu-item:hover {
     background-color: #b22222;
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-
 .menu-item:hover::before {
     left: 100%;
 }
-
 .menu-text {
     flex: 1;
     text-align: center;
 }
-
 .menu-icon {
     margin-left: 20px;
     font-size: 28px;
+}
+.About button {
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    padding: 15px 30px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #dadb98;
+    border: 3px solid #dadb98;
+    border-radius: 30px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .reset-button,
