@@ -9,25 +9,30 @@
 </head>
 <body>
     <div class="Header">
-        <a href="index.html">Gambit Guru</a>
-    </div>
-    <div class="Opening-Menu">
-        <div class="dropdown">
-            <button class="dropdown-toggle">Select your opening</button>
-            <div class="dropdown-menu">
-                <a id="ruyLopez" class="dropdown-item">The Ruy Lopez</a>
-                <a id="sicilianDefense" class="dropdown-item">The Sicilian Defense</a>
-                <a id="londonSystem" class="dropdown-item">The London System</a>
-                <a id="kingsIndianDefense" class="dropdown-item">King's Indian Defense</a>
-                <a id="queensGambit" class="dropdown-item">Queen's Gambit</a>
-                <a id="caroKannDefense" class="dropdown-item">Caro-Kann Defense</a>
+        <div class="Logo">
+            <a href="index.html">Gambit Guru</a>
+        </div>
+        <div class="Opening-Menu">
+            <div class="dropdown">
+                <button class="dropdown-toggle">Select your opening</button>
+                <div class="dropdown-menu">
+                    <a id="ruyLopez" class="dropdown-item">The Ruy Lopez</a>
+                    <a id="sicilianDefense" class="dropdown-item">The Sicilian Defense</a>
+                    <a id="londonSystem" class="dropdown-item">The London System</a>
+                    <a id="kingsIndianDefense" class="dropdown-item">King's Indian Defense</a>
+                    <a id="queensGambit" class="dropdown-item">Queen's Gambit</a>
+                    <a id="caroKannDefense" class="dropdown-item">Caro-Kann Defense</a>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="board-container">
-        <button id="switchButton" class="switch-button">Switch Colour</button>
         <div id="Board"></div>
-        <button id="resetButton" class="reset-button">Reset</button>
+        <div class="button-container">
+            <button id="switchButton" class="switch-button">Switch</button>
+            <button id="resetButton" class="reset-button">Reset</button>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
     <script src="helpers/boardpieces.js"></script>
