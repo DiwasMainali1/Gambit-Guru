@@ -1,3 +1,5 @@
+import { whiteChessUtilities, blackChessUtilities } from "./helpers/helper.js";
+
 const changeButton = document.getElementById("switchButton"); 
 changeButton.addEventListener("click", changeBoard);
 
@@ -6,12 +8,11 @@ resetButton.addEventListener('click', resetBoard);
 
 const ruyLopezButton = document.getElementById('ruyLopez');
 const sicilianDefenseButton = document.getElementById('sicilianDefense');
-const frenchDefenseButton = document.getElementById('frenchDefense');
+const londonSystem = document.getElementById('londonSystem');
 const queensGambitButton = document.getElementById('queensGambit');
 const kingsIndianDefenseButton = document.getElementById('kingsIndianDefense');
 const caroKannDefenseButton = document.getElementById('caroKannDefense');
 
-import { whiteChessUtilities, blackChessUtilities } from "./helpers/helper.js";
 
 whiteChessUtilities.createBoard(0, [], []);
 whiteChessUtilities.addEventListeners();
@@ -66,6 +67,7 @@ sicilianDefenseButton.addEventListener('click', () => {
         ["c6", "e5"],
         ["e7", "e5"],
         ["b8", "c6"],
+        ["d7", "d5"],
     ];   
     blackChessUtilities.createBoard(1, sicilianMoves, whiteMoves);
     blackChessUtilities.addEventListeners();
@@ -97,6 +99,114 @@ queensGambitButton.addEventListener('click', () => {
     ];
     whiteChessUtilities.createBoard(1, queensGambitMoves, blackMoves);
     whiteChessUtilities.addEventListeners();
+});
+
+kingsIndianDefenseButton.addEventListener('click', () => {
+    let board = document.querySelector("#Board");
+    let pieceColour = board.childNodes[0].firstChild.id;
+    
+    if (pieceColour.includes("Black")) {
+      changeBoard();
+    }
+    
+    board.innerHTML = '';
+    
+    let kingsIndianDefenseMoves = [
+        ["Black-Knight", "d2"],
+        ["Black-Knight", "f3"],
+        ["Black-Pawn", "d4"], 
+        ["Black-King", "b1"],
+        ["Black-Pawn", "e3"],
+        ["Black-Bishop", "b2"],
+        ["Black-Pawn", "b3"],
+        ["Black-Knight", "c3"],
+    ];
+    
+    let whiteMoves = [
+        ["e5", "e4"],
+        ["sCastle", "sCastle"],
+        ["c8", "d7"],
+        ["b8", "c6"],
+        ["d7", "d5"],
+        ["g8", "f6"],
+        ["f7", "f5"],
+        ["e7", "e5"]
+    ];
+    
+    blackChessUtilities.createBoard(1, kingsIndianDefenseMoves, whiteMoves);
+    blackChessUtilities.addEventListeners();
+});
+
+londonSystem.addEventListener('click', () => {
+    let board = document.querySelector("#Board");
+    let pieceColour = board.childNodes[0].firstChild.id;
+
+    if (pieceColour.includes("White")) {
+        changeBoard();
+    }
+
+    board.innerHTML = '';
+
+    let londonSystemMoves = [
+        ["White-Pawn", "f4"],
+        ["White-Knight", "e5"],
+        ["White-Bishop", "d3"],
+        ["White-Bishop", "g3"],
+        ["White-Knight", "f3"],
+        ["White-Knight", "d2"],
+        ["White-Pawn", "c3"],
+        ["White-Pawn", "e3"],
+        ["White-Bishop", "f4"],
+        ["White-Pawn", "d4"]
+    ];
+
+    let blackMoves = [
+        ["d8", "c7"],
+        ["f8", "e8"],
+        ["sCastle", "sCastle"],
+        ["f8", "d6"],
+        ["b8", "c6"],
+        ["e7", "e6"],
+        ["c7", "c5"],
+        ["g8", "f6"],
+        ["d7", "d5"]
+    ];
+
+    whiteChessUtilities.createBoard(1, londonSystemMoves, blackMoves);
+    whiteChessUtilities.addEventListeners();
+});
+
+
+caroKannDefenseButton.addEventListener('click', () => {
+    let board = document.querySelector("#Board");
+    let pieceColour = board.childNodes[0].firstChild.id;
+
+    if (pieceColour.includes("Black")) {
+        changeBoard();
+    }
+
+    board.innerHTML = '';
+
+    let caroKannDefenseMoves = [
+        ["Black-Pawn", "e3"],
+        ["Black-Pawn", "d4"],
+        ["Black-Knight", "c3"],
+        ["Black-Bishop", "d2"],
+        ["Black-Knight", "f3"],
+        ["Black-Pawn", "c3"]
+    ];
+
+    let whiteMoves = [
+        ["d8", "e7"],
+        ["b8", "d7"],
+        ["e7", "e5"],
+        ["d7", "f6"],
+        ["f8", "e7"],
+        ["e7", "d5"]
+    ];
+
+    blackChessUtilities.createBoard(1, caroKannDefenseMoves, whiteMoves);
+    blackChessUtilities.addEventListeners();
 });
 
 function changeBoard() {

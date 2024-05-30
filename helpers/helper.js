@@ -73,7 +73,6 @@ const whiteChessUtilities = (function () {
 			square.addEventListener("dragend", dragEnd);
 		});
 	}
-
 	function dragStart(e) {
 		draggedElement =
 			e.target.tagName.toLowerCase() === "img" ? e.target : null;
@@ -151,9 +150,22 @@ const whiteChessUtilities = (function () {
                 if (blackMoves.length > 0) {
                     let bPieceLocation = blackMoves[blackMoves.length - 1][0];
                     let blackPieceNode = blackMoves[blackMoves.length - 1][1];
-                    let blackPiece = document.querySelector(
-                        `[square-id="${bPieceLocation}"]`,
-                    );
+
+                    if(blackPieceNode === "sCastle") {
+                        let ksquare1 = document.querySelector(`[square-id="${'g8'}"]`);
+                        let rsquare1 = document.querySelector(`[square-id="${'f8'}"]`);
+                        let kSquare = document.querySelector(`[square-id="${'e8'}"]`);
+                        let rSquare = document.querySelector(`[square-id="${'h8'}"]`);
+                        let kPiece = kSquare.childNodes[0];
+                        let rPiece = rSquare.childNodes[0];
+                        ksquare1.appendChild(kPiece);
+                        rsquare1.appendChild(rPiece);
+                        blackMoves.pop();
+                        openingMoves.pop();
+                        return;
+                    }
+
+                    let blackPiece = document.querySelector(`[square-id="${bPieceLocation}"]`);
                     let childNodes = blackPiece.childNodes;
                     let whiteSquare = document.querySelector(
                         `[square-id="${blackPieceNode}"]`,
@@ -729,6 +741,15 @@ const blackChessUtilities = (function() {
             openingStorage = [...movesA];			
             whiteMoves = movesB;
             whiteStorage = [...movesB];
+            setTimeout(() => {
+                let [wPieceLocation, whitePieceNode] = whiteMoves.pop();
+                let whitePiece = document.querySelector(`[square-id="${wPieceLocation}"]`);
+                let blackSquare = document.querySelector(`[square-id="${whitePieceNode}"]`);
+                isDragDrop = 0;
+                blackSquare.innerHTML = "";
+                blackSquare.appendChild(whitePiece.childNodes[0]);
+                blackSquare.style.backgroundColor = "";
+            }, 100);
         }
 		let rank = 8;
 		startPieces.forEach((startPiece, i) => {
@@ -860,7 +881,20 @@ const blackChessUtilities = (function() {
 				if (whiteMoves.length > 0) {
 					let wPieceLocation = whiteMoves[whiteMoves.length - 1][0];
 					let whitePieceNode = whiteMoves[whiteMoves.length - 1][1];
-					let whitePiece = document.querySelector(
+                    if(whitePieceNode === "sCastle") {
+                        let ksquare1 = document.querySelector(`[square-id="${'b8'}"]`);
+                        let rsquare1 = document.querySelector(`[square-id="${'c8'}"]`);
+                        let kSquare = document.querySelector(`[square-id="${'d8'}"]`);
+                        let rSquare = document.querySelector(`[square-id="${'a8'}"]`);
+                        let kPiece = kSquare.childNodes[0];
+                        let rPiece = rSquare.childNodes[0];
+                        ksquare1.appendChild(kPiece);
+                        rsquare1.appendChild(rPiece);
+                        whiteMoves.pop();
+                        openingMoves.pop();
+                        return;
+                    }
+                    let whitePiece = document.querySelector(
 						`[square-id="${wPieceLocation}"]`,
 					);
 					let childNodes = whitePiece.childNodes;
