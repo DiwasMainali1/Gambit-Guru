@@ -188,21 +188,27 @@ caroKannDefenseButton.addEventListener('click', () => {
     board.innerHTML = '';
 
     let caroKannDefenseMoves = [
-        ["Black-Pawn", "e3"],
-        ["Black-Pawn", "d4"],
+        ["Black-Knight", "e2"],
+        ["Black-Bishop", "b5"],
+        ["Black-King", "b1"],
+        ["Black-Bishop", "e3"],
+        ["Black-Pawn", "c3"],
         ["Black-Knight", "c3"],
-        ["Black-Bishop", "d2"],
-        ["Black-Knight", "f3"],
-        ["Black-Pawn", "c3"]
+        ["Black-Pawn", "d5"],
+        ["Black-Pawn", "e4"],
+        ["Black-Pawn", "f3"]
     ];
 
     let whiteMoves = [
-        ["d8", "e7"],
-        ["b8", "d7"],
+        ["f7", "f6"],
+        ["sCastle", "sCastle"],
+        ["c8", "e6"],
+        ["b8", "c6"],
+        ["d5", "c3"],
+        ["f6", "d5"],
+        ["g8", "f6"],
         ["e7", "e5"],
-        ["d7", "f6"],
-        ["f8", "e7"],
-        ["e7", "d5"]
+        ["d7", "d5"]
     ];
 
     blackChessUtilities.createBoard(1, caroKannDefenseMoves, whiteMoves);

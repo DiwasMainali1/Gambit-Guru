@@ -904,7 +904,6 @@ const blackChessUtilities = (function() {
                     isDragDrop = 0;
 					blackSquare.innerHTML = "";
 					blackSquare.appendChild(childNodes[0]);
-					blackSquare.style.backgroundColor = "";
 					whiteMoves.pop();
 				}
 				openingMoves.pop();
