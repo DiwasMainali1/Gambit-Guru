@@ -151,33 +151,33 @@ const whiteChessUtilities = (function () {
 			isSrookMoved = 1;
 		}
 		if (isOpening && isDragDrop) {
-			const lastMove = openingMoves[openingMoves.length - 1];
-			if (
-				JSON.stringify([draggedElement.id, squareId]) ===
-				JSON.stringify(lastMove)
-			) {
-				if (blackMoves.length > 0) {
-					let bPieceLocation = blackMoves[blackMoves.length - 1][0];
-					let blackPieceNode = blackMoves[blackMoves.length - 1][1];
-					let blackPiece = document.querySelector(
-						`[square-id="${bPieceLocation}"]`,
-					);
-					let childNodes = blackPiece.childNodes;
-					let blackSquare = document.querySelector(
-						`[square-id="${blackPieceNode}"]`,
-					);
-					blackSquare.appendChild(childNodes[0]);
-				}
-				pieceNode.style.backgroundColor = "green";
-				specialSquares.push(pieceNode);
-				openingMoves.pop();
-				blackMoves.pop();
-			} else {
-				pieceNode.style.backgroundColor = "red";
-				setTimeout(() => {
-					resetBoard();
-				}, 250);
-			}
+            const lastMove = openingMoves[openingMoves.length - 1];
+            if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
+                pieceNode.style.backgroundColor = "green";
+                specialSquares.push(pieceNode);
+                if (blackMoves.length > 0) {
+                    let bPieceLocation = blackMoves[blackMoves.length - 1][0];
+                    let blackPieceNode = blackMoves[blackMoves.length - 1][1];
+                    let blackPiece = document.querySelector(
+                        `[square-id="${bPieceLocation}"]`,
+                    );
+                    let childNodes = blackPiece.childNodes;
+                    let whiteSquare = document.querySelector(
+                        `[square-id="${blackPieceNode}"]`,
+                    );
+                    isDragDrop = 0;
+                    whiteSquare.innerHTML = "";
+                    whiteSquare.appendChild(childNodes[0]);
+                    whiteSquare.style.backgroundColor = "";
+                    blackMoves.pop();
+                }
+                openingMoves.pop();
+            } else {
+                pieceNode.style.backgroundColor = "red";
+                setTimeout(() => {
+                    resetBoard();
+                }, 250);
+            }
 			if (!openingMoves.length) {
 				const allSquares = document.querySelectorAll("#Board .square");
 				allSquares.forEach((square) => {
@@ -763,7 +763,6 @@ const blackChessUtilities = (function() {
         openingMoves = [...openingStorage];
         whiteMoves = [...whiteStorage];
         board.innerHTML = '';
-        console.log('hi')
         createBoard(isOpening, openingMoves, whiteMoves);
         addEventListeners();
     }
@@ -862,10 +861,7 @@ const blackChessUtilities = (function() {
 		}
 		if (isOpening && isDragDrop) {
 			const lastMove = openingMoves[openingMoves.length - 1];
-			if (
-				JSON.stringify([draggedElement.id, squareId]) ===
-				JSON.stringify(lastMove)
-			) {
+			if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
 				pieceNode.style.backgroundColor = "green";
 				specialSquares.push(pieceNode);
 				if (whiteMoves.length > 0) {
@@ -878,6 +874,7 @@ const blackChessUtilities = (function() {
 					let blackSquare = document.querySelector(
 						`[square-id="${whitePieceNode}"]`,
 					);
+                    isDragDrop = 0;
 					blackSquare.innerHTML = "";
 					blackSquare.appendChild(childNodes[0]);
 					blackSquare.style.backgroundColor = "";
@@ -886,7 +883,6 @@ const blackChessUtilities = (function() {
 				openingMoves.pop();
 			} else {
 				pieceNode.style.backgroundColor = "red";
-				console.log('hi')
                 setTimeout(() => {
 					resetBoard();
 				}, 250);
@@ -943,7 +939,7 @@ const blackChessUtilities = (function() {
 		specialSquares.length = 0;
 		captureSquares.length = 0;
 		if (pieceNode && pieceNode == prevSquare) {
-			prevSquare = NaN;
+            prevSquare = NaN;
 			return;
 		}
 		prevSquare = e.target.parentNode;
