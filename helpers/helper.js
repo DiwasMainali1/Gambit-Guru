@@ -101,11 +101,7 @@ const whiteChessUtilities = (function () {
 			pieceNode = pieceNode.parentNode;
 			squareId = pieceNode.getAttribute("square-id");
 		}
-		if (
-			!isKingMoved &&
-			draggedElement.id === "White-King" &&
-			squareId === "g1"
-		) {
+		if (!isKingMoved && draggedElement.id === "White-King" && squareId === "g1") {
 			let rookElement = document.querySelector(
 				`[id="${"H-White-Rook"}"]`,
 			);
@@ -115,11 +111,7 @@ const whiteChessUtilities = (function () {
 			removeColour(allSquares);
 			specialSquares.length = 0;
 			isDragDrop = 1;
-		} else if (
-			!isKingMoved &&
-			draggedElement.id === "White-King" &&
-			squareId === "c1"
-		) {
+		} else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
 			let rookElement = document.querySelector(
 				`[id="${"A-White-Rook"}"]`,
 			);
@@ -152,6 +144,7 @@ const whiteChessUtilities = (function () {
 		}
 		if (isOpening && isDragDrop) {
             const lastMove = openingMoves[openingMoves.length - 1];
+            console.log(draggedElement.id, squareId, lastMove)
             if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
                 pieceNode.style.backgroundColor = "green";
                 specialSquares.push(pieceNode);

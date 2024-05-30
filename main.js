@@ -71,6 +71,34 @@ sicilianDefenseButton.addEventListener('click', () => {
     blackChessUtilities.addEventListeners();
 });
 
+queensGambitButton.addEventListener('click', () => {
+    let board = document.querySelector("#Board");
+    let pieceColour = board.childNodes[0].firstChild.id;
+    if (pieceColour.includes("White")) {
+        changeBoard();
+    }
+    board.innerHTML = '';
+    let queensGambitMoves = [
+        ["White-Pawn", "e3"],
+        ["White-Bishop", "f4"],
+        ["White-Pawn", "d5"],
+        ["White-Knight", "c3"],
+        ["White-Pawn", "c4"],
+        ["White-Pawn", "d4"]
+    ];
+    
+    let blackMoves = [
+        ["c7", "c6"],
+        ["c8", "f5"],
+        ["e6", "d5"],
+        ["g8", "f6"],
+        ["e7", "e6"],
+        ["d7", "d5"]
+    ];
+    whiteChessUtilities.createBoard(1, queensGambitMoves, blackMoves);
+    whiteChessUtilities.addEventListeners();
+});
+
 function changeBoard() {
    let board = document.querySelector("#Board");
    let pieceColour = board.childNodes[0].firstChild.id;
