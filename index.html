@@ -1,53 +1,36 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Gambit Guru - Train Openings!</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="Header">
-			<a href="index.html">Gambit Guru</a>
-		</div>
-		<div class="container">
-			<div class="Opening-Menu">
-				<p>Select your opening:</p>
-				<button id="ruyLopez" class="menu-item">
-					<span class="menu-text">The Ruy Lopez</span>
-					<span class="menu-icon">&#9818;</span>
-				</button>
-				<button id="sicilianDefense" class="menu-item">
-					<span class="menu-text">The Sicilian Defense</span>
-					<span class="menu-icon">&#9812;</span>
-				</button>
-                <button id="londonSystem" class="menu-item">
-					<span class="menu-text">The London System</span>
-					<span class="menu-icon">&#9818;</span>
-				</button>
-                <button id="kingsIndianDefense" class="menu-item">
-					<span class="menu-text">King's Indian Defense</span>
-					<span class="menu-icon">&#9812;</span>
-				</button>
-                <button id="queensGambit" class="menu-item">
-					<span class="menu-text">Queen's Gambit</span>
-					<span class="menu-icon">&#9818;</span>
-				</button>
-                <button id="caroKannDefense" class="menu-item">
-					<span class="menu-text">Caro-Kann Defense</span>
-					<span class="menu-icon">&#9812;</span>
-				</button>
-			</div>
-			<div class="board-container">
-				<div id="Board"></div>
-				<button id="resetButton" class="reset-button">Reset</button>
-				<button id="switchButton" class="switch-button">
-					Switch Colour
-				</button>
-				<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
-				<script src="helpers/boardpieces.js"></script>
-				<script type="module" src="main.js"></script>
-			</div>
-		</div>
-	</body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gambit Guru - Train Openings!</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
+</head>
+<body>
+    <div class="Header">
+        <a href="index.html">Gambit Guru</a>
+    </div>
+    <div class="Opening-Menu">
+        <div class="dropdown">
+            <button class="dropdown-toggle">Select your opening</button>
+            <div class="dropdown-menu">
+                <a id="ruyLopez" class="dropdown-item">The Ruy Lopez</a>
+                <a id="sicilianDefense" class="dropdown-item">The Sicilian Defense</a>
+                <a id="londonSystem" class="dropdown-item">The London System</a>
+                <a id="kingsIndianDefense" class="dropdown-item">King's Indian Defense</a>
+                <a id="queensGambit" class="dropdown-item">Queen's Gambit</a>
+                <a id="caroKannDefense" class="dropdown-item">Caro-Kann Defense</a>
+            </div>
+        </div>
+    </div>
+    <div class="board-container">
+        <button id="switchButton" class="switch-button">Switch Colour</button>
+        <div id="Board"></div>
+        <button id="resetButton" class="reset-button">Reset</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    <script src="helpers/boardpieces.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
 </html>
