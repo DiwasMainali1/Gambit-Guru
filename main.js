@@ -64,6 +64,8 @@ function loadOpeningContent(openingId) {
       whiteChessUtilities.createBoard(1, whiteMovesCopy, blackMovesCopy);
       whiteChessUtilities.addEventListeners();
     }
+    resetButton.style.display = 'none';
+    changeButton.style.display = 'none';
   }
 }
 
