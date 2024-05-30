@@ -22,7 +22,7 @@
       ]
     },
     "sicilianDefense": {
-      "title": "Sicilian Defense",
+      "title": "The Sicilian Defense",
       "whiteMoves": [
         ["g8", "f6"],
         ["c6", "e5"],
@@ -39,7 +39,7 @@
       ]
     },
     "queensGambit": {
-      "title": "Queen's Gambit",
+      "title": "The Queen's Gambit",
       "whiteMoves": [
         ["White-Pawn", "e3"],
         ["White-Bishop", "f4"],
@@ -81,7 +81,7 @@
       ]
     },
     "londonSystem": {
-      "title": "London System",
+      "title": "The London System",
       "whiteMoves": [
         ["White-Pawn", "f4"],
         ["White-Knight", "e5"],

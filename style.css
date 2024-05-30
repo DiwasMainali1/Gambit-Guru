@@ -4,6 +4,10 @@ body {
     background-size: cover;
     font-family: 'Inter', sans-serif;
     color: #dadb98;
+    -webkit-user-select: none;  /* Chrome, Safari, Opera */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* IE/Edge */
+    user-select: none;          /* Standard */
 }
 
 .container {
@@ -26,7 +30,7 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-weight: bold;
-    border: 2px solid #dadb98;
+    border: 3px solid #dadb98;
     border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -202,19 +206,22 @@ body {
     overflow: hidden;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-
+.button-container {
+    margin-top: 4px;
+    margin-right: 9px;
+}
 .reset-button,
 .switch-button {
     background-color: transparent;
     color: #dadb98;
-    padding: 15px 30px;
+    padding: 13px 30px;
     font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     border: 3.2px solid #dadb98;
-    border-radius: 25px;
+    border-radius: 3px;
     cursor: pointer;
     overflow: hidden;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
