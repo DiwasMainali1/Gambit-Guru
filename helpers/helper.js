@@ -1,7 +1,7 @@
 const whiteChessUtilities = (function () {
 	const board = document.querySelector("#Board");
 
-    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening;
+    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening, draggedSquare;
     let openingMoves = [], blackMoves = [];
     let openingStorage = [], blackStorage = [];
 
@@ -82,6 +82,7 @@ const whiteChessUtilities = (function () {
 			e.target.tagName.toLowerCase() === "img" ? e.target : null;
 		if (draggedElement) getPossibleMoves(e);
 		else e.preventDefault();
+        draggedSquare = e.target.parentNode;
 	}
 
 	function dragOver(e) {
@@ -149,6 +150,7 @@ const whiteChessUtilities = (function () {
             const lastMove = openingMoves[openingMoves.length - 1];
             if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
                 pieceNode.style.backgroundColor = "green";
+                draggedSquare.style.backgroundColor = "";
                 specialSquares.push(pieceNode);
                 if (blackMoves.length > 0) {
                     let bPieceLocation = blackMoves[blackMoves.length - 1][0];
@@ -715,7 +717,7 @@ const whiteChessUtilities = (function () {
 const blackChessUtilities = (function() {
     const board = document.querySelector("#Board")
 
-    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening;
+    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening, draggedSquare;
     let openingMoves = [], whiteMoves = [];
     let openingStorage = [], whiteStorage = [];
 
@@ -810,6 +812,7 @@ const blackChessUtilities = (function() {
 			e.preventDefault();
 			return;
 		}
+        draggedSquare = e.target.parentNode;
 		getPossibleMoves(e);
 	}
 
@@ -886,6 +889,7 @@ const blackChessUtilities = (function() {
 			const lastMove = openingMoves[openingMoves.length - 1];
 			if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
 				pieceNode.style.backgroundColor = "green";
+                draggedSquare.style.backgroundColor = "";
 				specialSquares.push(pieceNode);
 				if (whiteMoves.length > 0) {
 					let wPieceLocation = whiteMoves[whiteMoves.length - 1][0];
