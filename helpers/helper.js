@@ -53,6 +53,10 @@ const whiteChessUtilities = (function () {
 		});
 	}
 
+    function getHint() {
+        return openingMoves.length - 1;
+    }
+
     function resetBoard() {
         (isDragDrop = isSrookMoved = isLrookMoved = draggedElement = 0),
 		(isKingMoved = 0);
@@ -143,7 +147,6 @@ const whiteChessUtilities = (function () {
 		}
 		if (isOpening && isDragDrop) {
             const lastMove = openingMoves[openingMoves.length - 1];
-            console.log(draggedElement.id, squareId, lastMove)
             if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
                 pieceNode.style.backgroundColor = "green";
                 specialSquares.push(pieceNode);
@@ -685,6 +688,7 @@ const whiteChessUtilities = (function () {
 		return boolean;
 	}
 	return {
+        getHint,
 		addConfetti,
 		createBoard,
 		addEventListeners,
@@ -771,6 +775,11 @@ const blackChessUtilities = (function() {
 			}
 		});
 	}
+
+    function getHint() {
+        return openingMoves.length - 1;
+    }
+
     function resetBoard() {
         (isDragDrop = isSrookMoved = isLrookMoved = draggedElement = 0),
 		(isKingMoved = 0);
@@ -1416,6 +1425,7 @@ const blackChessUtilities = (function() {
 		return boolean;
 	}
 	return {
+        getHint,
 		resetBoard,
         createBoard,
 		addEventListeners,

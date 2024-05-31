@@ -1,134 +1,195 @@
 {
     "ruyLopez": {
-      "title": "Ruy Lopez Opening",
-      "whiteMoves": [
-        ["White-Pawn", "c3"],
-        ["White-King", "g1"],
-        ["White-Bishop", "b3"],
-        ["White-Pawn", "d3"],
-        ["White-Bishop", "a4"],
-        ["White-Bishop", "b5"],
-        ["White-Knight", "f3"],
-        ["White-Pawn", "e4"]
-      ],
-      "blackMoves": [
-        ["d7", "d6"],
-        ["f8", "c5"],
-        ["b7", "b5"],
-        ["g8", "f6"],
-        ["a7", "a6"],
-        ["b8", "c6"],
-        ["e7", "e5"]
-      ]
+        "title": "Ruy Lopez Opening",
+        "whiteMoves": [
+            ["White-Pawn", "c3"],
+            ["White-King", "g1"],
+            ["White-Bishop", "b3"],
+            ["White-Pawn", "d3"],
+            ["White-Bishop", "a4"],
+            ["White-Bishop", "b5"],
+            ["White-Knight", "f3"],
+            ["White-Pawn", "e4"]
+        ],
+        "blackMoves": [
+            ["d7", "d6"],
+            ["f8", "c5"],
+            ["b7", "b5"],
+            ["g8", "f6"],
+            ["a7", "a6"],
+            ["b8", "c6"],
+            ["e7", "e5"]
+        ],
+        "hintMoves": [
+            ["c2", "c3"],
+            ["e1", "g1"],
+            ["a4", "b3"],
+            ["d2", "d3"],
+            ["b5", "a4"],
+            ["f1", "b5"],
+            ["g1", "f3"],
+            ["e2", "e4"]
+        ]
     },
     "sicilianDefense": {
-      "title": "The Sicilian Defense",
-      "whiteMoves": [
-        ["g8", "f6"],
-        ["c6", "e5"],
-        ["e7", "e5"],
-        ["b8", "c6"],
-        ["d7", "d5"]
-      ],
-      "blackMoves": [
-        ["Black-Pawn", "b3"],
-        ["Black-Pawn", "e3"],
-        ["Black-Pawn", "e5"],
-        ["Black-Knight", "f3"],
-        ["Black-Pawn", "f4"]
-      ]
+        "title": "The Sicilian Defense",
+        "whiteMoves": [
+            ["g8", "f6"],
+            ["c6", "e5"],
+            ["e7", "e5"],
+            ["b8", "c6"],
+            ["d7", "d5"]
+        ],
+        "blackMoves": [
+            ["Black-Pawn", "b3"],
+            ["Black-Pawn", "e3"],
+            ["Black-Pawn", "e5"],
+            ["Black-Knight", "f3"],
+            ["Black-Pawn", "f4"]
+        ],
+        "hintMoves": [
+            ["Black", "Black"],
+            ["b2", "b3"],
+            ["e4", "e5"],
+            ["f4", "e5"],
+            ["g1", "f3"],
+            ["f2", "f4"]
+        ]
     },
     "queensGambit": {
-      "title": "The Queen's Gambit",
-      "whiteMoves": [
-        ["White-Pawn", "e3"],
-        ["White-Bishop", "f4"],
-        ["White-Pawn", "d5"],
-        ["White-Knight", "c3"],
-        ["White-Pawn", "c4"],
-        ["White-Pawn", "d4"]
-      ],
-      "blackMoves": [
-        ["c7", "c6"],
-        ["c8", "f5"],
-        ["e6", "d5"],
-        ["g8", "f6"],
-        ["e7", "e6"],
-        ["d7", "d5"]
-      ]
+        "title": "The Queen's Gambit",
+        "whiteMoves": [
+            ["White-Pawn", "e3"],
+            ["White-Bishop", "f4"],
+            ["White-Pawn", "d5"],
+            ["White-Knight", "c3"],
+            ["White-Pawn", "c4"],
+            ["White-Pawn", "d4"]
+        ],
+        "blackMoves": [
+            ["c7", "c6"],
+            ["c8", "f5"],
+            ["e6", "d5"],
+            ["g8", "f6"],
+            ["e7", "e6"],
+            ["d7", "d5"]
+        ],
+        "hintMoves": [
+            ["e2", "e3"],
+            ["c1", "f4"],
+            ["c4", "d5"],
+            ["b1", "c3"],
+            ["c2", "c4"],
+            ["d2", "d4"]
+        ]
     },
     "kingsIndianDefense": {
-      "title": "King's Indian Defense",
-      "whiteMoves": [
-        ["e5", "e4"],
-        ["sCastle", "sCastle"],
-        ["c8", "d7"],
-        ["b8", "c6"],
-        ["d7", "d5"],
-        ["g8", "f6"],
-        ["f7", "f5"],
-        ["e7", "e5"]
-      ],
-      "blackMoves": [
-        ["Black-Knight", "d2"],
-        ["Black-Knight", "f3"],
-        ["Black-Pawn", "d4"],
-        ["Black-King", "b1"],
-        ["Black-Pawn", "e3"],
-        ["Black-Bishop", "b2"],
-        ["Black-Pawn", "b3"],
-        ["Black-Knight", "c3"]
-      ]
+        "title": "King's Indian Defense",
+        "whiteMoves": [
+            ["e5", "e4"],
+            ["sCastle", "sCastle"],
+            ["c8", "d7"],
+            ["b8", "c6"],
+            ["d7", "d5"],
+            ["g8", "f6"],
+            ["f7", "f5"],
+            ["e7", "e5"]
+        ],
+        "blackMoves": [
+            ["Black-Knight", "d2"],
+            ["Black-Knight", "f3"],
+            ["Black-Pawn", "d4"],
+            ["Black-King", "b1"],
+            ["Black-Pawn", "e3"],
+            ["Black-Bishop", "b2"],
+            ["Black-Pawn", "b3"],
+            ["Black-Knight", "c3"]
+        ],
+        "hintMoves": [
+            ["Black", "Black"],
+            ["f3", "d2"],
+            ["g1", "f3"],
+            ["d2", "d4"],
+            ["d1", "b1"],
+            ["e2", "e3"],
+            ["c1", "b2"],
+            ["b2", "b3"],
+            ["b1", "c3"]
+        ]
     },
     "londonSystem": {
-      "title": "The London System",
-      "whiteMoves": [
-        ["White-Pawn", "f4"],
-        ["White-Knight", "e5"],
-        ["White-Bishop", "d3"],
-        ["White-Bishop", "g3"],
-        ["White-Knight", "f3"],
-        ["White-Knight", "d2"],
-        ["White-Pawn", "c3"],
-        ["White-Pawn", "e3"],
-        ["White-Bishop", "f4"],
-        ["White-Pawn", "d4"]
-      ],
-      "blackMoves": [
-        ["d8", "c7"],
-        ["f8", "e8"],
-        ["sCastle", "sCastle"],
-        ["f8", "d6"],
-        ["b8", "c6"],
-        ["e7", "e6"],
-        ["c7", "c5"],
-        ["g8", "f6"],
-        ["d7", "d5"]
-      ]
+        "title": "The London System",
+        "whiteMoves": [
+            ["White-Pawn", "f4"],
+            ["White-Knight", "e5"],
+            ["White-Bishop", "d3"],
+            ["White-Bishop", "g3"],
+            ["White-Knight", "f3"],
+            ["White-Knight", "d2"],
+            ["White-Pawn", "c3"],
+            ["White-Pawn", "e3"],
+            ["White-Bishop", "f4"],
+            ["White-Pawn", "d4"]
+        ],
+        "blackMoves": [
+            ["d8", "c7"],
+            ["f8", "e8"],
+            ["sCastle", "sCastle"],
+            ["f8", "d6"],
+            ["b8", "c6"],
+            ["e7", "e6"],
+            ["c7", "c5"],
+            ["g8", "f6"],
+            ["d7", "d5"]
+        ],
+        "hintMoves": [
+            ["f2", "f4"],
+            ["f3", "e5"],
+            ["f1", "d3"],
+            ["f4", "g3"],
+            ["g1", "f3"],
+            ["b1", "d2"],
+            ["c2", "c3"],
+            ["e2", "e3"],
+            ["c1", "f4"],
+            ["d2", "d4"]
+        ]
     },
     "caroKannDefense": {
-      "title": "Caro-Kann Defense",
-      "whiteMoves": [
-        ["f7", "f6"],
-        ["sCastle", "sCastle"],
-        ["c8", "e6"],
-        ["b8", "c6"],
-        ["d5", "c3"],
-        ["f6", "d5"],
-        ["g8", "f6"],
-        ["e7", "e5"],
-        ["d7", "d5"]
-      ],
-      "blackMoves": [
-        ["Black-Knight", "e2"],
-        ["Black-Bishop", "b5"],
-        ["Black-King", "b1"],
-        ["Black-Bishop", "e3"],
-        ["Black-Pawn", "c3"],
-        ["Black-Knight", "c3"],
-        ["Black-Pawn", "d5"],
-        ["Black-Pawn", "e4"],
-        ["Black-Pawn", "f3"]
-      ]
+        "title": "Caro-Kann Defense",
+        "whiteMoves": [
+            ["f7", "f6"],
+            ["sCastle", "sCastle"],
+            ["c8", "e6"],
+            ["b8", "c6"],
+            ["d5", "c3"],
+            ["f6", "d5"],
+            ["g8", "f6"],
+            ["e7", "e5"],
+            ["d7", "d5"]
+        ],
+        "blackMoves": [
+            ["Black-Knight", "e2"],
+            ["Black-Bishop", "b5"],
+            ["Black-King", "b1"],
+            ["Black-Bishop", "e3"],
+            ["Black-Pawn", "c3"],
+            ["Black-Knight", "c3"],
+            ["Black-Pawn", "d5"],
+            ["Black-Pawn", "e4"],
+            ["Black-Pawn", "f3"]
+        ],
+        "hintMoves": [
+            ["Black", "Black"],
+            ["g1", "e2"],
+            ["f1", "b5"],
+            ["d1", "b1"],
+            ["c1", "e3"],
+            ["d2", "c3"],
+            ["b1", "c3"],
+            ["e4", "d5"],
+            ["e2", "e4"],
+            ["f2", "f3"]
+        ]
     }
-  }
+}
