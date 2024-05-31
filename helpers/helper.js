@@ -32,6 +32,8 @@ const whiteChessUtilities = (function () {
             blackMoves = movesB;
             blackStorage = [...movesB];
         }
+        (isDragDrop = isSrookMoved = isLrookMoved = draggedElement = 0),
+		(isKingMoved = 0);
 		let rank = 8;
 		startPieces.forEach((startPiece, i) => {
 			let index = 8 - (i % 8);
@@ -320,7 +322,6 @@ const whiteChessUtilities = (function () {
             } else {
                 square.style.backgroundColor = "";
             }
-
 		}
 	}
 
@@ -761,6 +762,8 @@ const blackChessUtilities = (function() {
                 blackSquare.style.backgroundColor = "";
             }, 100);
         }
+        (isDragDrop = isSrookMoved = isLrookMoved = draggedElement = 0),
+		(isKingMoved = 0);       
 		let rank = 8;
 		startPieces.forEach((startPiece, i) => {
 			let index = 8 - (i % 8);
@@ -826,6 +829,7 @@ const blackChessUtilities = (function() {
 	}
 
 	function dragDrop(e) {
+        console.log(isKingMoved);
 		let pieceNode = e.target;
 		let hasSpan = pieceNode.querySelector("span") !== null;
 		let hasCapture =
@@ -851,7 +855,7 @@ const blackChessUtilities = (function() {
 			let rookSquare = document.querySelector(`[square-id="${"e1"}"]`);
 			pieceNode.appendChild(draggedElement);
 			rookSquare.appendChild(rookElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);;
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (
@@ -865,18 +869,18 @@ const blackChessUtilities = (function() {
 			let rookSquare = document.querySelector(`[square-id="${"c1"}"]`);
 			pieceNode.appendChild(draggedElement);
 			rookSquare.appendChild(rookElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);;
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (hasSpan) {
 			pieceNode.appendChild(draggedElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);;
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (hasCapture) {
 			pieceNode.innerHTML = "";
 			pieceNode.appendChild(draggedElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);;
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		}
@@ -892,7 +896,8 @@ const blackChessUtilities = (function() {
 		if (isOpening && isDragDrop) {
 			const lastMove = openingMoves[openingMoves.length - 1];
 			if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
-				pieceNode.style.backgroundColor = "green";
+				removeColour(allSquares, 0);
+                pieceNode.style.backgroundColor = "green";
                 draggedSquare.style.backgroundColor = "";
 				specialSquares.push(pieceNode);
 				if (whiteMoves.length > 0) {
@@ -978,7 +983,7 @@ const blackChessUtilities = (function() {
 			}, 0);
 		}
 		const clickInfo = getInfo(e);
-		removeColour(allSquares);
+		removeColour(allSquares, 1);;
 		specialSquares.length = 0;
 		captureSquares.length = 0;
 		if (pieceNode && pieceNode == prevSquare) {
@@ -1050,15 +1055,17 @@ const blackChessUtilities = (function() {
 		}
 	}
 
-	function removeColour(squares) {
+	function removeColour(squares, bool) {
 		for (let i = 0; i < squares.length; i++) {
 			const square = squares[i];
 			const spanElement = square.querySelector("span");
-
-			if (spanElement) {
-				square.removeChild(spanElement);
-			}
-			square.style.backgroundColor = "";
+            if (bool) {
+                if (spanElement) {
+                    square.removeChild(spanElement);
+                }
+            } else {
+                square.style.backgroundColor = "";
+            }
 		}
 	}
 
