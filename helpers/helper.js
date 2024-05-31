@@ -112,7 +112,7 @@ const whiteChessUtilities = (function () {
 			let rookSquare = document.querySelector(`[square-id="${"f1"}"]`);
 			pieceNode.appendChild(draggedElement);
 			rookSquare.appendChild(rookElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
@@ -122,18 +122,18 @@ const whiteChessUtilities = (function () {
 			let rookSquare = document.querySelector(`[square-id="${"d1"}"]`);
 			pieceNode.appendChild(draggedElement);
 			rookSquare.appendChild(rookElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (hasSpan) {
 			pieceNode.appendChild(draggedElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (hasCapture) {
 			pieceNode.innerHTML = "";
 			pieceNode.appendChild(draggedElement);
-			removeColour(allSquares);
+			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		}
@@ -149,6 +149,7 @@ const whiteChessUtilities = (function () {
 		if (isOpening && isDragDrop) {
             const lastMove = openingMoves[openingMoves.length - 1];
             if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
+                removeColour(allSquares, 0);
                 pieceNode.style.backgroundColor = "green";
                 draggedSquare.style.backgroundColor = "";
                 specialSquares.push(pieceNode);
@@ -236,7 +237,7 @@ const whiteChessUtilities = (function () {
 			}, 0);
 		}
 		const clickInfo = getInfo(e);
-		removeColour(allSquares);
+		removeColour(allSquares, 1);
 		specialSquares.length = 0;
 		captureSquares.length = 0;
 		if (pieceNode && pieceNode == prevSquare) {
@@ -308,15 +309,18 @@ const whiteChessUtilities = (function () {
 		}
 	}
 
-	function removeColour(squares) {
+	function removeColour(squares, bool) {
 		for (let i = 0; i < squares.length; i++) {
 			const square = squares[i];
 			const spanElement = square.querySelector("span");
+            if (bool) {
+                if (spanElement) {
+                    square.removeChild(spanElement);
+                }
+            } else {
+                square.style.backgroundColor = "";
+            }
 
-			if (spanElement) {
-				square.removeChild(spanElement);
-			}
-			square.style.backgroundColor = "";
 		}
 	}
 
