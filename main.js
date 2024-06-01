@@ -12,11 +12,25 @@ const openingTitle = document.getElementById('opening-title');
 const hintButton = document.getElementById("hintButton");
 hintButton.addEventListener("click", giveHint);
 
+const aboutButton = document.getElementById("aboutButton");
+const aboutPage = document.getElementById("aboutPage");
+const closeButton = document.getElementById("closeButton");
+
+aboutButton.addEventListener("click", function() {
+    console.log('hi')
+    aboutPage.style.display = "flex";
+});
+
+closeButton.addEventListener("click", function() {
+    aboutPage.style.display = "none";
+});
+
+let board = document.querySelector("#Board");
+board.innerHTML = "";
 whiteChessUtilities.createBoard(0, [], []);
 whiteChessUtilities.addEventListeners();
 
 let openingData;
-let currOpening = NaN;
 
 hintButton.style.display = 'none';
 fetch('openings.json')
@@ -37,6 +51,7 @@ fetch('openings.json')
     });
 
 function loadOpeningContent(openingId) {
+    let currOpening = NaN;
     var openingInfo = openingData[openingId];
     if (openingInfo) {
         openingTitle.textContent = openingInfo.title;
@@ -118,11 +133,9 @@ function giveHint() {
         if(hintMoves[0][0] === "Black") {
             let currHint = blackChessUtilities.getHint();
             currMove = hintMoves[currHint + 1];
-            console.log(currMove)
         } else {
             let currHint = whiteChessUtilities.getHint();
             currMove = hintMoves[currHint];
-            console.log(currMove)
         }
         square1 = document.querySelector(`[square-id="${currMove[0]}"]`)
         square2 = document.querySelector(`[square-id="${currMove[1]}"]`)

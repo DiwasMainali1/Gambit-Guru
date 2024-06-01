@@ -9,24 +9,33 @@
 </head>
 <body>
     <div class="Header">
-        <div class="Opening-Menu">
-            <div class="dropdown">
-                <button class="dropdown-toggle">Openings Menu</button>
-                <div class="dropdown-menu">
-                    <a id="ruyLopez" class="dropdown-item">The Ruy Lopez</a>
-                    <a id="sicilianDefense" class="dropdown-item">The Sicilian Defense</a>
-                    <a id="londonSystem" class="dropdown-item">The London System</a>
-                    <a id="kingsIndianDefense" class="dropdown-item">King's Indian Defense</a>
-                    <a id="queensGambit" class="dropdown-item">Queen's Gambit</a>
-                    <a id="caroKannDefense" class="dropdown-item">Caro-Kann Defense</a>
-                </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle">Openings Menu</button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a id="ruyLopez" class="dropdown-item">The Ruy Lopez</a>
+                <a id="sicilianDefense" class="dropdown-item">The Sicilian Defense</a>
+                <a id="londonSystem" class="dropdown-item">The London System</a>
+                <a id="kingsIndianDefense" class="dropdown-item">King's Indian Defense</a>
+                <a id="queensGambit" class="dropdown-item">Queen's Gambit</a>
+                <a id="caroKannDefense" class="dropdown-item">Caro-Kann Defense</a>
             </div>
         </div>
         <div class="Logo">
             <a href="index.html">Gambit Guru</a>
         </div>
         <div class="About">
-            <button>About</button>
+            <button id="aboutButton">About</button>
+        </div>
+        
+        <div id="aboutPage" class="about-page">
+            <div class="about-content">
+                <h2>About Gambit Guru</h2>
+                <p>Gambit Guru is a web application designed to help chess players train and learn various chess openings.
+                    <br><br>
+                    Created by: Diwas Mainali
+                </p>
+                <button id="closeButton">Close</button>
+            </div>
         </div>
     </div>
 
@@ -42,5 +51,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
     <script src="helpers/boardpieces.js"></script>
     <script type="module" src="main.js"></script>
+    <script src="DragDropTouch.js"></script>
 </body>
 </html>
