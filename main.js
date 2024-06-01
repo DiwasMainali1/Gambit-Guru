@@ -118,11 +118,9 @@ function giveHint() {
         if(hintMoves[0][0] === "Black") {
             let currHint = blackChessUtilities.getHint();
             currMove = hintMoves[currHint + 1];
-            console.log(currMove)
         } else {
             let currHint = whiteChessUtilities.getHint();
             currMove = hintMoves[currHint];
-            console.log(currMove)
         }
         square1 = document.querySelector(`[square-id="${currMove[0]}"]`)
         square2 = document.querySelector(`[square-id="${currMove[1]}"]`)

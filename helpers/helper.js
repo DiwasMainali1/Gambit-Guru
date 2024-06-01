@@ -77,32 +77,75 @@ const whiteChessUtilities = (function () {
 			square.addEventListener("dragover", dragOver);
 			square.addEventListener("drop", dragDrop);
 			square.addEventListener("dragend", dragEnd);
+
+            square.addEventListener("touchstart", dragStart);
+            square.addEventListener("touchmove", dragOver);
+            square.addEventListener("touchend", dragDrop);            
 		});
 	}
 	function dragStart(e) {
-		draggedElement =
-			e.target.tagName.toLowerCase() === "img" ? e.target : null;
-		if (draggedElement) getPossibleMoves(e);
-		else e.preventDefault();
-        draggedSquare = e.target.parentNode;
+        if (e.type === "touchstart") {
+            draggedElement = e.target.tagName.toLowerCase() === "img" ? e.target : null;
+            if (draggedElement) {
+                getPossibleMoves(e.touches[0]);
+                const ghostImage = draggedElement.cloneNode(true);
+                ghostImage.classList.add("ghost-image");
+                
+                // Adjust the size of the ghost image
+                ghostImage.style.width = draggedElement.offsetWidth * 0.8 + "px";
+                ghostImage.style.height = draggedElement.offsetHeight * 0.8 + "px";
+                
+                document.body.appendChild(ghostImage);
+                const touch = e.touches[0];
+                ghostImage.style.left = touch.clientX - ghostImage.offsetWidth / 2 + "px";
+                ghostImage.style.top = touch.clientY - ghostImage.offsetHeight / 2 + "px";
+                e.preventDefault();
+            }
+        } else {
+            draggedElement =
+                e.target.tagName.toLowerCase() === "img" ? e.target : null;
+            if (draggedElement) getPossibleMoves(e);
+            else e.preventDefault();
+            draggedSquare = e.target.parentNode;
+        }
 	}
 
 	function dragOver(e) {
-		e.dataTransfer.dropEffect = "move";
-		e.preventDefault();
+        if (e.type === "touchmove") {
+            const ghostImage = document.querySelector(".ghost-image");
+            if (ghostImage) {
+                const touch = e.touches[0];
+                ghostImage.style.left = touch.clientX - ghostImage.offsetWidth / 2 + "px";
+                ghostImage.style.top = touch.clientY - ghostImage.offsetHeight / 2 + "px";
+            }
+            e.preventDefault();
+        }
+		else {
+            e.dataTransfer.dropEffect = "move";
+            e.preventDefault();
+        }
 	}
 
 	function dragDrop(e) {
-		let pieceNode = e.target;
-		let hasSpan = pieceNode.querySelector("span") !== null;
-		let hasCapture =
-			pieceNode.parentNode.style.backgroundColor === "rgb(100, 110, 64)";
-		let squareId = e.target.getAttribute("square-id");
-		if (pieceNode.tagName.toLowerCase() === "span") {
-			pieceNode = pieceNode.parentNode;
-			squareId = pieceNode.getAttribute("square-id");
-			hasSpan = 1;
-		}
+        const ghostImage = document.querySelector(".ghost-image");
+        let pieceNode, hasCapture, squareId, hasSpan; 
+        if (e.type === "touchend") {
+            ghostImage.remove();
+            let touch = e.changedTouches[0];
+            pieceNode = document.elementFromPoint(touch.clientX, touch.clientY);
+            hasSpan = pieceNode.querySelector("span") !== null;
+            squareId = pieceNode.getAttribute("square-id");
+        } else {
+            pieceNode = e.target;
+            hasSpan = pieceNode.querySelector("span") !== null;
+            hasCapture = pieceNode.parentNode.style.backgroundColor === "rgb(100, 110, 64)";
+            squareId = pieceNode.getAttribute("square-id");
+        } 
+        if (pieceNode.tagName.toLowerCase() === "span") {
+            pieceNode = pieceNode.parentNode;
+            squareId = pieceNode.getAttribute("square-id");
+            hasSpan = 1;
+        }
 		if (hasCapture) {
 			pieceNode = pieceNode.parentNode;
 			squareId = pieceNode.getAttribute("square-id");
@@ -114,7 +157,6 @@ const whiteChessUtilities = (function () {
 			let rookSquare = document.querySelector(`[square-id="${"f1"}"]`);
 			pieceNode.appendChild(draggedElement);
 			rookSquare.appendChild(rookElement);
-			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (!isKingMoved && draggedElement.id === "White-King" && squareId === "c1") {
@@ -124,18 +166,15 @@ const whiteChessUtilities = (function () {
 			let rookSquare = document.querySelector(`[square-id="${"d1"}"]`);
 			pieceNode.appendChild(draggedElement);
 			rookSquare.appendChild(rookElement);
-			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (hasSpan) {
 			pieceNode.appendChild(draggedElement);
-			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		} else if (hasCapture) {
 			pieceNode.innerHTML = "";
 			pieceNode.appendChild(draggedElement);
-			removeColour(allSquares, 1);
 			specialSquares.length = 0;
 			isDragDrop = 1;
 		}
@@ -151,7 +190,6 @@ const whiteChessUtilities = (function () {
 		if (isOpening && isDragDrop) {
             const lastMove = openingMoves[openingMoves.length - 1];
             if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
-                removeColour(allSquares, 0);
                 pieceNode.style.backgroundColor = "green";
                 draggedSquare.style.backgroundColor = "";
                 specialSquares.push(pieceNode);
@@ -187,9 +225,15 @@ const whiteChessUtilities = (function () {
                 openingMoves.pop();
             } else {
                 pieceNode.style.backgroundColor = "red";
+                console.log(pieceNode.style.backgroundColor)
                 setTimeout(() => {
                     resetBoard();
                 }, 250);
+            }
+            if (e.type === "touchend") {
+                draggedElement.style.visibility = "visible";
+                removeColour(allSquares, 0);
+                removeColour(allSquares, 1);    
             }
 			if (!openingMoves.length) {
 				const allSquares = document.querySelectorAll("#Board .square");
@@ -205,15 +249,22 @@ const whiteChessUtilities = (function () {
 				}, 1300);
 			}
 		}
-	}
+        if (e.type === "touchend") {
+            draggedElement.style.visibility = "visible";
+            removeColour(allSquares, 0);
+            removeColour(allSquares, 1);    
+        }
+    }
 
-	function dragEnd(e) {
-		const pieceNode = e.target;
-		if (isDragDrop) {
-			isDragDrop = 0;
-		}
-		pieceNode.style.visibility = "visible";
-	}
+    function dragEnd(e) {
+        const pieceNode = e.target;
+        if (isDragDrop) {
+            isDragDrop = 0;
+        }
+        pieceNode.style.visibility = "visible";
+        removeColour(allSquares, 0);
+        removeColour(allSquares, 1);
+    }
 
 	function getInfo(e) {
 		let pieceId = e.target.parentNode.getAttribute("square-id");
@@ -229,9 +280,7 @@ const whiteChessUtilities = (function () {
 	const specialSquares = [];
 	const captureSquares = [];
 	const allSquares = [];
-	let prevSquare = NaN;
 	function getPossibleMoves(e) {
-		const pieceNode = e.target.parentNode;
 		const imageNode = e.target.parentNode.firstElementChild;
 		if (imageNode) {
 			setTimeout(() => {
@@ -239,14 +288,9 @@ const whiteChessUtilities = (function () {
 			}, 0);
 		}
 		const clickInfo = getInfo(e);
-		removeColour(allSquares, 1);
 		specialSquares.length = 0;
 		captureSquares.length = 0;
-		if (pieceNode && pieceNode == prevSquare) {
-			prevSquare = NaN;
-			return;
-		}
-		prevSquare = e.target.parentNode;
+
 		if (Array.isArray(clickInfo)) {
 			const pieceName = clickInfo[1];
 			const pieceId = clickInfo[0];
@@ -829,7 +873,6 @@ const blackChessUtilities = (function() {
 	}
 
 	function dragDrop(e) {
-        console.log(isKingMoved);
 		let pieceNode = e.target;
 		let hasSpan = pieceNode.querySelector("span") !== null;
 		let hasCapture =
