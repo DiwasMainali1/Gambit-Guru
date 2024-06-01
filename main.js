@@ -12,11 +12,13 @@ const openingTitle = document.getElementById('opening-title');
 const hintButton = document.getElementById("hintButton");
 hintButton.addEventListener("click", giveHint);
 
+
+let board = document.querySelector("#Board");
+board.innerHTML = "";
 whiteChessUtilities.createBoard(0, [], []);
 whiteChessUtilities.addEventListeners();
 
 let openingData;
-let currOpening = NaN;
 
 hintButton.style.display = 'none';
 fetch('openings.json')
@@ -37,6 +39,7 @@ fetch('openings.json')
     });
 
 function loadOpeningContent(openingId) {
+    let currOpening = NaN;
     var openingInfo = openingData[openingId];
     if (openingInfo) {
         openingTitle.textContent = openingInfo.title;
