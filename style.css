@@ -145,6 +145,63 @@ body {
     overflow: hidden;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+.about-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.about-content {
+    background-color: #000000;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    position: relative;
+    border: 3px solid #dadb98;
+    box-shadow: 0px 0px 20px rgba(218, 219, 152, 0.4);
+}
+
+.about-content h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 28px;
+    color: #dadb98;
+    margin-bottom: 20px;
+}
+
+.about-content p {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: #dadb98;
+    margin-bottom: 30px;
+}
+
+#closeButton {
+    background-color: #000000;
+    color: #dadb98;
+    padding: 12px 30px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 3px solid #dadb98;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#closeButton:hover {
+    background-color: #b22222;
+    transform: scale(1.1);
+}
 .button-container {
     margin-top: 4px;
     margin-right: 9px;

@@ -12,6 +12,18 @@ const openingTitle = document.getElementById('opening-title');
 const hintButton = document.getElementById("hintButton");
 hintButton.addEventListener("click", giveHint);
 
+const aboutButton = document.getElementById("aboutButton");
+const aboutPage = document.getElementById("aboutPage");
+const closeButton = document.getElementById("closeButton");
+
+aboutButton.addEventListener("click", function() {
+    console.log('hi')
+    aboutPage.style.display = "flex";
+});
+
+closeButton.addEventListener("click", function() {
+    aboutPage.style.display = "none";
+});
 
 let board = document.querySelector("#Board");
 board.innerHTML = "";
