@@ -211,6 +211,11 @@ const whiteChessUtilities = (function () {
                         rsquare1.appendChild(rPiece);
                         blackMoves.pop();
                         openingMoves.pop();
+                        if (e.type === "touchend") {
+                            draggedElement.style.visibility = "visible";
+                            removeColour(specialSquares);    
+                            removeColour(captureSquares);
+                        }
                         return;
                     }
 
@@ -1150,12 +1155,8 @@ const blackChessUtilities = (function() {
 
 	function fillColour(squares) {
 		for (let i in squares) {
-			const square = squares[i];
-			square.style.display = "flex";
-			square.style.justifyContent = "center";
-			square.style.alignItems = "center";
-			square.innerHTML =
-				'<span style="display: inline-block; width: 19px; height: 19px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
+            const square = squares[i];
+            square.innerHTML = '<span></span>';
 		}
 	}
 
