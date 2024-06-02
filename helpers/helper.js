@@ -264,18 +264,11 @@ const whiteChessUtilities = (function () {
     function showWellDoneMessage() {
         const message = document.createElement('div');
         message.textContent = 'Well Done!';
-        message.style.position = 'fixed';
-        message.style.top = '50%';
-        message.style.left = '50%';
-        message.style.transform = 'translate(-50%, -50%)';
-        message.style.fontSize = '48px';
-        message.style.fontWeight = 'bold';
-        message.style.color = '#fff';
-        message.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-        message.style.padding = '20px';
-        message.style.borderRadius = '10px';
-        message.style.zIndex = '9999';
-        document.body.appendChild(message);
+        message.classList.add('message');
+        
+        const boardElement = document.getElementById('Board');
+        boardElement.appendChild(message);
+        
         setTimeout(() => {
             message.remove();
         }, 1300);

@@ -23,7 +23,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px 30px;
+    padding: 15px 20px;
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-weight: bold;
@@ -121,7 +121,6 @@ body {
 }
 
 .Logo {
-    margin-right: 60px;
     width: 250px;
     height: 60px;
     font-family: 'Inter', sans-serif;
@@ -160,7 +159,7 @@ body {
 .Header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 20px;
 }
 
@@ -169,7 +168,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 15px;
     padding: 15px 30px;
     font-family: 'Inter', sans-serif;
     font-size: 20px;
@@ -212,7 +210,6 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 28px;
     color: #dadb98;
-    margin-bottom: 20px;
 }
 
 .about-content p {
@@ -242,7 +239,6 @@ body {
     transform: scale(1.1);
 }
 .button-container {
-    margin-top: 4px;
     margin-right: 9px;
 }
 .reset-button,
@@ -268,7 +264,19 @@ body {
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-
+.message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+}
 #Board {
     width: 100%;
     max-width: 600px;
@@ -337,67 +345,31 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
 }
 
 @media screen and (max-width: 768px) {
     .Header {
-        flex-direction: column;
-        align-items: center;
+        justify-content: space-evenly;
     }
-    
+
     .Logo {
-        order: -1;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-    
-    .About {
-        margin-right: 0;
-    }
-    
-    .dropdown-toggle, .About button {
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-    
-    .Logo {
-        width: 200px;
-        height: 50px;
+        width: 120px;
+        height: 40px;
         font-size: 24px;
-        margin-right: 0;
-        margin-bottom: 15px;
     }
-    
+
     .Logo a {
-        font-size: 24px;
-    }
-    
-    #Board {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    .square {
-        height: 12.5%;
-        width: 12.5%;
-    }
-    
-    .square span {
-        width: 25%;
-        height: 25%;
-    }
-    
-    .button-container {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .reset-button,
-    .switch-button {
-        padding: 10px 20px;
         font-size: 16px;
-        margin: 0 5px;
+    }
+
+    .openings-button,
+    .About button {
+        font-size: 12px;
+        padding: 10px 20px;
+    }
+
+    #closeOpeningsButton,
+    #closeButton {
+        font-size: 12px;
     }
 }
