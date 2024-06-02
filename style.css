@@ -370,11 +370,7 @@ body {
     
     #Board {
         max-width: 100%;
-        aspect-ratio: unset;
         height: auto;
-        border-radius: 0;
-        box-shadow: none;
-        border: none;
     }
     
     .square {
