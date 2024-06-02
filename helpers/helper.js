@@ -85,7 +85,6 @@ const whiteChessUtilities = (function () {
 	}
     function dragStart(e) {
         if (e.type === "touchstart") {
-            console.log('hi')
             draggedElement = e.target.tagName.toLowerCase() === "img" ? e.target : null;
             if (draggedElement) {
                 getPossibleMoves(e.touches[0]);
@@ -108,12 +107,12 @@ const whiteChessUtilities = (function () {
                 e.preventDefault();
             }
         } else {
-            console.log('hi')
             draggedElement =
                 e.target.tagName.toLowerCase() === "img" ? e.target : null;
             if (draggedElement) getPossibleMoves(e);
             else e.preventDefault();
             draggedSquare = e.target.parentNode;
+            console.log(draggedElement)
         }
     }
 

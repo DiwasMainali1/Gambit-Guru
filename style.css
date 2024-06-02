@@ -298,6 +298,11 @@ body {
     align-items: center;
     justify-content: center;
 }
+.square img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
 .square span {
     display: inline-block;
     width: 25%;

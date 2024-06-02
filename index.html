@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gambit Guru - Train Openings!</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
@@ -58,5 +58,14 @@
     <script src="helpers/boardpieces.js"></script>
     <script type="module" src="main.js"></script>
     <script src="DragDropTouch.js"></script>
+    <script src="fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
+
 </body>
 </html>
