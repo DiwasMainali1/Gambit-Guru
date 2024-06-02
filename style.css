@@ -121,7 +121,7 @@ body {
 }
 
 .Logo {
-    margin-right: 45px;
+    margin-right: 60px;
     width: 250px;
     height: 60px;
     font-family: 'Inter', sans-serif;
@@ -369,8 +369,12 @@ body {
     }
     
     #Board {
-        max-width: 90%;
-        margin: 0 auto;
+        max-width: 100%;
+        aspect-ratio: unset;
+        height: auto;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
     }
     
     .square {
@@ -381,11 +385,6 @@ body {
     .square span {
         width: 25%;
         height: 25%;
-    }
-    
-    .ghost-image {
-        width: 12.5%;
-        height: 12.5%;
     }
     
     .button-container {
