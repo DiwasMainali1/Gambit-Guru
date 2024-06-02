@@ -112,7 +112,6 @@ const whiteChessUtilities = (function () {
             if (draggedElement) getPossibleMoves(e);
             else e.preventDefault();
             draggedSquare = e.target.parentNode;
-            console.log(draggedElement)
         }
     }
 
@@ -786,7 +785,7 @@ const whiteChessUtilities = (function () {
 const blackChessUtilities = (function() {
     const board = document.querySelector("#Board")
 
-    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening, draggedSquare;
+    let isDragDrop, isKingMoved, isSrookMoved, isLrookMoved, draggedElement, isOpening, draggedSquare, draggedSquareId;
     let openingMoves = [], whiteMoves = [];
     let openingStorage = [], whiteStorage = [];
 
@@ -980,8 +979,10 @@ const blackChessUtilities = (function() {
 		if (isDragDrop && draggedElement.id == "H-Black-Rook") {
 			isSrookMoved = 1;
 		}
+        draggedSquareId = draggedSquare.getAttribute("square-id");
+        console.log(draggedSquareId);
 		if (isOpening && isDragDrop) {
-			const lastMove = openingMoves[openingMoves.length - 1];
+            const lastMove = openingMoves[openingMoves.length - 1];
 			if (JSON.stringify([draggedElement.id, squareId]) === JSON.stringify(lastMove)) {
                 pieceNode.style.backgroundColor = "green";
                 draggedSquare.style.backgroundColor = "";
