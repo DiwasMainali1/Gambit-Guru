@@ -93,13 +93,18 @@ const whiteChessUtilities = (function () {
                 ghostImage.classList.add("ghost-image");
                 draggedSquare = draggedElement.parentNode;
                 
-                ghostImage.style.width = draggedElement.offsetWidth * 0.8 + "px";
-                ghostImage.style.height = draggedElement.offsetHeight * 0.8 + "px";
+                ghostImage.style.width = draggedElement.offsetWidth + "px";
+                ghostImage.style.height = draggedElement.offsetHeight + "px";
                 
                 document.body.appendChild(ghostImage);
+                
                 const touch = e.touches[0];
-                ghostImage.style.left = touch.clientX - ghostImage.offsetWidth / 2 + "px";
-                ghostImage.style.top = touch.clientY - ghostImage.offsetHeight / 2 + "px";
+                const rect = draggedElement.getBoundingClientRect();
+                const offsetX = touch.clientX - rect.left;
+                const offsetY = touch.clientY - rect.top;
+                
+                ghostImage.style.left = touch.clientX - offsetX + "px";
+                ghostImage.style.top = touch.clientY - offsetY + "px";
                 e.preventDefault();
             }
         } else {
@@ -363,12 +368,8 @@ const whiteChessUtilities = (function () {
 
 	function fillColour(squares) {
 		for (let i in squares) {
-			const square = squares[i];
-			square.style.display = "flex";
-			square.style.justifyContent = "center";
-			square.style.alignItems = "center";
-			square.innerHTML =
-				'<span style="display: inline-block; width: 19px; height: 19px; border-radius: 50%; background-color: #646e40; opacity: 0.9;"></span>';
+            const square = squares[i];
+            square.innerHTML = '<span></span>';
 		}
 	}
 
@@ -890,8 +891,8 @@ const blackChessUtilities = (function() {
                 ghostImage.classList.add("ghost-image");
                 draggedSquare = draggedElement.parentNode;
                 
-                ghostImage.style.width = draggedElement.offsetWidth * 0.8 + "px";
-                ghostImage.style.height = draggedElement.offsetHeight * 0.8 + "px";
+                ghostImage.style.width = draggedElement.offsetWidth + "px";
+                ghostImage.style.height = draggedElement.offsetHeight + "px";
                 
                 document.body.appendChild(ghostImage);
                 const touch = e.touches[0];

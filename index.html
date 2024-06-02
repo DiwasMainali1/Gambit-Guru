@@ -10,14 +10,20 @@
 <body>
     <div class="Header">
         <div class="dropdown">
-            <button class="dropdown-toggle">Openings Menu</button>
-            <div class="dropdown-menu" id="dropdownMenu">
-                <a id="ruyLopez" class="dropdown-item">The Ruy Lopez</a>
-                <a id="sicilianDefense" class="dropdown-item">The Sicilian Defense</a>
-                <a id="londonSystem" class="dropdown-item">The London System</a>
-                <a id="kingsIndianDefense" class="dropdown-item">King's Indian Defense</a>
-                <a id="queensGambit" class="dropdown-item">Queen's Gambit</a>
-                <a id="caroKannDefense" class="dropdown-item">Caro-Kann Defense</a>
+            <button id="openingsButton" class="openings-button">Openings Menu</button>
+            <div id="openingsPage" class="openings-page">
+                <div class="openings-content">
+                    <h2>Openings</h2>
+                    <ul class="dropdown-menu" id="dropdownMenu">
+                        <li><a id="ruyLopez" class="dropdown-item"><span class="chess-icon white">&#9812;</span> The Ruy Lopez</a></li>
+                        <li><a id="sicilianDefense" class="dropdown-item"><span class="chess-icon black">&#9818;</span> The Sicilian Defense</a></li>
+                        <li><a id="londonSystem" class="dropdown-item"><span class="chess-icon white">&#9812;</span> The London System</a></li>
+                        <li><a id="kingsIndianDefense" class="dropdown-item"><span class="chess-icon black">&#9818;</span> King's Indian Defense</a></li>
+                        <li><a id="queensGambit" class="dropdown-item"><span class="chess-icon white">&#9812;</span> Queen's Gambit</a></li>
+                        <li><a id="caroKannDefense" class="dropdown-item"><span class="chess-icon black">&#9818;</span> Caro-Kann Defense</a></li>
+                    </ul>
+                    <button id="closeOpeningsButton">Close</button>
+                </div>
             </div>
         </div>
         <div class="Logo">

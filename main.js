@@ -17,14 +17,23 @@ const aboutPage = document.getElementById("aboutPage");
 const closeButton = document.getElementById("closeButton");
 
 aboutButton.addEventListener("click", function() {
-    console.log('hi')
     aboutPage.style.display = "flex";
 });
 
 closeButton.addEventListener("click", function() {
     aboutPage.style.display = "none";
 });
+const openingsButton = document.getElementById('openingsButton');
+const openingsPage = document.getElementById('openingsPage');
+const closeOpeningsButton = document.getElementById('closeOpeningsButton');
 
+openingsButton.addEventListener('click', () => {
+    openingsPage.style.display = 'flex';
+});
+
+closeOpeningsButton.addEventListener('click', () => {
+    openingsPage.style.display = 'none';
+});
 let board = document.querySelector("#Board");
 board.innerHTML = "";
 whiteChessUtilities.createBoard(0, [], []);
@@ -43,6 +52,7 @@ fetch('openings.json')
                 event.preventDefault();
                 var openingId = this.id;
                 loadOpeningContent(openingId);
+                openingsPage.style.display = 'none';
             });
         });
     })
