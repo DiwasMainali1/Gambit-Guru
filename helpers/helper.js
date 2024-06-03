@@ -1001,6 +1001,11 @@ const blackChessUtilities = (function() {
                         rsquare1.appendChild(rPiece);
                         whiteMoves.pop();
                         openingMoves.pop();
+                        if (e.type === "touchend") {
+                            draggedElement.style.visibility = "visible";
+                            removeColour(specialSquares);    
+                            removeColour(captureSquares);
+                        }
                         return;
                     }
                     let whitePiece = document.querySelector(

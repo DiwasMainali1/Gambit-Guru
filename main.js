@@ -68,6 +68,8 @@ function loadOpeningContent(openingId) {
         openingTitle.className = openingId;
 
         let board = document.querySelector("#Board");
+        board.classList.remove("default");
+        board.classList.add("opening");
         let pieceColour = board.childNodes[0].firstChild.id;
 
         if (pieceColour.includes("Black")) {
