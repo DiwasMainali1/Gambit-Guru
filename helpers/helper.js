@@ -796,7 +796,7 @@ const blackChessUtilities = (function() {
         '', '',  '',  '',  '',  '',  '',  '',
         '', '',  '',  '',  '',  '',  '',  '',
         '', '',  '',  '',  '',  '',  '',  '',
-        blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
+        blackPawn, blackPawn, blackPawn, D_blackPawn, blackPawn, blackPawn, blackPawn, blackPawn,
         A_blackRook, blackKnight, blackBishop, blackKing, blackQueen, blackBishop, blackKnight, H_blackRook
     ]
     createBoard();
@@ -1112,7 +1112,7 @@ const blackChessUtilities = (function() {
 			const pieceName = clickInfo[1];
 			const pieceId = clickInfo[0];
 			let possibleMoveIds = [];
-			if (pieceName === "Black-Pawn") {
+            if (pieceName.includes("Black-Pawn")) {
 				possibleMoveIds = pawnMoves(pieceId);
 			} else if (pieceName === "Black-Knight") {
 				possibleMoveIds = knightMoves(pieceId);

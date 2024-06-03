@@ -6,6 +6,7 @@ const H_whiteRook = '<img src="./images/wR.svg" class="Wpiece" id="H-White-Rook"
 const whiteQueen = '<img src="./images/wQ.svg" class="Wpiece" id="White-Queen" />';
 const whiteKing = '<img src="./images/wK.svg" class="Wpiece" id="White-King" />';
 const blackPawn = '<img src="./images/bP.svg" class="Bpiece" id="Black-Pawn" />';
+const D_blackPawn = '<img src="./images/bP.svg" class="Bpiece" id="D-Black-Pawn" />';
 const blackKnight = '<img src="./images/bN.svg" class="Bpiece" id="Black-Knight" />';
 const blackBishop = '<img src="./images/bB.svg" class="Bpiece" id="Black-Bishop" />';
 const A_blackRook = '<img src="./images/bR.svg" class="Bpiece" id="A-Black-Rook" />';
