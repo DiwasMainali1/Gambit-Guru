@@ -98,7 +98,7 @@
         "blackMoves": [
             ["Black-Knight", "d2"],
             ["Black-Knight", "f3"],
-            ["Black-Pawn", "d4"],
+            ["D-Black-Pawn", "d4"],
             ["Black-King", "b1"],
             ["Black-Pawn", "e3"],
             ["Black-Bishop", "b2"],
@@ -173,7 +173,7 @@
             ["Black-Bishop", "b5"],
             ["Black-King", "b1"],
             ["Black-Bishop", "e3"],
-            ["Black-Pawn", "c3"],
+            ["D-Black-Pawn", "c3"],
             ["Black-Knight", "c3"],
             ["Black-Pawn", "d5"],
             ["Black-Pawn", "e4"],

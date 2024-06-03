@@ -37,7 +37,36 @@ body {
     overflow: hidden;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+.openingTitle {
+    display: flex;
+    align-items: center;
+}
+.opening-link {
+    background-color: transparent;
+    padding: 5px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: inherit;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #C6E2FF;
+    border: 2px solid #C6E2FF;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    margin-left: 5px; /* Adjust the margin as needed */
+    margin-right: 5px;
+}
 
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
 .openings-page {
     position: fixed;
     top: 0;
@@ -63,7 +92,8 @@ body {
 }
 .chess-icon {
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 10px;
+    margin-left: 15px;
     font-size: 18px;
 }
 
@@ -74,12 +104,7 @@ body {
 .chess-icon.black {
     color: #ac8f40;
 }
-.openings-content h2 {
-    font-family: 'Inter', sans-serif;
-    font-size: 28px;
-    color: #C6E2FF;
-    margin-bottom: 20px;
-}
+
 
 .dropdown-menu {
     list-style-type: none;
@@ -239,7 +264,7 @@ body {
     transform: scale(1.1);
 }
 .button-container {
-    margin-right: 9px;
+    margin-left: 12px;
 }
 .reset-button,
 .switch-button {
@@ -333,11 +358,11 @@ body {
     opacity: 0.9;
 }
 .yellow {
-    background-color: #f0d9b5;
+    background-color: #CCDAE0;
 }
 
 .gray {
-    background-color: #b58863;
+    background-color: #7296AC;
 }
 
 .grabbable {
@@ -359,8 +384,30 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
+.openingTitle {
+    font-size: 20px;
+}
 @media screen and (max-width: 768px) {
+    .openingTitle {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+    }
+    .opening-link {
+        margin-left: 0;
+        margin-top: 10px;
+        display: inline-block;
+        max-width: 100%;
+        width: auto;
+        padding: 5px 10px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    #Board {
+        width: 100%;
+        height: 100%;
+    }
     .Header {
         justify-content: space-evenly;
     }
