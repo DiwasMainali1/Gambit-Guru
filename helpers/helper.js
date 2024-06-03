@@ -115,32 +115,50 @@ const whiteChessUtilities = (function () {
         }
     }
 
-	function dragOver(e) {
+    function dragOver(e) {
         if (e.type === "touchmove") {
             const ghostImage = document.querySelector(".ghost-image");
             if (ghostImage) {
                 const touch = e.touches[0];
-                ghostImage.style.left = touch.clientX - ghostImage.offsetWidth / 2 + "px";
-                ghostImage.style.top = touch.clientY - ghostImage.offsetHeight / 2 + "px";
+                const boardRect = board.getBoundingClientRect();
+    
+                if (
+                    touch.clientX < boardRect.left ||
+                    touch.clientX > boardRect.right ||
+                    touch.clientY < boardRect.top ||
+                    touch.clientY > boardRect.bottom
+                ) {
+                    // If the touch position is outside the board, remove the ghost image
+                    ghostImage.remove();
+                    draggedElement.style.visibility = "visible";
+                    draggedSquare.appendChild(draggedElement);
+                    removeColour(specialSquares);
+                    return;
+                } else {
+                    // If the touch position is within the board, update the ghost image position
+                    ghostImage.style.left = touch.clientX - ghostImage.offsetWidth / 2 + "px";
+                    ghostImage.style.top = touch.clientY - ghostImage.offsetHeight / 2 + "px";
+                }
             }
             e.preventDefault();
-        }
-		else {
+        } else {
             e.dataTransfer.dropEffect = "move";
             e.preventDefault();
         }
-	}
+    }
 
 	function dragDrop(e) {
         const ghostImage = document.querySelector(".ghost-image");
         let pieceNode, hasCapture, squareId, hasSpan; 
         if (e.type === "touchend") {
-            ghostImage.remove();
             let touch = e.changedTouches[0];
             pieceNode = document.elementFromPoint(touch.clientX, touch.clientY);
             hasSpan = pieceNode.querySelector("span") !== null;
-            hasCapture = pieceNode.parentNode.style.backgroundColor === "rgb(100, 110, 64)";
+            hasCapture = pieceNode.parentNode && pieceNode.parentNode.style.backgroundColor === "rgb(100, 110, 64)";
             squareId = pieceNode.getAttribute("square-id");
+            if (ghostImage) {
+                ghostImage.remove();
+            }        
         } else {
             pieceNode = e.target;
             hasSpan = pieceNode.querySelector("span") !== null;

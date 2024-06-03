@@ -405,7 +405,7 @@ body {
         margin-bottom: 10px;
     }
     #Board {
-        height: 100%;
+        height: 100vw;
     }
     .Header {
         justify-content: space-evenly;
