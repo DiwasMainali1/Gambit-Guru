@@ -252,7 +252,7 @@ const whiteChessUtilities = (function () {
                 pieceNode.style.backgroundColor = "red";
                 setTimeout(() => {
                     resetBoard();
-                }, 250);
+                }, 100);
             }
 			if (!openingMoves.length) {
 				let allSquares = document.querySelectorAll("#Board .square");
