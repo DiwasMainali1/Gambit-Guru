@@ -9,6 +9,8 @@ body {
     -ms-user-select: none;      /* IE/Edge */
     user-select: none;          /* Standard */
     overflow: hidden;
+    transform: scale(0.70);
+    transform-origin: top center;
 }
 
 .container {
