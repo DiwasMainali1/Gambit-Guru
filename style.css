@@ -124,7 +124,7 @@ body {
 }
 
 .dropdown-item:hover {
-    background-color: #b22222;
+    background-color: #C6E2FF;
 }
 
 #closeOpeningsButton {
@@ -144,7 +144,7 @@ body {
 }
 
 #closeOpeningsButton:hover {
-    background-color: #b22222;
+    background-color: #C6E2FF;
     transform: scale(1.1);
 }
 
@@ -263,7 +263,7 @@ body {
 }
 
 #closeButton:hover {
-    background-color: #b22222;
+    background-color: #C6E2FF;
     transform: scale(1.1);
 }
 .button-container {
@@ -288,7 +288,7 @@ body {
 
 .reset-button:hover,
 .switch-button:hover {
-    background-color: #b22222;
+    background-color: #C6E2FF;
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
@@ -318,9 +318,9 @@ body {
 }
 #Board {
     width: 100%;
-    max-width: 600px; 
-    max-height: 600px; 
-    aspect-ratio: 1/1; 
+    max-width: 600px;
+    max-height: 600px;
+    aspect-ratio: 1/1;
     background-color: white;
     display: flex;
     flex-wrap: wrap;
@@ -390,6 +390,9 @@ body {
     font-size: 20px;
 }
 @media screen and (max-width: 768px) {
+    body {
+        transform: scale(1);
+    }
     .openingTitle {
         flex-direction: column;
         align-items: center;
