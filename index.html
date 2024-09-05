@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gambit Guru - Train Openings!</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
+</head>
+<body>
+    <div class="Header">
+        <div class="dropdown">
+            <button id="openingsButton" class="openings-button">Openings</button>
+            <div id="openingsPage" class="openings-page">
+                <div class="openings-content">
+                    <h2>Openings</h2>
+                    <ul class="dropdown-menu" id="dropdownMenu">
+                        <li><a id="ruyLopez" class="dropdown-item"><span class="chess-icon white">&#9812;</span> The Ruy Lopez</a></li>
+                        <li><a id="sicilianDefense" class="dropdown-item"><span class="chess-icon black">&#9818;</span> The Sicilian Defense</a></li>
+                        <li><a id="londonSystem" class="dropdown-item"><span class="chess-icon white">&#9812;</span> The London System</a></li>
+                        <li><a id="kingsIndianDefense" class="dropdown-item"><span class="chess-icon black">&#9818;</span> King's Indian Defense</a></li>
+                        <li><a id="queensGambit" class="dropdown-item"><span class="chess-icon white">&#9812;</span> Queen's Gambit</a></li>
+                        <li><a id="caroKannDefense" class="dropdown-item"><span class="chess-icon black">&#9818;</span> Caro-Kann Defense</a></li>
+                    </ul>
+                    <button id="closeOpeningsButton">Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="Logo">
+            <a href="index.html">Gambit Guru</a>
+        </div>
+        <div class="About">
+            <button id="aboutButton">About</button>
+        </div>
+        
+        <div id="aboutPage" class="about-page">
+            <div class="about-content">
+                <h2>About Gambit Guru</h2>
+                <p>Gambit Guru is a web application designed to help chess players train and learn various chess openings.
+                    <br><br>
+                    Created by: Diwas Mainali
+                </p>
+                <button id="closeButton">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="board-container">
+        <h2 class="openingTitle" id="opening-title">
+            Pick an<a href="#" class="opening-link" onclick="document.getElementById('openingsButton').click();">Opening</a>  from the list to start practicing
+        </h2>
+        <div id="Board" class="default"></div>
+        <div class="button-container">
+            <button class="reset-button" id="resetButton">Reset</button>
+            <button class="switch-button" id="switchButton">Switch</button>
+            <button id="hintButton" class="reset-button">Hint</button>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    <script src="helpers/boardpieces.js"></script>
+    <script type="module" src="main.js"></script>
+    <script src="DragDropTouch.js"></script>
+    <script src="fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
+</body>
+</html>
